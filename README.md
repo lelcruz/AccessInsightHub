@@ -27,3 +27,6 @@ How to clone and edit repository:
 	3. Create your own branch by the command "git checkout -b <branchName>"
 	4. Commit changes to the repository with the command "git commit -m 'message here describing changes'"
 	5. Push the commit to the repository with the command "git push"
+	
+How to run the repository:
+	Type in terminal the following command: npm run dev
