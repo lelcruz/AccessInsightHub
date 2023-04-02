@@ -1,6 +1,14 @@
 import React from 'react';
+import {Link, useNavigate } from 'react-router-dom'
 
 function LoginPage() {
+
+  const navigate = useNavigate();
+
+  const directToRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="login-body">
     
@@ -17,7 +25,7 @@ function LoginPage() {
 
 
       <button className="button1">Sign in</button>
-      <button>Register</button>
+      <button onClick={directToRegister}>Register</button>
     </div>
   );
 }
