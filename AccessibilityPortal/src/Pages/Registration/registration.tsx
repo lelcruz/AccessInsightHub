@@ -2,6 +2,11 @@ import React from 'react';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import {useNavigate} from "react-router-dom";
 function Registration() {
+  const navigate = useNavigate();
+
+  const directToLoginPage = () => {
+    navigate('/cancel');
+  };
 
 
 
@@ -13,9 +18,9 @@ function Registration() {
       </div>
 
 
-      <h4 style={{ margin: ".5rem 0 .5rem 0" }}>
+      <h5 style={{ textAlign: "center", margin: ".5rem 0 .5rem 0" }}>
           Select type of your accout
-        </h4>
+        </h5>
 
         <div>
           <BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
@@ -38,7 +43,7 @@ function Registration() {
         <label>Confirm Password</label>
         <input></input>
         <div className="button-layout2">
-        <BasicButtonComponent title={"Cancel"}></BasicButtonComponent>
+        <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
         <BasicButtonComponent title={"Register"}></BasicButtonComponent>
         </div>
       </div>
