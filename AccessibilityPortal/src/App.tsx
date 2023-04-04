@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import ReactDOM from "react-dom/client";
 import './Styles/App.scss'
@@ -12,9 +11,9 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        {/*<Route path='/' element={<LoginPage />}/>*/}
+        <Route path='/' element={<LoginPage />}/>
         <Route path='/register' element={<Registration />}/>
-          <Route path='/cancel' element={<LoginPage />}/>
+        
 
       </Routes>
     </Router>
@@ -22,6 +21,6 @@ export default function App() {
   )
 }
 
+
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(<App />);
-{/*export default App*/}

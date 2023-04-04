@@ -19,7 +19,7 @@ function Registration() {
 
 
       <h5 style={{ textAlign: "center", margin: ".5rem 0 .5rem 0" }}>
-          Select type of your accout
+          Select type of your account
         </h5>
 
         <div>
@@ -42,8 +42,8 @@ function Registration() {
         <input></input>
         <label>Confirm Password</label>
         <input></input>
-        <div className="button-layout2">
-        <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
+        <div>
+        <BasicButtonComponent title={"Cancel"} ></BasicButtonComponent>
         <BasicButtonComponent title={"Register"}></BasicButtonComponent>
         </div>
       </div>
