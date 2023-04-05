@@ -1,6 +1,15 @@
 import React from 'react';
+import {Link, useNavigate } from 'react-router-dom'
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 
 function LoginPage() {
+
+  const navigate = useNavigate();
+
+  const directToRegister = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="login-body">
     
@@ -16,8 +25,8 @@ function LoginPage() {
       <span>Forgot password?</span>
 
 
-      <button className="button1">Sign in</button>
-      <button>Register</button>
+        <BasicButtonComponent title={"Log In"}></BasicButtonComponent>
+        <BasicButtonComponent title={"Register"} onClick={directToRegister}></BasicButtonComponent>
     </div>
   );
 }
