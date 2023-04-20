@@ -1,6 +1,8 @@
 import React from 'react';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import {useNavigate} from "react-router-dom";
+import '../../Styles/registration.scss';
+
 function Registration() {
   const navigate = useNavigate();
 
@@ -8,17 +10,16 @@ function Registration() {
     navigate('/cancel');
   };
 
-
-
+  
   return (
     <div className="registration-page">
-      <div style={{ textAlign: "center" }}>
+      <div className="text-center">
         <h3>Welcome</h3>
         <h5>Register to create your account</h5>
       </div>
 
-
-      <h5 style={{ textAlign: "center", margin: ".5rem 0 .5rem 0" }}>
+      <div className="registration-body">
+      <h5>
           Select type of your account
         </h5>
 
@@ -27,8 +28,6 @@ function Registration() {
           <BasicButtonComponent title={"Participant"}></BasicButtonComponent>
         </div>
 
-
-      <div className="registration-body">
         <label>First Name</label>
         <input></input>
         <label>Last Name</label>
@@ -47,6 +46,7 @@ function Registration() {
         <BasicButtonComponent title={"Register"}></BasicButtonComponent>
         </div>
       </div>
+ 
     </div>
   );
 }

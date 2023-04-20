@@ -1,0 +1,29 @@
+@import "Variables";
+
+.registration-page {
+    width: 100%;
+    height: 100vh;
+    background-color: $lilac;
+    padding-top: 5rem;
+    
+}
+
+/*.registration-header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: "center";
+    background-color: "green";
+}*/
+    
+  .registration-body {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background-color: white;
+    width: 450px;
+    padding: 3rem;
+    margin: auto;
+
+}
