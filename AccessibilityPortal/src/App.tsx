@@ -6,8 +6,8 @@ import Registration from './Pages/Registration/registration';
 import LoginPage from './Pages/Login/login-page';
 
 
-export default function App() {
- 
+
+function App() {
   return (
     <Router>
       <Routes>
@@ -21,6 +21,4 @@ export default function App() {
   )
 }
 
-
-const root = ReactDOM.createRoot(document.getElementById('root')!);
-root.render(<App />);
+export default App;
