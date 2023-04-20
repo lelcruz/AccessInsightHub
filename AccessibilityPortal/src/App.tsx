@@ -6,8 +6,8 @@ import Registration from './Pages/Registration/registration';
 import LoginPage from './Pages/Login/login-page';
 
 
-function App() {
 
+function App() {
   return (
     <Router>
       <Routes>
