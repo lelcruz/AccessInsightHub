@@ -8,8 +8,9 @@ function Registration() {
 
   const directToLoginPage = () => {
     navigate('/cancel');
+  
   };
-
+  
   
   return (
     <div className="registration-page">
@@ -19,12 +20,13 @@ function Registration() {
       </div>
 
       <div className="registration-body">
-      <h5>
+      <h5 className="text-center">
           Select type of your account
         </h5>
 
-        <div>
+        <div className="text-center">
           <BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
+          <span className="btn-right-space"></span>
           <BasicButtonComponent title={"Participant"}></BasicButtonComponent>
         </div>
 
@@ -41,8 +43,9 @@ function Registration() {
         <input></input>
         <label>Confirm Password</label>
         <input></input>
-        <div>
-        <BasicButtonComponent title={"Cancel"} ></BasicButtonComponent>
+        <div style={{marginTop: "20px"}}   className="text-end">
+        <BasicButtonComponent title={"Cancel"}></BasicButtonComponent>
+        <span className="btn-right-space"></span>
         <BasicButtonComponent title={"Register"}></BasicButtonComponent>
         </div>
       </div>
