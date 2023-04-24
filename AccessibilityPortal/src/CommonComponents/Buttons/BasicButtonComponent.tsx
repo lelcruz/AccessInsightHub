@@ -3,7 +3,6 @@ import React from 'react';
 type BasicButtonComponentProps = {
   title: string;
   onClick?: () => void;
-
 };
 
 function BasicButtonComponent(props: BasicButtonComponentProps) {
