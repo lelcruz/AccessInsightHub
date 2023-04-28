@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link, useNavigate } from 'react-router-dom'
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
+import '../../Styles/login.scss'
 
 function LoginPage() {
 
@@ -12,9 +13,8 @@ function LoginPage() {
 
   return (
     <div className="login-body">
-    
       <div className="login-header">
-        <h3>Welcome Back</h3>
+        <h2>Welcome Back</h2>
         <h5>Enter the information you entered while registering</h5>
       </div>
 
@@ -22,10 +22,10 @@ function LoginPage() {
       <input></input>
       <label>Password</label>
       <input></input>
-      <span>Forgot password?</span>
-
-
-        <BasicButtonComponent title={"Log In"}></BasicButtonComponent>
+      {/* Need href for the Forgot password anchor*/}
+      <span style={{fontWeight: "bold", paddingBottom: "30px"}} className="text-end">Forgot password?</span>
+        <BasicButtonComponent title={"Sign In"}></BasicButtonComponent>
+        <span className="formatted-text">or</span>
         <BasicButtonComponent title={"Register"} onClick={directToRegister}></BasicButtonComponent>
     </div>
   );
