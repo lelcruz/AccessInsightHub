@@ -7,15 +7,18 @@ function Registration() {
   const navigate = useNavigate();
 
   const directToLoginPage = () => {
-    navigate('/cancel');
-  
+    navigate('/login');
+  };
+
+  const directToMainPage = () => {
+    navigate('/main');
   };
   
   
   return (
     <div className="registration-page">
       <div className="text-center">
-        <h3>Welcome</h3>
+        <h2>Welcome</h2>
         <h5>Register to create your account</h5>
       </div>
 
@@ -43,10 +46,10 @@ function Registration() {
         <input></input>
         <label>Confirm Password</label>
         <input></input>
-        <div style={{marginTop: "20px"}}   className="text-end">
-        <BasicButtonComponent title={"Cancel"}></BasicButtonComponent>
+        <div style={{marginTop: "20px"}} className="text-end">
+        <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
         <span className="btn-right-space"></span>
-        <BasicButtonComponent title={"Register"}></BasicButtonComponent>
+        <BasicButtonComponent title={"Register"} onClick={directToMainPage}></BasicButtonComponent>
         </div>
       </div>
  

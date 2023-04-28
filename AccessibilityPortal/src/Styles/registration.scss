@@ -12,6 +12,24 @@
     margin-right: 20px; 
 }
 
+input{
+    outline: none;
+    border-style: none;
+    border-radius: 3pt;
+    box-shadow: 0 0 2pt 0.4pt black inset;
+    padding-bottom: 10px;
+}
+
+input:focus{
+    outline: none;
+    border: none;
+    box-shadow: 0 0 5pt 0.5pt grey;
+}
+
+label{
+    margin-top: 10px;
+}
+
 /*.registration-header {
     align-items: center;
     display: flex;
