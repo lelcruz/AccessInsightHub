@@ -1,13 +1,14 @@
 @import "Variables";
 
 .login-body{
-    width: 35%;
+    width: 40%;
     height: 100vh;
     background-color: $lilac;
     display: flex;
     flex-direction: column;
     text-align: left;
-    padding: 7vw;
+    padding-left: 160px;
+    padding-right: 160px;
 
     label{
         font-weight: bold;
@@ -51,6 +52,21 @@
         padding-bottom: 20px;
     }
 }
+
+.bg-image {
+    position: absolute;
+    left: 40%;
+    width: 60%;
+    height: 100%;
+    background-image: url('Background.jpg');
+    background-position: 0 0;
+    background-repeat:no-repeat;
+    background-size: cover;
+}
+
+
+
+
 
 
 
