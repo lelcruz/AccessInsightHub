@@ -30,3 +30,6 @@ How to clone and edit repository:
 	
 How to run the repository:
 	Type in terminal the following command: npm run dev
+	
+BackEnd Repository:
+https://github.com/snewbz02/TeamNameNotFound-BackEnd.git
