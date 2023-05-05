@@ -3,8 +3,6 @@ import React from 'react';
 type BasicButtonComponentProps = {
   title: string;
   onClick?: () => void;
-  //backgroundColor: string;
-  //color: string;
 };
 
 function BasicButtonComponent(props: BasicButtonComponentProps) {

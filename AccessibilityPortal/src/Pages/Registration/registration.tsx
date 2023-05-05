@@ -27,10 +27,16 @@ function Registration() {
           Select type of your account
         </h5>
 
-        <div className="text-center">
-          <BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
+        <div className="radio-button">
+          {/*<BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
           <span className="btn-right-space"></span>
           <BasicButtonComponent title={"Participant"}></BasicButtonComponent>
+  */}
+          <input type="radio" id="researcher" value="researcher" name="role"/>
+          <label htmlFor="researcher">Researcher</label>
+          <span className="btn-right-space"></span>
+          <input type="radio" id="participant" value="participant" name="role"/>
+          <label htmlFor="participant">Participant</label>
         </div>
 
         <label>First Name</label>
