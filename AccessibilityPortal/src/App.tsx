@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import ReactDOM from "react-dom/client";
 import './Styles/App.scss'
 import React from 'react'
 import Registration from './Pages/Registration/registration';
@@ -12,9 +11,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/login' element={<LoginPage />}/>
-        <Route path='/register' element={<Registration />}/>
-        <Route path='/main' element={<MainPage />}/>
+          <Route path='/' element={<LoginPage />}/>
+          <Route path='/login' element={<LoginPage />}/>
+          <Route path='/register' element={<Registration />}/>
+          <Route path='/main' element={<MainPage />}/>
 
       </Routes>
     </Router>
