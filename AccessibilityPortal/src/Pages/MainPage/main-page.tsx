@@ -6,9 +6,15 @@ import '../../Styles/main.scss';
 function MainPage(){
 
     return (
+        <div className="main-page">
+            <div className="header">
+                <div className="input-group">
+                <input type="search" className="form-control"></input>
+                <button className="btn btn-dark">Search</button>
+               </div>
+            </div>
 
-
-        <div>
+            <div>
             <div>
                 <BasicCardComponent
                     imageUrl={"/vite.svg"}
@@ -37,6 +43,11 @@ function MainPage(){
 
         </div>
 
+
+        </div>
+       
+
+        
 
     );
 
