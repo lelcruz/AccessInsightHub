@@ -30,16 +30,45 @@ label{
     margin-top: 10px;
 }
 
-/*.registration-header {
-    align-items: center;
+.radio-button{
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    text-align: "center";
-    background-color: "green";
-}*/
     
-  .registration-body {
+    input{
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        border: 0;
+        
+        &:checked + label {
+            background-color: $english-violet;
+            color: white;
+	        box-shadow: 0 1px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    label{
+        background-color: #e4e4e4;
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 18px;
+        line-height: 1;
+        text-align: center;
+        padding: 8px 16px;
+        margin-right: -1px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4pt;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	    transition: all 0.1s ease-in-out;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+}
+
+    
+.registration-body {
     display: flex;
     flex-direction: column;
     text-align: left;

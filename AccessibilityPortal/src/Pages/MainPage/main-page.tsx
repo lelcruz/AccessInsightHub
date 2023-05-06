@@ -2,11 +2,12 @@ import React from 'react';
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 
 import {useNavigate} from "react-router-dom";
-//import '../../../node_modules/bootstrap/scss/_card.scss';
-
+import '../../Styles/main.scss';
 function MainPage(){
 
     return (
+
+
         <div>
             <div>
                 <BasicCardComponent
