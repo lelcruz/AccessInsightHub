@@ -1,2 +1,18 @@
+@import "../../styles/variables";
+
+.nav-link{
+  transition: all 0.2s;
+}
+
+.nav-link:hover{
+  border-bottom: 2px solid black;
+}
+.container-md{
+  font-weight: bold;
+}
+
+.bg-body-tertiary{
+  background-color: $light-grey;
+}
 
 

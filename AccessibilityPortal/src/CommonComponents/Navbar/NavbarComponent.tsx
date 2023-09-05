@@ -5,8 +5,9 @@ import './NavbarComponent.scss';
 
 const NavbarComponent = () => {
     return (
-            <nav className="navbar bg-body-tertiary" style={{backgroundColor: "lightgrey"}}>
+            <nav className="navbar bg-body-tertiary">
                 <div className="container-md">
+
                     <Link to="/main" className="nav-link active" aria-current="page">Home</Link>
                     <Link to="/register" className="nav-link active" aria-current="page">Surveys</Link>
                     <Link to="/main" className="nav-link active" aria-current="page">Studies</Link>
