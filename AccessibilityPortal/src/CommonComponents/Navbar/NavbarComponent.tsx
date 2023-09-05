@@ -9,7 +9,7 @@ const NavbarComponent = () => {
         console.log('Submit!');
     };
     return (
-            <nav className="navbar bg-body-tertiary">
+            <nav className="navbar">
                 <div className="container-md">
 
                     <Link to="/main" className="nav-link active" aria-current="page">Home</Link>
