@@ -1,0 +1,81 @@
+@import "Variables";
+
+.registration-page {
+    width: 100%;
+    height: 100vh;
+    background-color: $lilac;
+    padding-top: 5rem;
+    
+}
+
+.btn-right-space{
+    margin-right: 20px; 
+}
+
+input{
+    outline: none;
+    border-style: none;
+    border-radius: 3pt;
+    box-shadow: 0 0 2pt 0.4pt black inset;
+    padding-bottom: 10px;
+}
+
+input:focus{
+    outline: none;
+    border: none;
+    box-shadow: 0 0 5pt 0.5pt grey;
+}
+
+label{
+    margin-top: 10px;
+}
+
+.radio-button{
+    display: flex;
+    justify-content: center;
+    
+    input{
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        border: 0;
+        
+        &:checked + label {
+            background-color: $english-violet;
+            color: white;
+	        box-shadow: 0 1px rgba(0, 0, 0, 0.3);
+        }
+    }
+
+    label{
+        background-color: #e4e4e4;
+        color: rgba(0, 0, 0, 0.7);
+        font-size: 18px;
+        line-height: 1;
+        text-align: center;
+        padding: 8px 16px;
+        margin-right: -1px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 4pt;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	    transition: all 0.1s ease-in-out;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+}
+
+    
+.registration-body {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    background-color: white;
+    width: 450px;
+    padding: 3rem;
+    margin: auto;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+}
