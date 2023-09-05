@@ -13,6 +13,7 @@ function MainPage(){
 
     return (
         <div className="main-page">
+
             <div className="header">
                 <div className="input-group">
                 <input type="search" className="form-control"></input>
