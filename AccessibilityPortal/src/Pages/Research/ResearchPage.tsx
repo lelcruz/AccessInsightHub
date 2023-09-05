@@ -4,7 +4,7 @@ import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 function ResearchPage(){
 
     return (
-        <div className="main-page">
+        <div className="ResearchPageBody">
             <NavbarComponent/>
 
 

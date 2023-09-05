@@ -1,7 +1,13 @@
 @import "Variables";
 
-.main-page {
+.ResearchPageBody {
   width: 100%;
   height: 100vh;
-  background-color: $lilac;
+  background: linear-gradient(
+                  to right,
+                  $lilac 0%,
+                  $lilac 15%,
+                  white 15%,
+                  white 100%
+  );
 }
