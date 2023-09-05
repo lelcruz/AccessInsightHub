@@ -7,7 +7,7 @@ interface CardProps {
 
 const BasicCardComponent: React.FC<CardProps> = ({ imageUrl, title}) => {
     return (
-        <div className="card" style={{ width: "12rem" }}>
+        <div className="card">
             <img src={imageUrl} className="card-img-top" alt={title} />
             <div className="card-body">
                 <h5 className="card-title" style={{ textAlign: "center" }}>{title}</h5>

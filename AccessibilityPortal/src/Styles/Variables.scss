@@ -2,3 +2,12 @@ $lilac: #D9DBF1;
 $rose-quartz: #BAA1A7;
 $english-violet: #544E61;
 $light-grey: #D0CDD7;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
