@@ -3,6 +3,7 @@
 .main-page {
     width: 100%;
     height: 100vh;
+    overflow-y: scroll;
     background-color: $lilac;
 }
 
@@ -16,6 +17,26 @@
         width: 700px;
         margin: auto;
         padding: 5pt;
-    }
 
+        @media (max-width: 700px) {
+            width: 90vw;
+        }
+    }
 }
+
+.display-box{
+    display: grid;
+    gap: 100px 200px;
+    padding: 14rem 0;
+    justify-content: center;
+    grid-template-columns: auto auto;
+    
+    @media (max-width: 660px){
+        grid-template-columns: auto;
+    }
+}
+
+
+
+
+

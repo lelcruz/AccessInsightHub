@@ -1,5 +1,11 @@
 @import "Variables";
 
+
+@mixin resize($screen, $x) {
+    width: 100%;
+    padding: 0 $screen - $x;
+}
+
 .login-body{
     width: 40%;
     height: 100vh;
@@ -9,6 +15,14 @@
     text-align: left;
     padding-left: 160px;
     padding-right: 160px;
+
+    @media (max-width: 1200px){
+       @include resize(1200px, 900px);
+    }
+
+    @media (max-width: 800px){
+        @include resize(800px, 690px);
+    }
 
     label{
         font-weight: bold;
@@ -40,6 +54,7 @@
         left: 0.5em;
         margin-right: -50%;
     }
+ 
 }
 
 .login-header{
@@ -62,7 +77,16 @@
     background-position: 0 0;
     background-repeat:no-repeat;
     background-size: cover;
+
+    @media (max-width: 1200px){
+        display: none;
+    }
 }
+
+
+
+
+
 
 
 

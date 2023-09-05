@@ -3,6 +3,12 @@ import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 
 import {useNavigate} from "react-router-dom";
 import '../../Styles/main.scss';
+import '../../Styles/custom.scss';
+import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
+import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
+import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
+import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
+
 function MainPage(){
 
     return (
@@ -14,29 +20,29 @@ function MainPage(){
                </div>
             </div>
 
+            <div className="display-box">
             <div>
-            <div>
-                <BasicCardComponent
-                    imageUrl={"/vite.svg"}
-                    title={"Example Card 1"}
+                <BasicCardComponent 
+                    imageUrl={surveyIcon}
+                    title={"Surveys"}
                 ></BasicCardComponent>
             </div>
             <div>
                 <BasicCardComponent
-                    imageUrl={"/vite.svg"}
-                    title={"Example Card 2"}
+                    imageUrl={studiesIcon}
+                    title={"Studies"}
                 ></BasicCardComponent>
             </div>
             <div>
                 <BasicCardComponent
-                    imageUrl={"/vite.svg"}
-                    title={"Example Card 3"}
+                    imageUrl={profileIcon}
+                    title={"Profile"}
                 ></BasicCardComponent>
             </div>
             <div>
                 <BasicCardComponent
-                    imageUrl={"/vite.svg"}
-                    title={"Example Card 4"}
+                    imageUrl={templateIcon}
+                    title={"Templates"}
                 ></BasicCardComponent>
             </div>
 
