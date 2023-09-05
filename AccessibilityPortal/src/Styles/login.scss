@@ -13,8 +13,8 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    padding-left: 160px;
-    padding-right: 160px;
+    padding-left: 8vw;
+    padding-right: 8vw;
 
     @media (max-width: 1200px){
        @include resize(1200px, 900px);
@@ -58,7 +58,7 @@
 }
 
 .login-header{
-    padding-top: 180px;
+    padding-top: 25vh;
     padding-bottom: 40px;
     text-align: center;
 
