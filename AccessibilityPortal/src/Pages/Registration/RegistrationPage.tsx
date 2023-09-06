@@ -3,7 +3,7 @@ import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComp
 import {useNavigate} from "react-router-dom";
 import '../../Styles/registration.scss';
 
-function Registration() {
+function RegistrationPage() {
   const navigate = useNavigate();
 
   const directToLoginPage = () => {
@@ -62,4 +62,4 @@ function Registration() {
     </div>
   );
 }
-export default Registration;
+export default RegistrationPage;
