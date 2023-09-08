@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContainer from '../../components/AuthContainer'; // delete file later
-import ErrorText from '../../components/ErrorText';
+import ErrorText from '../../CommonComponents/ErrorText';
 import { auth } from '../../config/firebase';
 import logging from '../../config/logging';
 import IPageProps from '../../interfaces/page';
@@ -91,11 +90,11 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
             }
             else if (error.code.includes('auth/email-already-in-use'))
             {
-                setError('Email already in use.');
+                setError('Email already in use, please try another email!');
             }
             else
             {
-                setError('Unable to register.  Please try again later.')
+                setError('Unable to register. Please try again later.')
             }
         });
     }
@@ -113,10 +112,10 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
                 </h5>
 
             <div className="radio-button">
-                <input type="radio" id="researcher" value="researcher" name="role"/>
+                <input type="radio" id="researcher" value={role} onChange={(e) => setRole("researcher")} name="role"/>
                 <label htmlFor="researcher">Researcher</label>
                 <span className="btn-right-space"></span>
-                <input type="radio" id="participant" value="participant" name="role"/>
+                <input type="radio" id="participant" value={role} onChange={(e) => setRole("participant")} name="role"/>
                 <label htmlFor="participant">Participant</label>
             </div>
 
@@ -142,10 +141,10 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
             <BasicButtonComponent title={"Register"} onClick={() => signUpWithEmailAndPassword()}></BasicButtonComponent>
             <span className="btn-right-space"></span>
             <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
-            
             </div>
+            
             <ErrorText error={error}/>
-            </div>  
+        </div>  
     </div>
     );
 }
