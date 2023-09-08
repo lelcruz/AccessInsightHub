@@ -1,6 +1,6 @@
 import React, { useState }  from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../../config/firebase";
 import {Link, useNavigate } from 'react-router-dom'
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import '../../Styles/login.scss'
@@ -15,19 +15,21 @@ function LoginPage() {
     };
 
     //  -----------------------------------------BACKEND-----------------------------------------
-    const [email, setEmail] = useState(""); 
-    const [password, setPassword] = useState("");
+    function AuthenticateUser() {
+        signInWithEmailAndPassword(auth, login_email, login_password)
+          .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
+    }
 
-    const Login = (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          console.log(userCredential);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+    const [login_email, setEmail] = useState(""); 
+    const [login_password, setPassword] = useState("");
 
     //  -----------------------------------------BACKEND-----------------------------------------
   return (
@@ -38,13 +40,13 @@ function LoginPage() {
       </div>
 
       <label htmlFor="username" className="form-check-label"> Email Address </label>
-      <input type="text" placeholder="teamnamenotfound@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
+      <input type="text" placeholder="teamnamenotfound@gmail.com" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
       <label htmlFor="password" className="form-check-label">Password</label>
-      <input type="password" placeholder="**********" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
+      <input type="password" placeholder="**********" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
 
         {/* Need href for the Forgot password anchor*/}
         <span style={{fontWeight: "bold", paddingBottom: "30px"}} className="text-end">Forgot password?</span>
-        <BasicButtonComponent title={"Sign In"} onClick={directToMainPage}></BasicButtonComponent>
+        <BasicButtonComponent title={"Sign In"} onClick={AuthenticateUser}></BasicButtonComponent>
         <span className="formatted-text">or</span>
         <BasicButtonComponent title={"Register"} onClick={directToRegister}></BasicButtonComponent>
     <div className="bg-image"></div>
