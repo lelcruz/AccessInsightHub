@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, FormGroup, Input } from 'reactstrap';
-import ErrorText from '../../CommonComponents/ErrorText';
+import { Button } from 'reactstrap';
+import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth, Providers } from '../../config/firebase';
 import logging from '../../config/logging';
-import IPageProps from '../../interfaces/page';
 import firebase from 'firebase/compat/app';
 import { SignInWithSocialMedia } from '../auth/modules';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/login.scss'
 
-const LoginPage: React.FunctionComponent<IPageProps> = props => {
+function LoginPage() {
     
-    const [authenticating, setAuthenticating] = useState<boolean>(false);
+    const [verify, setVerification] = useState<boolean>(false);
     const [login_email, setEmail] = useState<string>("");
     const [login_password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
@@ -26,7 +25,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
     const signInWithEmailAndPassword = () => {
         if (error !== '') setError('');
 
-        setAuthenticating(true);
+        setVerification(true);
 
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(result => {
@@ -35,7 +34,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
         })
         .catch(error => {
             logging.error(error);
-            setAuthenticating(false);
+            setVerification(false);
             setError(error.message);
         });
     }
@@ -43,7 +42,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
     const signInWithSocialMedia = (provider: firebase.auth.AuthProvider) => {
         if (error !== '') setError('');
 
-        setAuthenticating(true);
+        setVerification(true);
 
         SignInWithSocialMedia(provider)
         .then(result => {
@@ -52,7 +51,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
         })
         .catch(error => {
             logging.error(error);
-            setAuthenticating(false);
+            setVerification(false);
             setError(error.message);
         });
     }
@@ -73,7 +72,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
             <span style={{fontWeight: "bold", paddingBottom: "20px"}} className="text-end">Forgot password?</span>
             
             <Button
-                disabled={authenticating}
+                disabled={verify}
                 color="success"
                 block
                 onClick={() => signInWithEmailAndPassword()}
@@ -81,7 +80,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
 
             <Button
                 block
-                disabled={authenticating}
+                disabled={verify}
                 onClick={() => signInWithSocialMedia(Providers.google)}
                 style={{ backgroundColor:'#ea4335', borderColor: '#ea4335'}} 
             ><i className="fab fa-google mr-2"></i> Sign in with Google</Button>
@@ -89,7 +88,7 @@ const LoginPage: React.FunctionComponent<IPageProps> = props => {
             <span className="formatted-text">or</span>
             <BasicButtonComponent title={"Register"} onClick={directToRegister}></BasicButtonComponent>
 
-            <ErrorText error={error} />
+            <ErrorMessage error={error} />
             <div className="bg-image"></div>
         </div>
     );

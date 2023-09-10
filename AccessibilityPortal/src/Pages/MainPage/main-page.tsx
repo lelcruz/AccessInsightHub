@@ -1,15 +1,24 @@
 import React from 'react';
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
-
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import '../../Styles/main.scss';
 import '../../Styles/custom.scss';
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 
 function MainPage(){
+
+    const navigate = useNavigate();
+    const directToChangePassword = () => {
+        navigate('/changepassword');
+    };
+
+    const directToLoginPage = () => {
+        navigate('/login');
+    };
 
     return (
         <div className="main-page">
@@ -45,6 +54,14 @@ function MainPage(){
                     imageUrl={templateIcon}
                     title={"Templates"}
                 ></BasicCardComponent>
+            </div>
+
+            <div>
+                <BasicButtonComponent title={"Change my password"} onClick={directToChangePassword}></BasicButtonComponent>
+            </div>
+
+            <div>
+                <BasicButtonComponent title={"Sign out"} onClick={directToLoginPage}></BasicButtonComponent>
             </div>
 
 

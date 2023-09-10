@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ErrorText from '../../CommonComponents/ErrorText';
+import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../config/firebase';
 import logging from '../../config/logging';
-import IPageProps from '../../interfaces/page';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
 
-const RegisterPage: React.FunctionComponent<IPageProps> = props => {
+function RegisterPage() {
     
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -143,7 +142,7 @@ const RegisterPage: React.FunctionComponent<IPageProps> = props => {
             <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
             </div>
             
-            <ErrorText error={error}/>
+            <ErrorMessage error={error}/>
         </div>  
     </div>
     );
