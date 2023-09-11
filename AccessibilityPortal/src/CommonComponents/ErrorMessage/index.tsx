@@ -1,10 +1,10 @@
 import React from 'react';
 
-export interface IErrorTextProps {
+export interface IErrorMessageProps {
     error: string;
 }
 
-const ErrorText: React.FunctionComponent<IErrorTextProps> = props => {
+const ErrorMessage: React.FunctionComponent<IErrorMessageProps> = props => {
     const { error } = props;
 
     if (error === '') return null;
@@ -16,4 +16,4 @@ const ErrorText: React.FunctionComponent<IErrorTextProps> = props => {
     );
 }
 
-export default ErrorText;
+export default ErrorMessage;

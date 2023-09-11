@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
 import './Styles/App.scss'
 import React from 'react'
 import RegisterPage from './Pages/Registration/RegistrationPage';
@@ -6,8 +6,8 @@ import LoginPage from './Pages/Login/login-page';
 import MainPage from './Pages/MainPage/main-page';
 import ResearchPage from "./Pages/Research/ResearchPage";
 import ChangePasswordPage from './Pages/ChangePasswordPage/changepassword-page';
-
-
+import ForgotPasswordPage from './Pages/ForgotPasswordPage/forgotpassword-page';
+import LogoutPage from './Pages/LogoutPage/logout-page';
 
 function App() {
   return (
@@ -18,7 +18,9 @@ function App() {
           <Route path='/register' element={<RegisterPage />}/>
           <Route path='/main' element={<MainPage />}/>
           <Route path='/research' element={<ResearchPage />}/>
-          <Route path='/changepassword' element={<ChangePasswordPage />}/>
+          <Route path='/change' element={<ChangePasswordPage />}/>
+          <Route path='/logout' element={<LogoutPage />}/>
+          <Route path='/forgot' element={<ForgotPasswordPage />}/>
       </Routes>
     </Router>
 

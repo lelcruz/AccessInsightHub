@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import { auth } from '../../config/firebase';
-import logging from '../../config/logging';
+import { auth } from '../../configurations/firebase';
+import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
+import {useNavigate} from "react-router-dom";
 
 function RegisterPage() {
+
+    const navigate = useNavigate();
+
+    const directToLoginPage = () => {
+        navigate('/login');
+    };
     
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -16,12 +22,6 @@ function RegisterPage() {
     const [signup_password, setPassword] = useState<string>("");
     const [confirmpassword, setConfirmPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
-
-    const navigate = useNavigate();
-
-    const directToLoginPage = () => {
-        navigate('/login');
-      };
 
     // Text-fields are required
     function isItEmpty(str: any) {

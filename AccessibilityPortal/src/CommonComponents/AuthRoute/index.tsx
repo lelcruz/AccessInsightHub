@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { auth } from '../../config/firebase';
-import logging from '../../config/logging';
+import { auth } from '../../configurations/firebase';
+import logging from '../../configurations/logging';
 
 export interface IAuthRouteProps { }
 
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
-    const {children} = props;
+    const { children } = props as React.PropsWithChildren<IAuthRouteProps>;
 
     if (!auth.currentUser)
     {
@@ -15,7 +15,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     }
 
     return (
-        <div>{children}</div>
+        <div>{children}</div> 
     );
 }
 

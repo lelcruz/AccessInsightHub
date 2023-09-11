@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app';
-import { auth } from '../../../config/firebase';
+import { auth } from '../../configurations/firebase';
 
 export const SignInWithSocialMedia = (provider: firebase.auth.AuthProvider) => 
     new Promise<firebase.auth.UserCredential>((resolve, reject) => {

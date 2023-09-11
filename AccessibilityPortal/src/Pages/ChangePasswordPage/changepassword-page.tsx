@@ -1,27 +1,67 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import { auth } from '../../config/firebase';
-import logging from '../../config/logging';
+import { auth } from '../../configurations/firebase';
+import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
-import '../../Styles/registration.scss'
+import '../../Styles/registration.scss';
+import {useNavigate} from "react-router-dom";
 
 function ChangePassword() {
     
+    const navigate = useNavigate();
+
+    const directToMainPage = () => {
+        navigate('/main');
+    };
+
     const [change_password, setChangePassword] = useState<boolean>(false);
     const [old_password, setOldPassword] = useState<string>("");
     const [new_password, setNewPassword] = useState<string>("");
     const [confirm_newpassword, setConfirmNewPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
 
-    const navigate = useNavigate();
+    // Text-fields are required
+    function isItEmpty(str: any) {
+        return str == null || str.match(/^ *$/) !== null;
+    }
 
-    const directToMain = () => {
-        navigate('/main');
-    };
+    // Validation
+    function Validation() {
+        //let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        let passwordRegex = /.*/; // simple one
+
+        // All fields are required
+        if(isItEmpty(old_password) || isItEmpty(new_password) || isItEmpty(confirm_newpassword)){
+            alert("All fields are required!");
+            return false;
+        }
+
+        // Verify OLD PASSWORD
+        if (auth.currentUser?.providerData[0]?.providerId !== 'old_password') {
+            alert("The current password is incorrect!");
+            return false;
+        }
+
+        // Match password-regex
+        if(!passwordRegex.test(new_password)) {
+            alert("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
+            return false;
+        }
+
+        // Confirm Password
+        if(!new_password.match(confirm_newpassword)) {
+            alert("Passwords do not match!");
+            return false;
+        }
+
+        return true;
+    }
 
     const changePassword = () => {
+        if (!Validation())
+            return;
+
         if (error !== '') setError('');
 
         setChangePassword(true);
@@ -63,7 +103,7 @@ function ChangePassword() {
                     >Change password</Button>
                     
                     <span className="btn-right-space"></span>
-                    <BasicButtonComponent title={"Cancel"} onClick={directToMain}></BasicButtonComponent>
+                    <BasicButtonComponent title={"Cancel"} onClick={directToMainPage}></BasicButtonComponent>
                 </div>
 
                 <ErrorMessage error={error}/>
