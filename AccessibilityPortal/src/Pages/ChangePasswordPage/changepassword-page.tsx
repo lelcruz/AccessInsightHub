@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
 import {useNavigate} from "react-router-dom";
+import { Button } from 'reactstrap';
 
 function ChangePassword() {
     
@@ -95,7 +95,7 @@ function ChangePassword() {
                 <input type="password" placeholder="**********" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
                 
                 <div style={{marginTop: "20px"}} className="text-end">
-                    <Button
+                    <Button 
                         disabled={change_password}
                         color="success"
                         block

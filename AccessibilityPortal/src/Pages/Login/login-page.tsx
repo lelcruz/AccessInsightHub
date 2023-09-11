@@ -69,7 +69,7 @@ function LoginPage() {
             <input type="password" placeholder="**********" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
 
             {/* Need href for the Forgot password anchor*/}
-            <Link style={{fontWeight: "bold", paddingBottom: "20px"}} to='/forgot'>Forgot password?</Link>
+            <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
 
             
             <Button
