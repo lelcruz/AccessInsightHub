@@ -20,6 +20,9 @@ function App() {
           <Route path='/register' element={<RegistrationPage />}/>
           <Route path='/main' element={<MainPage />}/>
           <Route path='/research' element={<ResearchPage />}/>
+          <Route path='/survey' element={<SurveyPage />}/>
+          <Route path='/profile' element={<ProfilePage />}/>
+          <Route path='/template' element={<TemplatePage />}/>
       </Routes>
     </Router>
 
