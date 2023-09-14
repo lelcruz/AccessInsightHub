@@ -33,25 +33,25 @@ function ChangePassword() {
 
         // All fields are required
         if(isItEmpty(old_password) || isItEmpty(new_password) || isItEmpty(confirm_newpassword)){
-            alert("All fields are required!");
+            setError("All fields are required!");
             return false;
         }
 
         // Verify OLD PASSWORD
         if (auth.currentUser?.providerData[0]?.providerId !== 'old_password') {
-            alert("The current password is incorrect!");
+            setError("The current password is incorrect!");
             return false;
         }
 
         // Match password-regex
         if(!passwordRegex.test(new_password)) {
-            alert("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
+            setError("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
             return false;
         }
 
         // Confirm Password
         if(!new_password.match(confirm_newpassword)) {
-            alert("Passwords do not match!");
+            setError("Passwords do not match!");
             return false;
         }
 

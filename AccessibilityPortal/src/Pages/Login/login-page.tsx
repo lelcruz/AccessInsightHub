@@ -31,10 +31,33 @@ function LoginPage() {
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(userCredential => {
             logging.info(userCredential);
-            navigate('/main');
-
+            
+            // Verify if the verification email is clicked
             const user = userCredential.user;
+            if (user) {
+                if(user.emailVerified) {
+                    logging.info('Email verified');
+                    navigate('/main');
+                } else {
+                    logging.error('Email has not been verified! User deleted');
+                    navigate('/login');
+                    // Deleting user
+                    /*
+                    
+                    * Might find a way to ask user to verify email before completely deleting user (time for verification link to expire)
 
+                    */
+                    user.delete() 
+                        .then(function() {
+                            logging.info('User deleted');
+                        })
+                        .catch(function(error) {
+                            logging.error('Error deleting user:', error);
+                        });
+                }
+            } else {
+                logging.error('User is null');
+            }
 
         })
         .catch(error => {

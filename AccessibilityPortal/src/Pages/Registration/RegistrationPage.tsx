@@ -14,12 +14,6 @@ function RegisterPage() {
         navigate('/login');
     };
 
-    const actionCodeSettings = {
-        url: 'http://localhost:5173/login', // The URL where the user will be redirected after clicking the email verification link.
-        handleCodeInApp: true, // This indicates whether to open the link in a mobile app if it's installed.
-    };
-    
-    
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
@@ -44,38 +38,40 @@ function RegisterPage() {
         // All fields are required
         if(isItEmpty(firstName) || isItEmpty(lastName) || isItEmpty(dob) 
             || isItEmpty(signup_email) || isItEmpty(signup_password) || isItEmpty(confirmpassword)){
-            alert("All fields are required!");
+                setError("All fields are required!");
             return false;
         }
 
         // MATCHING REGEX
         if(!emailRegex.test(signup_email)) {
-            alert("Invalid email!");
+            setError("Invalid email!");
             return false;
         }
 
-        // Verify valid email / existing email
-
-
-
         if(!passwordRegex.test(signup_password)) {
-            alert("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
+            setError("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
             return false;
         }
 
         // Match Password
         if(!signup_password.match(confirmpassword)) {
-            alert("Passwords do not match!");
+            setError("Passwords do not match!");
             return false;
         }
 
         if(!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
-            alert("Name should only contain alphabets!");
+            setError("Name should only contain alphabets!");
             return false;
         }
 
         return true;
     }
+
+    // Verification Email 
+    const actionCodeSettings = {
+        url: 'http://localhost:5173/login', // The URL where the user will be redirected after clicking the email verification link.
+        handleCodeInApp: true, // This indicates whether to open the link in a mobile app if it's installed.
+    };
 
     const signUpWithEmailAndPassword = () => {
         if (!Validation())
@@ -94,7 +90,7 @@ function RegisterPage() {
 
                     user.sendEmailVerification(actionCodeSettings)
                         .then(function() {
-                            logging.info('Verification email sent');
+                            logging.info('One-time verification email sent');
                         })
                         .catch(function(error) {
                             logging.error('Error occurs sending verification email');
@@ -102,6 +98,7 @@ function RegisterPage() {
                 } else {
                     logging.error('User is null');
                 }
+                navigate('/login');
             })
             .catch(error => {
                 logging.error(error);
