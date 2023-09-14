@@ -13,6 +13,12 @@ function RegisterPage() {
     const directToLoginPage = () => {
         navigate('/login');
     };
+
+    const actionCodeSettings = {
+        url: 'http://localhost:5173/login', // The URL where the user will be redirected after clicking the email verification link.
+        handleCodeInApp: true, // This indicates whether to open the link in a mobile app if it's installed.
+    };
+    
     
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -48,6 +54,10 @@ function RegisterPage() {
             return false;
         }
 
+        // Verify valid email / existing email
+
+
+
         if(!passwordRegex.test(signup_password)) {
             alert("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
             return false;
@@ -76,25 +86,38 @@ function RegisterPage() {
         if (error !== '') setError('');
 
         auth.createUserWithEmailAndPassword(signup_email, signup_password)
-        .then(result => {
-            logging.info(result);
-            navigate('/login');
-        })
-        .catch(error => {
-            logging.error(error);
+            .then(userCredential => {
+                const user = userCredential.user;
 
-            if (error.code.includes('auth/weak-password'))
-            {
-                setError('Please enter a stronger password.');
-            }
-            else if (error.code.includes('auth/email-already-in-use'))
-            {
-                setError('Email already in use, please try another email!');
-            }
-            else
-            {
-                setError('Unable to register. Please try again later.')
-            }
+                if (user) {
+                    logging.info(user);
+
+                    user.sendEmailVerification(actionCodeSettings)
+                        .then(function() {
+                            logging.info('Verification email sent');
+                        })
+                        .catch(function(error) {
+                            logging.error('Error occurs sending verification email');
+                        });
+                } else {
+                    logging.error('User is null');
+                }
+            })
+            .catch(error => {
+                logging.error(error);
+
+                if (error.code.includes('auth/weak-password'))
+                {
+                    setError('Please enter a stronger password.');
+                }
+                else if (error.code.includes('auth/email-already-in-use'))
+                {
+                    setError('Email already in use, please try another email!');
+                }
+                else
+                {
+                    setError('Unable to register. Please try again later.')
+                }
         });
     }
 
@@ -119,10 +142,10 @@ function RegisterPage() {
             </div>
 
             <label htmlFor="firstname" className="form-check-label">First Name</label>
-            <input type="text" placeholder="Salmon" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="form-control mb-3"/>
+            <input type="text" placeholder="First Name" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="form-control mb-3"/>
             
             <label htmlFor="lastname" className="form-check-label">Last Name</label>
-            <input type="text" placeholder="Tuna" value={lastName} onChange={(e) => setLastName(e.target.value)} className="form-control mb-3"/>
+            <input type="text" placeholder="Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)} className="form-control mb-3"/>
             
             <label htmlFor="dob" className="form-check-label">Date of Birth</label>
             <input type="date" value={dob} min="1900-01-01" max="2023-01-01" onChange={(e) => setDOB(e.target.value)} className="form-control mb-3"/>
