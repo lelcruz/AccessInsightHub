@@ -11,7 +11,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = props => {
     if (!auth.currentUser)
     {
         logging.warn('No user detected, redirecting');
-        return <Navigate to="/login" />;
+        return <Navigate to="/" />;
     }
 
     return (

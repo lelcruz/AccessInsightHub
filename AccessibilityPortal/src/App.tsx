@@ -6,14 +6,7 @@ import AuthRoute from '../src/CommonComponents/AuthRoute';
 import { auth } from './configurations/firebase';
 import logging from './configurations/logging';
 import routes from './configurations/routes';
-import RegisterPage from './Pages/Registration/RegistrationPage';
-import LoginPage from './Pages/Login/login-page';
-import MainPage from './Pages/MainPage/main-page';
-import ResearchPage from "./Pages/Research/ResearchPage";
-import ChangePasswordPage from './Pages/ChangePasswordPage/changepassword-page';
-import ForgotPasswordPage from './Pages/ForgotPasswordPage/forgotpassword-page';
-import LogoutPage from './Pages/LogoutPage/logout-page';
-import ResetPasswordPage from './Pages/ResetPasswordPage/resetpassword-page';
+
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,33 +31,24 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-          <Route path='/' element={<LoginPage />}/>
-          <Route path='/login' element={<LoginPage />}/>
-          <Route path='/register' element={<RegisterPage />}/>
-          <Route path='/main' element={<MainPage />}/>
-          <Route path='/research' element={<ResearchPage />}/>
-          <Route path='/change' element={<ChangePasswordPage />}/>
-          <Route path='/logout' element={<LogoutPage />}/>
-          <Route path='/forgot' element={<ForgotPasswordPage />}/>
-          <Route path='/reset' element={<ResetPasswordPage />}/>
-
-          {routes.map((route, index) => 
-            <Route
-                key={index}
-                path={route.path} 
-                Component={(routeProps: any) => {
-                    if (route.protected)
-                    return <AuthRoute><route.component  {...routeProps} /></AuthRoute>;
-
-                return <route.component  {...routeProps} />;
-                }}
-            />
-            )}
-      </Routes>
-    </Router>
-
-    
+            <Routes> {/* All the routes are in the routes.ts for readability and cleanliness of the codes */}
+                {routes.map((route, index) => (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        element={
+                            route.protected ? (
+                                <AuthRoute>
+                                    <route.component />
+                                </AuthRoute>
+                            ) : (
+                                <route.component />
+                            )
+                        }
+                    />
+                ))}
+            </Routes>
+        </Router>
   )
 }
 
