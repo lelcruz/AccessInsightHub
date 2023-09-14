@@ -21,6 +21,10 @@ function MainPage(){
         navigate('/logout');
     };
 
+    const directToResetPage = () => {
+        navigate('/reset');
+    };
+
     return (
         <div className="main-page">
 
@@ -63,6 +67,10 @@ function MainPage(){
 
                 <div>
                     <BasicButtonComponent title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                </div>
+
+                <div>
+                    <BasicButtonComponent title={"Reset"} onClick={directToResetPage}></BasicButtonComponent>
                 </div>
             </div>
         </div>

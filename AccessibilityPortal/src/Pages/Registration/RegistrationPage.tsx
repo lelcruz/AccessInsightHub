@@ -128,13 +128,13 @@ function RegisterPage() {
             <input type="date" value={dob} min="1900-01-01" max="2023-01-01" onChange={(e) => setDOB(e.target.value)} className="form-control mb-3"/>
             
             <label htmlFor="username" className="form-check-label"> Email Address </label>
-            <input type="text" placeholder="teamnamenotfound@gmail.com" value={signup_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
+            <input type="text" placeholder="Enter your email" value={signup_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
             
             <label htmlFor="password" className="form-check-label">Password</label>
-            <input type="password" placeholder="**********" value={signup_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
+            <input type="password" placeholder="Enter your password" value={signup_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
             
             <label htmlFor="confirmpassword" className="form-check-label">Confirmed Password</label>
-            <input type="password" placeholder="**********" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className="form-control mb-3"/>
+            <input type="password" placeholder="Confirm your password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className="form-control mb-3"/>
 
             <div style={{marginTop: "20px"}} className="text-end">
             <BasicButtonComponent title={"Register"} onClick={() => signUpWithEmailAndPassword()}></BasicButtonComponent>

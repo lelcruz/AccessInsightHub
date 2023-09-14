@@ -16,6 +16,7 @@ const ResetPasswordPage: React.FunctionComponent<any> = () => {
 
     const navigate = useNavigate();
     const params = useParams<{ oobCode: string }>();
+    console.log(params);
     
     useEffect(() => {
         logging.info('Extracting code');
@@ -35,7 +36,6 @@ const ResetPasswordPage: React.FunctionComponent<any> = () => {
         auth.verifyPasswordResetCode(_code)
         .then(result => {
             logging.info(result);
-            console.log(_code);
             setOobCode(_code);
             setVerified(true);
             setVerifying(false);

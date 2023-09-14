@@ -8,6 +8,7 @@ import { SignInWithSocialMedia } from './login-socialmedia';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/login.scss'
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
+import { getAuth, signInWithCustomToken } from "firebase/auth";
 
 function LoginPage() {
     
@@ -28,9 +29,13 @@ function LoginPage() {
         setVerification(true);
 
         auth.signInWithEmailAndPassword(login_email, login_password)
-        .then(result => {
-            logging.info(result);
+        .then(userCredential => {
+            logging.info(userCredential);
             navigate('/main');
+
+            const user = userCredential.user;
+
+
         })
         .catch(error => {
             logging.error(error);
@@ -64,9 +69,9 @@ function LoginPage() {
             </div>
 
             <label htmlFor="username" className="form-check-label"> Email Address </label>
-            <input type="text" placeholder="teamnamenotfound@gmail.com" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
+            <input type="text" placeholder="Enter your email" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
             <label htmlFor="password" className="form-check-label">Password</label>
-            <input type="password" placeholder="**********" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
+            <input type="password" placeholder="Enter your password" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
 
             {/* Need href for the Forgot password anchor*/}
             <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
