@@ -1,6 +1,5 @@
 import React from 'react';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
-import AccessibilityMenu from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import {useNavigate} from "react-router-dom";
 import '../../Styles/registration.scss';
 
@@ -29,6 +28,10 @@ function RegistrationPage() {
         </h5>
 
         <div className="radio-button">
+          {/*<BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
+          <span className="btn-right-space"></span>
+          <BasicButtonComponent title={"Participant"}></BasicButtonComponent>
+  */}
           <input type="radio" id="researcher" value="researcher" name="role"/>
           <label htmlFor="researcher">Researcher</label>
           <span className="btn-right-space"></span>
@@ -55,8 +58,7 @@ function RegistrationPage() {
         <BasicButtonComponent title={"Register"} onClick={directToMainPage}></BasicButtonComponent>
         </div>
       </div>
-
-      <AccessibilityMenu />
+ 
     </div>
   );
 }
