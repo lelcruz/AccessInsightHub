@@ -1,9 +1,9 @@
 @import "Variables";
 
 
-@mixin resize($screen-width, $x) {
+@mixin resize($screen, $x) {
     width: 100%;
-    padding: 0 $screen-width - $x;
+    padding: 0 $screen - $x;
 }
 
 .login-body{

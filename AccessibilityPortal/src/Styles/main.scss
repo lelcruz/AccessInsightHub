@@ -26,18 +26,14 @@
 
 .display-box{
     display: grid;
-    height: 93vh;
     gap: 100px 200px;
-    grid-template-columns: auto auto;
+    padding: 14rem 0;
     justify-content: center;
-    align-content: center;
+    grid-template-columns: auto auto;
     
     @media (max-width: 660px){
         grid-template-columns: auto;
-        align-content: space-between;
-        margin-top: 5rem;
     }
 }
-
 
 
