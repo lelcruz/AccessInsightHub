@@ -1,7 +1,9 @@
 @import "../../Styles/Variables.scss";
 
-button{
+.logo-button{
     border: none;
+    height: 0;
+    width: 0;
 }
 
 .img-bottom-right{
@@ -11,12 +13,16 @@ button{
     background: transparent;
     position: absolute;
     top: 90%; //65rem
-    right: 5rem;
+    right: 5%;
+
+    @media (max-width: 600px){
+        display: none;
+    }
 }
 
 .accessibility-menu{
     position: fixed;
-    top: 20vh;
+    top: 25%;
     right: 4.1rem; 
     height: 35rem;
     width: 0; //25rem
