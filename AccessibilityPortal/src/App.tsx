@@ -5,6 +5,9 @@ import RegistrationPage from './Pages/Registration/RegistrationPage';
 import LoginPage from './Pages/Login/login-page';
 import MainPage from './Pages/MainPage/main-page';
 import ResearchPage from "./Pages/Research/ResearchPage";
+import SurveyPage from './Pages/Survey/SurveyPage';
+import ProfilePage from './Pages/Profile/ProfilePage';
+import TemplatePage from './Pages/Template/TemplatePage';
 
 
 
@@ -17,7 +20,9 @@ function App() {
           <Route path='/register' element={<RegistrationPage />}/>
           <Route path='/main' element={<MainPage />}/>
           <Route path='/research' element={<ResearchPage />}/>
-
+          <Route path='/survey' element={<SurveyPage />}/>
+          <Route path='/profile' element={<ProfilePage />}/>
+          <Route path='/template' element={<TemplatePage />}/>
       </Routes>
     </Router>
 
