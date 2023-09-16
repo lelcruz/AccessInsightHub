@@ -7,7 +7,9 @@ function ResearchPage(){
     return (
         <div className="ResearchPageBody">
             <NavbarComponent/>
-            <StudyForm/>
+
+            <StudyForm/> 
+
 
 
 
