@@ -13,15 +13,7 @@ function ResearchPage(){
         <>
         <div className="ResearchPageBody">
             <NavbarComponent/>
-            <StudyForm> <Button variant="primary" onClick={() => setModalShow(true)}>
-                Contact
-            </Button>
-
-            <ContactModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            />
-            <StudyForm/>
+            <StudyForm/> 
 
             
         
