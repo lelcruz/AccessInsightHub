@@ -63,14 +63,14 @@ const routes: IRoute[] = [
         exact: true,
         component: ForgotPasswordPage,
         name: 'Forgot Password Page',
-        protected: true
+        protected: false
     },
     {
         path: '/reset',
         exact: true,
         component: ResetPasswordPage,
         name: 'Reset Password Page',
-        protected: true
+        protected: false
     },
 ];
 

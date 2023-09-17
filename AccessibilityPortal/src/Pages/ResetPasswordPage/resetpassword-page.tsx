@@ -1,109 +1,95 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Button, FormGroup, Input, Spinner } from 'reactstrap';
+import React, { useEffect, useState, useContext, createContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Button, Spinner } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
+import { confirmPasswordReset } from 'firebase/auth';
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 
-const ResetPasswordPage: React.FunctionComponent<any> = () => {
-    const [verifying, setVerifying] = useState(true);
-    const [verified, setVerified] = useState(false);
-    const [change_password, setChangePassword] = useState(false);
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
+
+function closeOpenedWindow() {
+    window.close();
+  }
+
+function ResetPasswordPage() {
     const [new_password, setNewPassword] = useState("");
     const [confirm_newpassword, setConfirmNewPassword] = useState("");
-    const [oobCode, setOobCode] = useState<string>("");
+    const [reset, setReset] = useState<boolean>(true);
     const [error, setError] = useState("");
-
     const navigate = useNavigate();
-    const params = useParams<{ oobCode: string }>();
-    console.log(params);
-    
-    useEffect(() => {
-        logging.info('Extracting code');
-
-        if (params.oobCode) {
-            logging.info('Code found');
-            verifyPasswordResetLink(params.oobCode);
-        } else {
-            logging.error('Unable to find code');
-            setVerified(false);
-            setVerifying(false);
-        }
-        // eslint-disable-next-line
-    }, [params.oobCode]);
-
-    const verifyPasswordResetLink = (_code: string) => {
-        auth.verifyPasswordResetCode(_code)
-        .then(result => {
-            logging.info(result);
-            setOobCode(_code);
-            setVerified(true);
-            setVerifying(false);
-        })
-        .catch(error => {
-            logging.error(error);
-            setVerified(false);
-            setVerifying(false);
-        });
-    }
-
-    const passwordResetRequest = () => {
-        if (new_password !== confirm_newpassword) {
-            setError('Make sure your passwords are matching');
-            return;
-        }
-
-        if (error !== '') setError('');
-
-        setChangePassword(true);
-
-        if (oobCode) {
-            auth.confirmPasswordReset(oobCode, new_password)
-                .then(() => {
-                    navigate('./login');
-                })
-                .catch(error => {
-                    logging.error(error);
-                    setError(error.message);
-                    setChangePassword(false);
-                });
-        } else {
-            setError('Invalid reset code');
-            setChangePassword(false);
-        }
-    }
+    const query = useQuery();
+    let oobCode = query.get('oobCode'); // OOBCODE
 
     return (
         <div id="resetpassword" className="resetpassword-page">
-            {verifying ?
-                <Spinner color="info" />
-            :
-                <>
-                    {verified ?
-                        <>
-                            <label htmlFor="password" className="form-check-label">New Password</label>
-                            <input type="password" placeholder="**********" value={new_password} onChange={(e) => setNewPassword(e.target.value)} className="form-control mb-3"/>
-                            
-                            <label htmlFor="password" className="form-check-label">Confirm New Password</label>
-                            <input type="password" placeholder="**********" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
-                            
-                            <div style={{marginTop: "20px"}} className="text-end"></div>
-                            <Button
-                                disabled={change_password}
-                                color="success"
-                                block
-                                onClick={() => passwordResetRequest()}
-                            >
-                                Reset Password
-                            </Button>
-
-                            <ErrorMessage error={error} />
-                        </>
-                    :
-                        <p>--------------Invalid link--------------</p>
-                    }
-                </>
+            { reset ?
+            <>
+                <label htmlFor="password" className="form-check-label">New Password</label>
+                <input type="password" placeholder="**********" value={new_password} onChange={(e) => setNewPassword(e.target.value)} className="form-control mb-3"/>
+                
+                <label htmlFor="password" className="form-check-label">Confirm New Password</label>
+                <input type="password" placeholder="**********" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
+                
+                <div style={{marginTop: "20px"}} className="text-end"></div>
+                <Button
+                    color="success"
+                    block
+                    onClick={async e => {
+                        e.preventDefault()
+                        try {  
+                            if(oobCode) {
+                                auth.confirmPasswordReset(oobCode, new_password)
+                                .then(userCredential => {
+                                    setReset(false);
+                                })
+                                .catch(error => {
+                                    logging.error(error);
+                    
+                                    if (error.code.includes('auth/expired-action-code'))
+                                    {
+                                        setError('expired-action-code');
+                                    }
+                                    else if (error.code.includes('auth/invalid-action-code'))
+                                    {
+                                        setError('Link has expired!!!');
+                                    }
+                                    else if (error.code.includes('auth/user-disabled'))
+                                    {
+                                        setError('user-disabled');
+                                    }
+                                    else if (error.code.includes('auth/user-not-found'))
+                                    {
+                                        setError('user-not-found');
+                                    }
+                                    else if (error.code.includes('auth/weak-password'))
+                                    {
+                                        setError('weak-password');
+                                    }
+                                    else
+                                    {
+                                        setError('Unable to register. Please try again later.')
+                                    }
+                                });
+                            } else {
+                                navigate('/');
+                            }
+                        } catch (error) {
+                            logging.error(error)
+                        }
+                    }}
+                >
+                    Reset Password
+                </Button>
+            </>
+                :
+                <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
             }
+
+            <ErrorMessage error={error} />
         </div>
     );
 }

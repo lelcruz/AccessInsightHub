@@ -19,6 +19,11 @@ function ForgotPasswordPage() {
         navigate('/login');
     };
 
+    const back = () => {
+        setSent(false);  
+        setEmail('')
+    };
+
     const resetPasswordRequest = () => {
         if (error !== '') setError('');
 
@@ -43,6 +48,7 @@ function ForgotPasswordPage() {
                 <div>
                 <p>The recovery email has been sent to the entered email with instructions. Please check your mailbox.</p>
                 <BasicButtonComponent title={"Go back"} onClick={directToLoginPage}></BasicButtonComponent>
+                <BasicButtonComponent title={"Resend"} onClick={back}></BasicButtonComponent>
                 </div>
             :
                 <>
