@@ -5,6 +5,10 @@ import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
 import {useNavigate} from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore"; 
+import { User, UserConverter} from "Database/user";
+import Firebase from "configurations/firebase";
+import { getFirestore } from "firebase/firestore";
 
 function RegisterPage() {
 
@@ -89,12 +93,17 @@ function RegisterPage() {
                     logging.info(user);
 
                     user.sendEmailVerification(actionCodeSettings)
-                        .then(function() {
+                        .then(async function() {
                             logging.info('One-time verification email sent');
+
+                            const db = getFirestore(Firebase);
+                            const ref = doc(db, 'users').withConverter(UserConverter);   
+                            await setDoc(ref, new User(firstName, lastName, dob, signup_email, signup_password, role));
                         })
                         .catch(function(error) {
                             logging.error('Error occurs sending verification email');
                         });
+                        
                 } else {
                     logging.error('User is null');
                 }
