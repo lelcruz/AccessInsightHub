@@ -7,16 +7,21 @@
   overflow-y: scroll;
   background-color: $lilac;
 }
+
 .central-content {
   background-color: #FFFFFF;
   height: 100%;
   width: 75%;
   margin: 0 auto;
 }
-/* ResearchPage.scss */
+
 .section {
-  margin-bottom: 20px; /* Add margin to create separation between sections */
-  padding: 20px; /* Add padding to create space within each section */
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+li {
+  list-style: none;
 }
 
 
