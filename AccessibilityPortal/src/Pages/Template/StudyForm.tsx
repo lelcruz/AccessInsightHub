@@ -4,6 +4,7 @@ type FormData = {
     title: string;
     description: string;
     date: string;
+    endDate: string;
     studyType: string;
 };
 
@@ -12,6 +13,7 @@ const StudyForm = () => {
         title: '',
         description: '',
         date: '',
+        endDate: '',
         studyType: '',
     });
 
@@ -28,7 +30,6 @@ const StudyForm = () => {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
 
-        // Perform custom validation
         const validationErrors: Partial<FormData> = {};
 
         if (!formData.title) {
@@ -40,18 +41,22 @@ const StudyForm = () => {
         }
 
         if (!formData.date) {
-            validationErrors.date = 'Date is required';
+            validationErrors.date = 'Start date is required';
+        }
+
+        if (!formData.endDate) {
+            validationErrors.endDate = 'End date is required';
+        } else if (new Date(formData.endDate) < new Date(formData.date)) {
+            validationErrors.endDate = 'End date must be after start date';
         }
 
         if (!formData.studyType) {
             validationErrors.studyType = 'Study type is required';
         }
 
-        // If there are validation errors, set them in the state
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
-            // Validation passed; submit the form data to the server
             console.log('Form submitted with data:', formData);
         }
     };
@@ -86,7 +91,7 @@ const StudyForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="date">Date:</label>
+                    <label htmlFor="date">Start Date:</label>
                     <input
                         type="date"
                         id="date"
@@ -96,6 +101,19 @@ const StudyForm = () => {
                         onChange={handleInputChange}
                     />
                     {errors.date && <div className="invalid-feedback">{errors.date}</div>}
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="endDate">End Date:</label>
+                    <input
+                        type="date"
+                        id="endDate"
+                        name="endDate"
+                        className={`form-control ${errors.endDate && 'is-invalid'}`}
+                        value={formData.endDate}
+                        onChange={handleInputChange}
+                    />
+                    {errors.endDate && <div className="invalid-feedback">{errors.endDate}</div>}
                 </div>
 
                 <div className="form-group">
@@ -110,7 +128,6 @@ const StudyForm = () => {
                         <option value="">Select a study type</option>
                         <option value="Experimental">Experimental</option>
                         <option value="Observational">Observational</option>
-                        {/* Add more study types as needed */}
                     </select>
                     {errors.studyType && <div className="invalid-feedback">{errors.studyType}</div>}
                 </div>
@@ -123,6 +140,4 @@ const StudyForm = () => {
     );
 };
 
-
-export default StudyForm;
-
+export default StudyForm
