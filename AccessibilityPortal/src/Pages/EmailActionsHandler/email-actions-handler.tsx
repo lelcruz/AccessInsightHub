@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, createContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Spinner } from 'reactstrap';
+import { Button } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
@@ -13,7 +13,7 @@ function useQuery() {
 
 function closeOpenedWindow() {
     window.close();
-  }
+}
 
 function ResetPasswordPage() {
     const [new_password, setNewPassword] = useState("");
@@ -23,7 +23,12 @@ function ResetPasswordPage() {
     const [verify, setVerify] = useState<boolean>(false);
     const [doneVerify, setDoneVerify] = useState<boolean>(false);
     const [error, setError] = useState("");
+
+    // Navigator
     const navigate = useNavigate();
+    const directToLoginPage = () => {
+        navigate('/login');
+    };
 
     // Getting the mode and oobCode from the %LINK%
     const query = useQuery();
@@ -142,7 +147,10 @@ function ResetPasswordPage() {
                     }
                 </>    
                 : /* Neither verifyEmail or resetPassword are called, invalid link - design later */
-                <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
+                <>
+                <h1>INVALID LINK - UNAUTHORIZED USER</h1>
+                <BasicButtonComponent title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+                </>
             }
         </div>
     );
