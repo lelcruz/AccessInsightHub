@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import { auth } from '../../configurations/firebase';
+import Firebase, { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
 import {useNavigate} from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore"; 
-import { User, UserConverter} from "Database/user";
-import Firebase from "configurations/firebase";
+import { User, UserConverter} from "../../Database/user";
 import { getFirestore } from "firebase/firestore";
 
 function RegisterPage() {
@@ -93,15 +92,22 @@ function RegisterPage() {
                     logging.info(user);
 
                     user.sendEmailVerification(actionCodeSettings)
-                        .then(async function() {
+                        .then(function() {
                             logging.info('One-time verification email sent');
 
-                            const db = getFirestore(Firebase);
+                            /*const db = getFirestore(Firebase);
                             const ref = doc(db, 'users').withConverter(UserConverter);   
-                            await setDoc(ref, new User(firstName, lastName, dob, signup_email, signup_password, role));
+                            await setDoc(ref, new User(firstName, lastName, dob, signup_email, signup_password, role));*/
                         })
                         .catch(function(error) {
                             logging.error('Error occurs sending verification email');
+                            user.delete() 
+                                .then(function() {
+                                    logging.info('User deleted');
+                                })
+                                .catch(function(error) {
+                                    logging.error('Error deleting user:', error);
+                                });
                         });
                         
                 } else {

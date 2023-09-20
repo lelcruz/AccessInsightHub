@@ -6,7 +6,7 @@ import ResearchPage from "../Pages/Research/ResearchPage";
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import LogoutPage from '../Pages/LogoutPage/logout-page';
-import ResetPasswordPage from '../Pages/ResetPasswordPage/resetpassword-page';
+import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
 
 const routes: IRoute[] = [
     {
