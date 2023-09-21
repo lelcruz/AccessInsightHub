@@ -68,10 +68,6 @@ function MainPage(){
                 <div>
                     <BasicButtonComponent title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
                 </div>
-                {/* 
-                <div>
-                    <BasicButtonComponent title={"Reset"} onClick={directToResetPage}></BasicButtonComponent>
-                </div>*/}
                 
             </div>
         </div>

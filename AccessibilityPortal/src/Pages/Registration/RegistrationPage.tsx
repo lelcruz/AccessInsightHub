@@ -5,9 +5,9 @@ import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
 import {useNavigate} from "react-router-dom";
-import { doc, setDoc } from "firebase/firestore"; 
-import { User, UserConverter} from "../../Database/user";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore"; 
+import { db } from "../../configurations/firebase";
+import { hashPassword } from "../../Backend/hashPassword";
 
 function RegisterPage() {
 
@@ -94,10 +94,6 @@ function RegisterPage() {
                     user.sendEmailVerification(actionCodeSettings)
                         .then(function() {
                             logging.info('One-time verification email sent');
-
-                            /*const db = getFirestore(Firebase);
-                            const ref = doc(db, 'users').withConverter(UserConverter);   
-                            await setDoc(ref, new User(firstName, lastName, dob, signup_email, signup_password, role));*/
                         })
                         .catch(function(error) {
                             logging.error('Error occurs sending verification email');
@@ -109,10 +105,21 @@ function RegisterPage() {
                                     logging.error('Error deleting user:', error);
                                 });
                         });
-                        
                 } else {
                     logging.error('User is null');
                 }
+
+                // Store data to Firestore
+                const docRef = addDoc(collection(db, "users"), {
+                    firstName: firstName,
+                    lastName: lastName,
+                    dob: dob,
+                    email: signup_email,
+                    password: signup_password,
+                    role: role,
+                });
+
+                // Back to login
                 navigate('/login');
             })
             .catch(error => {
