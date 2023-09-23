@@ -9,10 +9,7 @@ type BasicButtonComponentProps = {
 
 function BasicButtonComponent(props: BasicButtonComponentProps) {
 
-  const buttonTheme = () => {
-    let theme = (props.color === "light") ? "btn btn-light" : (props.color === "dark") ? "btn btn-dark" : ""
-    return theme;
-  }
+  const buttonTheme = `btn ${props.color === 'light' ? 'btn-light' : 'btn-dark'}`;
   
   const handleClick = () => {
     if (props.onClick) {
@@ -21,7 +18,7 @@ function BasicButtonComponent(props: BasicButtonComponentProps) {
   }
 
   return (
-    <button type={props.type} className={buttonTheme()} onClick={handleClick}>
+    <button type={props.type} className={buttonTheme} onClick={handleClick}>
       {props.title}</button>
   );
 }

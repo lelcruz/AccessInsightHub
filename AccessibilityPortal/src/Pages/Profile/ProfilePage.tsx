@@ -28,8 +28,8 @@ function ProfilePage(){
 
             <Button color={"light"} onClick={openModal} title={"Edit Account"}/>
 
-            <EditModal isOpen={modalShow} onClose={closeModal}>
-                <form className="form-box" style={{rowGap: "8px", marginTop: "-30px"}} onSubmit={handleSubmit}>
+            <EditModal size="m" isOpen={modalShow} onClose={closeModal}>
+                <form className="form-box" style={{rowGap: "8px"}} onSubmit={handleSubmit}>
                     <label htmlFor='firstName'>First Name</label>
                     <input type="text" className="full-length-item"></input>
                     <label htmlFor='lastName'>Last Name</label>
