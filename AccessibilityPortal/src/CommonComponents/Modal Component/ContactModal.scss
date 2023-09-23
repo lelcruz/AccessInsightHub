@@ -1,0 +1,16 @@
+.form-box{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 30px 50px;
+    padding: 20px;
+}
+
+.full-length-item{ 
+    grid-column: 1 / span 2;
+}
+
+.text-box{
+    grid-row: 3 / span 5;
+}
+
+
