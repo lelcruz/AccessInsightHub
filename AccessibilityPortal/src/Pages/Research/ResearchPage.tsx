@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import '../../Styles/ResearchPage.scss';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import ContactModal from "../../CommonComponents/Modal Component/ContactModal";
 import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 import BasicButtonComponent from '../../CommonComponents/Buttons/BasicButtonComponent';
 
@@ -28,17 +27,8 @@ function ResearchPage(){
         <div className="ResearchPageBody">
             <NavbarComponent/>
 
-            {/*<Button variant="primary" onClick={() => setModalShow(true)}>
-                Contact
-            </Button>
-
-            <ContactModal
-            show={modalShow}
-    onHide={() => setModalShow(false)}/>*/}
-    
-           
             <BasicButtonComponent color={"light"} title="Open Modal" onClick={openModal}/>
-            <Modal isOpen={modalShow} onClose={closeModal}>
+            <Modal size="s" isOpen={modalShow} onClose={closeModal}>
                 <h4>Have any Question?</h4>
                 <h4>Get in touch</h4>
                 <form className="form-box" onSubmit={handleSubmit}>

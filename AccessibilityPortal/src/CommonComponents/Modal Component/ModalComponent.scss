@@ -19,10 +19,21 @@
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Box shadow for a raised effect */
     max-width: 80%;
-    width: 500px;
-    height: 540px;
+    //width: 450px;
+    //height: 520px;
     //overflow: auto;
     position: relative;
+  }
+
+  /* Size guide for modal body */
+  .small{
+    width: 420px;
+    height: 520px;
+  }
+
+  .medium{
+    width: 500px;
+    height: 590px;
   }
   
   /* Close button styles */
