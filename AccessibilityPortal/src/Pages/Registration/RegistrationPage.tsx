@@ -28,10 +28,7 @@ function RegistrationPage() {
         </h5>
 
         <div className="radio-button">
-          {/*<BasicButtonComponent title={"Researcher"}></BasicButtonComponent>
-          <span className="btn-right-space"></span>
-          <BasicButtonComponent title={"Participant"}></BasicButtonComponent>
-  */}
+          
           <input type="radio" id="researcher" value="researcher" name="role"/>
           <label htmlFor="researcher">Researcher</label>
           <span className="btn-right-space"></span>
@@ -53,9 +50,9 @@ function RegistrationPage() {
         <label>Confirm Password</label>
         <input></input>
         <div style={{marginTop: "20px"}} className="text-end">
-        <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
+        <BasicButtonComponent color={"light"} title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
         <span className="btn-right-space"></span>
-        <BasicButtonComponent title={"Register"} onClick={directToMainPage}></BasicButtonComponent>
+        <BasicButtonComponent color={"light"} title={"Register"} onClick={directToMainPage}></BasicButtonComponent>
         </div>
       </div>
  

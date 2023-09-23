@@ -15,7 +15,7 @@
     top: 90%; //65rem
     right: 5%;
 
-    @media (max-width: 600px){
+    @media (max-width: 600px), (max-height: 800px) {
         display: none;
     }
 }

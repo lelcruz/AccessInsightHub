@@ -16,18 +16,18 @@ function ContactModal(props: any) {
         {...props}
         size="m"
         aria-labelledby="contained-modal-title-vcenter"
-        centered onSubmit={handleSubmit}>
+        centered >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
            Have any Question? <br/> Get in touch
           </Modal.Title>
         </Modal.Header>
         <Modal.Body >
-          <form className="form-box">
+          <form className="form-box" onSubmit={handleSubmit}>
             <input type="text" placeholder="First Name"></input>
             <input type="text" placeholder="Last Name"></input>
             <input type="email" className="full-length-item" placeholder="Email"></input>
-            <textarea className="full-length-item text-box"placeholder="Description"></textarea>
+            <textarea className="full-length-item text-box" placeholder="Description"></textarea>
           </form>
         </Modal.Body>
         <Modal.Footer>
