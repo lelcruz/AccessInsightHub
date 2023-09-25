@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link} from "react-router-dom";
-import { Button } from 'reactstrap';
-import { auth, Providers } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
 import firebase from 'firebase/compat/app';
-import { SignInWithSocialMedia } from './login-socialmedia';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
-import '../../Styles/login.scss'
+import { collection, query, where, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from 'reactstrap';
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import { getAuth, signInWithCustomToken } from "firebase/auth";
+import '../../Styles/login.scss';
+import { Providers, auth, db } from '../../configurations/firebase';
+import logging from '../../configurations/logging';
+import { SignInWithSocialMedia } from './login-socialmedia';
 
 function LoginPage() {
     
@@ -25,12 +25,35 @@ function LoginPage() {
 
     // If the user is still saved, lead to main page
     useEffect(() => {
-        auth.onAuthStateChanged(user => {
-          if (user) {
-              logging.info('User detected.' + user.email);
-              navigate('/main')
-        }})
-    }, []);
+        auth.onAuthStateChanged( async user => {
+            if (user) {
+                logging.info('User detected.' + user.email);
+                // User.mail to lead to correct main page
+
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+
+                    console.log(doc.id, ' => ', doc.data().role);
+                    // Detect ROLE of user
+                    let userRole = doc.data().role;
+                    switch(userRole) {
+                        case 'admin':
+                            navigate('/mainadmin');
+                            break
+                        case 'researcher':
+                            navigate('/mainresearcher');
+                            break
+                        case 'participant':
+                            navigate('/mainparticipant');
+                            break
+                        default:
+                            return 'unknown';
+                    }
+                });
+            }
+    })}, []);
 
     const signInWithEmailAndPassword = () => {
         if (error !== '') setError('');
@@ -84,7 +107,7 @@ function LoginPage() {
         SignInWithSocialMedia(provider)
         .then(result => {
             logging.info(result);
-            navigate('/main');
+            navigate('/mainparticipant');
         })
         .catch(error => {
             logging.error(error);

@@ -1,12 +1,14 @@
 import IRoute from "../interfaces/route";
 import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
-import MainPage from '../Pages/MainPage/main-page';
 import ResearchPage from "../Pages/Research/ResearchPage";
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import LogoutPage from '../Pages/LogoutPage/logout-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
+import MainPageAdmin from "../Pages/MainPage/main-admin";
+import MainPageResearcher from "../Pages/MainPage/main-researcher";
+import MainPageParticipant from "../Pages/MainPage/main-participant";
 
 const routes: IRoute[] = [
     {
@@ -31,10 +33,24 @@ const routes: IRoute[] = [
         protected: false
     },
     {
-        path: '/main',
+        path: '/mainadmin',
         exact: true,
-        component: MainPage,
-        name: 'Main Page',
+        component: MainPageAdmin,
+        name: 'Main Page Admin',
+        protected: true
+    },
+    {
+        path: '/mainresearcher',
+        exact: true,
+        component: MainPageResearcher,
+        name: 'Main Page Researcher',
+        protected: true
+    },
+    {
+        path: '/mainparticipant',
+        exact: true,
+        component: MainPageParticipant,
+        name: 'Main Page User',
         protected: true
     },
     {

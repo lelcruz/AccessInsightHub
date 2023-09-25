@@ -9,7 +9,7 @@ import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import {useNavigate} from "react-router-dom";
 
-function MainPage(){
+function MainPageAdmin(){
 
     const navigate = useNavigate();
 
@@ -19,10 +19,6 @@ function MainPage(){
 
     const directToLogoutPage = () => {
         navigate('/logout');
-    };
-
-    const directToResetPage = () => {
-        navigate('/reset');
     };
 
     return (
@@ -38,6 +34,18 @@ function MainPage(){
             <div className="display-box">
                 <div>
                     <BasicCardComponent 
+                        imageUrl={profileIcon}
+                        title={"Users"}
+                    ></BasicCardComponent>
+                </div>
+                <div>
+                    <BasicCardComponent
+                        imageUrl={templateIcon}
+                        title={"Messages"}
+                    ></BasicCardComponent>
+                </div>
+                <div>
+                    <BasicCardComponent
                         imageUrl={surveyIcon}
                         title={"Surveys"}
                     ></BasicCardComponent>
@@ -62,7 +70,7 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
+                    <BasicButtonComponent title={"PP"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
 
                 <div>
@@ -75,4 +83,4 @@ function MainPage(){
 
 }
 
-export default MainPage;
+export default MainPageAdmin;
