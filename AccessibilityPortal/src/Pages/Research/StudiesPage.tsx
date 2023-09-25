@@ -3,8 +3,9 @@ import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import { Study } from "./Study";
 import ContactModal from "./ContactModal";
+import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 
-function ResearchPage() {
+function StudiesPage() {
   const studiesInformation = [
     {
       id: 1,
@@ -51,10 +52,10 @@ function ResearchPage() {
     <div className="ResearchPageBody">
       <NavbarComponent />
       <ul>{arrayDataItems}</ul>
-       <ContactModal />
-
+      <ContactModal />
+      <AccessibilityMenuComponent />
     </div>
   );
 }
 
-export default ResearchPage;
+export default StudiesPage;
