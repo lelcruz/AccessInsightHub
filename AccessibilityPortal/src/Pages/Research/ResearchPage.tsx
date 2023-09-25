@@ -2,6 +2,7 @@ import React from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import { Study } from "./Study";
+import ContactModal from "./ContactModal";
 
 function ResearchPage() {
   const studiesInformation = [
@@ -49,7 +50,9 @@ function ResearchPage() {
   return (
     <div className="ResearchPageBody">
       <NavbarComponent />
-      <ul>{arrayDataItems}</ul>\
+      <ul>{arrayDataItems}</ul>
+       <ContactModal />
+
     </div>
   );
 }
