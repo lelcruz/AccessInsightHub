@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {useNavigate, Link} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link} from "react-router-dom";
 import { Button } from 'reactstrap';
 import { auth, Providers } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
@@ -22,6 +22,15 @@ function LoginPage() {
     const directToRegisterPage = () => {
         navigate('/register');
     };
+
+    // If the user is still saved, lead to main page
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+          if (user) {
+              logging.info('User detected.' + user.email);
+              navigate('/main')
+        }})
+    }, []);
 
     const signInWithEmailAndPassword = () => {
         if (error !== '') setError('');

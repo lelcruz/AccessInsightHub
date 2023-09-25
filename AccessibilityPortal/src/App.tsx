@@ -7,22 +7,22 @@ import { auth } from './configurations/firebase';
 import logging from './configurations/logging';
 import routes from './configurations/routes';
 
-
 function App() {
+
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
       auth.onAuthStateChanged(user => {
-          if (user)
-          {
-              logging.info('User detected.');
-          }
-          else
-          {
-              logging.info('No user detected');
-          }
+        if (user)
+        {
+            logging.info('User detected.' + user.email);
+        }
+        else
+        {
+           logging.info('No user detected');
+        }
 
-          setLoading(false);
+        setLoading(false);
       })
   }, []);
 
