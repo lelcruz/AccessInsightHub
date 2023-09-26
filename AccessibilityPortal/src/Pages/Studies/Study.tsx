@@ -4,11 +4,12 @@ interface StudyProps {
   title: string;
   author: string;
   type: string;
-  //date: Date,
+  date: Date;
   description: string;
 }
 
 export const Study = (props: StudyProps) => {
+  const formattedDate = props.date.toLocaleString();
   return (
     <div className="central-content">
       <div className="section">
@@ -17,7 +18,7 @@ export const Study = (props: StudyProps) => {
       </div>
       <div className="section">
         <p>Study Type: {props.type}</p>
-        <p>Study Date: 00/00/2023</p>
+        <p>Study Date: {formattedDate}</p>
         <h3>Study Description</h3>
         <hr />
         <p className="lh-lg">{props.description}</p>
