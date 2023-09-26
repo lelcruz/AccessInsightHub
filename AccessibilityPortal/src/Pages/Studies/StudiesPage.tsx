@@ -8,7 +8,7 @@ function StudiesPage() {
   const studiesInformation = [
     {
       id: 1,
-      title: "Research title 1",
+      title: "Studies title 1",
       author: "Author Name 1",
       studyType: "N/A",
       date: new Date("01/03/2023"),
@@ -17,7 +17,7 @@ function StudiesPage() {
     },
     {
       id: 2,
-      title: "Research title 2",
+      title: "Studies title 2",
       author: "Author Name 2",
       studyType: "N/A",
       date: new Date("01/09/2023"),
@@ -26,7 +26,7 @@ function StudiesPage() {
     },
     {
       id: 3,
-      title: "Research title 3",
+      title: "Studies title 3",
       author: "Author Name 3",
       studyType: "N/A",
       date: new Date("01/28/2023"),
