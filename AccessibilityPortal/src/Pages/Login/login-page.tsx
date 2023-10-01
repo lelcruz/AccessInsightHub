@@ -36,6 +36,7 @@ function LoginPage() {
                 querySnapshot.forEach((doc) => {
 
                     console.log(doc.id, ' => ', doc.data().role);
+                    //if (doc)
                     // Detect ROLE of user
                     let userRole = doc.data().role;
                     switch(userRole) {
@@ -74,11 +75,6 @@ function LoginPage() {
                     logging.error('Email has not been verified! User deleted');
                     navigate('/login');
                     // Deleting user
-                    /*
-                    
-                    * Might find a way to ask user to verify email before completely deleting user (time for verification link to expire)
-
-                    */
                     user.delete() 
                         .then(function() {
                             logging.info('User deleted');

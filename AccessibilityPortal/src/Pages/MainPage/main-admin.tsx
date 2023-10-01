@@ -70,7 +70,7 @@ function MainPageAdmin(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"PP"} onClick={directToChangePassword}></BasicButtonComponent>
+                    <BasicButtonComponent title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
 
                 <div>
