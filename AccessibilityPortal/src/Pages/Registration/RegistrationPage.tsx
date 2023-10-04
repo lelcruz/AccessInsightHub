@@ -179,9 +179,9 @@ function RegisterPage() {
             <input type="password" placeholder="Confirm your password" value={confirmpassword} onChange={(e) => setConfirmPassword(e.target.value)} className="form-control mb-3"/>
 
             <div style={{marginTop: "20px"}} className="text-end">
-            <BasicButtonComponent title={"Register"} onClick={() => signUpWithEmailAndPassword()}></BasicButtonComponent>
+            <BasicButtonComponent color='light' title={"Register"} onClick={() => signUpWithEmailAndPassword()}></BasicButtonComponent>
             <span className="btn-right-space"></span>
-            <BasicButtonComponent title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
+            <BasicButtonComponent color='light' title={"Cancel"} onClick={directToLoginPage}></BasicButtonComponent>
             </div>
             
             <ErrorMessage error={error}/>

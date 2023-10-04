@@ -9,6 +9,10 @@ import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handle
 import MainPageAdmin from "../Pages/MainPage/main-admin";
 import MainPageResearcher from "../Pages/MainPage/main-researcher";
 import MainPageParticipant from "../Pages/MainPage/main-participant";
+import StudiesPage from "../Pages/Studies/StudiesPage";
+import SurveyPage from "../Pages/Survey/SurveyPage";
+import ProfilePage from "../Pages/Profile/ProfilePage";
+import TemplatePage from "../Pages/Template/TemplatePage";
 
 const routes: IRoute[] = [
     {
@@ -87,6 +91,34 @@ const routes: IRoute[] = [
         component: ResetPasswordPage,
         name: 'Reset Password Page',
         protected: false
+    },
+    {
+        path: '/studies',
+        exact: true,
+        component: StudiesPage,
+        name: 'Study Page',
+        protected: true
+    },
+    {
+        path: '/survey',
+        exact: true,
+        component: SurveyPage,
+        name: 'Survey Page',
+        protected: true
+    },
+    {
+        path: '/profile',
+        exact: true,
+        component: ProfilePage,
+        name: 'Profile Page',
+        protected: true
+    },
+    {
+        path: '/template',
+        exact: true,
+        component: TemplatePage,
+        name: 'Template Page',
+        protected: true
     },
 ];
 

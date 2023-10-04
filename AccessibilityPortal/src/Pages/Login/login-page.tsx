@@ -27,33 +27,32 @@ function LoginPage() {
     useEffect(() => {
         auth.onAuthStateChanged( async user => {
             if (user) {
-                logging.info('User detected.' + user.email);
-                // User.mail to lead to correct main page
+                if(user.emailVerified) {
+                    logging.info('User detected.' + user.email);
+                    // User.mail to lead to correct main page
 
-                const q = query(collection(db, "users"), where("email", "==", user.email));
-                
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
+                    const q = query(collection(db, "users"), where("email", "==", user.email));
+                    const querySnapshot = await getDocs(q);
 
-                    console.log(doc.id, ' => ', doc.data().role);
-                    //if (doc)
-                    // Detect ROLE of user
-                    let userRole = doc.data().role;
-                    switch(userRole) {
-                        case 'admin':
-                            navigate('/mainadmin');
-                            break
-                        case 'researcher':
-                            navigate('/mainresearcher');
-                            break
-                        case 'participant':
-                            navigate('/mainparticipant');
-                            break
-                        default:
-                            return 'unknown';
-                    }
-                });
-            }
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.id, ' => ', doc.data().role);
+                        // Detect ROLE of user
+                        let userRole = doc.data().role;
+                        switch(userRole) {
+                            case 'admin':
+                                navigate('/mainadmin');
+                                break
+                            case 'researcher':
+                                navigate('/mainresearcher');
+                                break
+                            case 'participant':
+                                navigate('/mainparticipant');
+                                break
+                            default:
+                                return 'unknown';
+                        }
+                    });
+            }}
     })}, []);
 
     const signInWithEmailAndPassword = () => {
@@ -62,7 +61,7 @@ function LoginPage() {
         setVerification(true);
 
         auth.signInWithEmailAndPassword(login_email, login_password)
-        .then(userCredential => {
+        .then(async userCredential => {
             logging.info(userCredential);
             
             // Verify if the verification email is clicked
@@ -70,7 +69,27 @@ function LoginPage() {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('Email verified');
-                    navigate('/main');
+
+                    const q = query(collection(db, "users"), where("email", "==", user.email));
+                    const querySnapshot = await getDocs(q);
+
+                    querySnapshot.forEach((doc) => {
+                        console.log(doc.id, ' => ', doc.data().role);
+                        let userRole = doc.data().role;
+                        switch(userRole) {
+                            case 'admin':
+                                navigate('/mainadmin');
+                                break
+                            case 'researcher':
+                                navigate('/mainresearcher');
+                                break
+                            case 'participant':
+                                navigate('/mainparticipant');
+                                break
+                            default:
+                                return 'unknown';
+                        }
+                    });
                 } else {
                     logging.error('Email has not been verified! User deleted');
                     navigate('/login');
@@ -143,7 +162,7 @@ function LoginPage() {
             ><i className="fab fa-google mr-2"></i> Sign in with Google</Button>
 
             <span className="formatted-text">or</span>
-            <BasicButtonComponent title={"Register"} onClick={directToRegisterPage}></BasicButtonComponent>
+            <BasicButtonComponent color='light' title={"Register"} onClick={directToRegisterPage}></BasicButtonComponent>
 
             <ErrorMessage error={error} />
             <div className="bg-image"></div>

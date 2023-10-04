@@ -21,6 +21,22 @@ function MainPageParticipant(){
         navigate('/logout');
     };
 
+    const directToStudyPage = () => {
+        navigate('/studies');
+    }
+
+    const directToSurveyPage = () => {
+        navigate('/survey');
+    }
+
+    const directToProfilePage = () => {
+        navigate('/profile');
+    }
+
+    const directToTemplatePage = () => {
+        navigate('/template');
+    }
+
     return (
         <div className="main-page">
 
@@ -36,33 +52,37 @@ function MainPageParticipant(){
                     <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
+                        handleClick={directToSurveyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={studiesIcon}
                         title={"Studies"}
+                        handleClick={directToStudyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={profileIcon}
                         title={"Profile"}
+                        handleClick={directToProfilePage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
                         title={"Templates"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
+                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
                 </div>
                 
             </div>
