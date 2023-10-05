@@ -1,29 +1,55 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./Styles/App.scss";
-import React from "react";
-import RegistrationPage from "./Pages/Registration/RegistrationPage";
-import LoginPage from "./Pages/Login/login-page";
-import MainPage from "./Pages/MainPage/main-page";
-import StudiesPage from "./Pages/Studies/StudiesPage";
-import SurveyPage from "./Pages/Survey/SurveyPage";
-import ProfilePage from "./Pages/Profile/ProfilePage";
-import TemplatePage from "./Pages/Template/TemplatePage";
+import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
+import './Styles/App.scss'
+import React, { useEffect, useState } from 'react';
+import { Spinner } from 'reactstrap';
+import AuthRoute from '../src/CommonComponents/AuthRoute';
+import { auth } from './configurations/firebase';
+import logging from './configurations/logging';
+import routes from './configurations/routes';
 
 function App() {
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+      auth.onAuthStateChanged(user => {
+        if (user)
+        {
+            logging.info('User detected.' + user.email);
+        }
+        else
+        {
+           logging.info('No user detected');
+        }
+
+        setLoading(false);
+      })
+  }, []);
+
+  if (loading)
+      return <Spinner color="info" />
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/studies" element={<StudiesPage />} />
-        <Route path="/survey" element={<SurveyPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/template" element={<TemplatePage />} />
-      </Routes>
-    </Router>
-  );
+            <Routes> {/* All the routes are in the routes.ts for readability and cleanliness of the codes */}
+                {routes.map((route, index) => (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        element={
+                            route.protected ? (
+                                <AuthRoute>
+                                    <route.component />
+                                </AuthRoute>
+                            ) : (
+                                <route.component />
+                            )
+                        }
+                    />
+                ))}
+            </Routes>
+        </Router>
+  )
 }
 
 export default App;
