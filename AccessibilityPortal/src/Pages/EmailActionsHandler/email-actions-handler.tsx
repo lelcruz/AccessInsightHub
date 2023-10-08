@@ -105,7 +105,7 @@ function ResetPasswordPage() {
                 </Button>
                 { doneReset ? 
                     <>
-                    <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
+                    <BasicButtonComponent color='light' title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
                     </> : <>
                     <ErrorMessage error={error}/>
                     </>
@@ -140,7 +140,7 @@ function ResetPasswordPage() {
                     </Button>
                     { doneVerify ? 
                         <>
-                        <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
+                        <BasicButtonComponent color='light' title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
                         </> : <>
                         <ErrorMessage error={error}/>
                         </>
@@ -149,7 +149,7 @@ function ResetPasswordPage() {
                 : /* Neither verifyEmail or resetPassword are called, invalid link - design later */
                 <>
                 <h1>INVALID LINK - UNAUTHORIZED USER</h1>
-                <BasicButtonComponent title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+                <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
                 </>
             }
         </div>
