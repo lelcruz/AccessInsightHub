@@ -1,7 +1,6 @@
 import IRoute from "../interfaces/route";
 import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
-import ResearchPage from "../Pages/Research/ResearchPage";
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import LogoutPage from '../Pages/LogoutPage/logout-page';
@@ -55,13 +54,6 @@ const routes: IRoute[] = [
         exact: true,
         component: MainPageParticipant,
         name: 'Main Page User',
-        protected: true
-    },
-    {
-        path: '/research',
-        exact: true,
-        component: ResearchPage,
-        name: 'Research Page',
         protected: true
     },
     {
