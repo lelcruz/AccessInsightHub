@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.nav-link{
+  transition: all 0.2s;
+}
+
+.nav-link:hover{
+  border-bottom: 3px solid black;
+}
+.container-md{
+  font-weight: bold;
+}
+
+.navbar{
+  background-color: $light-grey;
+}
+
+

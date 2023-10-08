@@ -1,0 +1,27 @@
+@import "Variables";
+
+
+.ResearchPageBody {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  background-color: $lilac;
+}
+
+.central-content {
+  background-color: #FFFFFF;
+  height: 100%;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.section {
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+li {
+  list-style: none;
+}
+
+
