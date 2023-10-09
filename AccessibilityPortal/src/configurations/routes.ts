@@ -1,14 +1,11 @@
 import IRoute from "../interfaces/route";
 import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
-import ResearchPage from "../Pages/Research/ResearchPage";
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import LogoutPage from '../Pages/LogoutPage/logout-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
-import MainPageAdmin from "../Pages/MainPage/main-admin";
-import MainPageResearcher from "../Pages/MainPage/main-researcher";
-import MainPageParticipant from "../Pages/MainPage/main-participant";
+import MainPage from "../Pages/MainPage/mainpage";
 import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
@@ -37,31 +34,10 @@ const routes: IRoute[] = [
         protected: false
     },
     {
-        path: '/mainadmin',
+        path: '/main',
         exact: true,
-        component: MainPageAdmin,
-        name: 'Main Page Admin',
-        protected: true
-    },
-    {
-        path: '/mainresearcher',
-        exact: true,
-        component: MainPageResearcher,
-        name: 'Main Page Researcher',
-        protected: true
-    },
-    {
-        path: '/mainparticipant',
-        exact: true,
-        component: MainPageParticipant,
-        name: 'Main Page User',
-        protected: true
-    },
-    {
-        path: '/research',
-        exact: true,
-        component: ResearchPage,
-        name: 'Research Page',
+        component: MainPage,
+        name: 'Main Page',
         protected: true
     },
     {
@@ -97,28 +73,28 @@ const routes: IRoute[] = [
         exact: true,
         component: StudiesPage,
         name: 'Study Page',
-        protected: true
+        protected: false
     },
     {
         path: '/survey',
         exact: true,
         component: SurveyPage,
         name: 'Survey Page',
-        protected: true
+        protected: false
     },
     {
         path: '/profile',
         exact: true,
         component: ProfilePage,
         name: 'Profile Page',
-        protected: true
+        protected: false
     },
     {
         path: '/template',
         exact: true,
         component: TemplatePage,
         name: 'Template Page',
-        protected: true
+        protected: false
     },
 ];
 

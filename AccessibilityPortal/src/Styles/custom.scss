@@ -1,0 +1,17 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.card{
+    box-shadow: 10px 10px 5px #aaaaaa;
+    width: 14rem;
+
+    @media (max-width: 660px){
+        width: 11rem;
+    }
+
+}
+
+.card-img-top{
+    width: 200px;
+    height: 200px;
+    padding: 0 20px;
+}
