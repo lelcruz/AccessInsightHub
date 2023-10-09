@@ -4,8 +4,7 @@ import { Button } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
-import { confirmPasswordReset, applyActionCode } from 'firebase/auth';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -140,6 +139,7 @@ function ResetPasswordPage() {
                     </Button>
                     { doneVerify ? 
                         <>
+                        <h1>SUCCESSFULLY RESET PASSWORD</h1>
                         <BasicButtonComponent color='light' title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
                         </> : <>
                         <ErrorMessage error={error}/>

@@ -1,24 +1,25 @@
+import { collection, getDocs, query, where } from "firebase/firestore";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
-import '../../Styles/main.scss';
 import '../../Styles/custom.scss';
-import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
-import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
+import '../../Styles/login.scss';
+import '../../Styles/main.scss';
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
-import firebase from 'firebase/compat/app';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from 'reactstrap';
-import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import '../../Styles/login.scss';
-import { Providers, auth, db } from '../../configurations/firebase';
+import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
+import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
+import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 
 function MainPage(){
 
     const navigate = useNavigate();
+
+    const directToLoginPage = () => {
+        navigate('/login');
+    };
 
     const directToChangePassword = () => {
         navigate('/change');
@@ -220,9 +221,10 @@ function MainPage(){
                 
             </div>
         </>
-        :
+        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
         <>
-
+            <h1>!!! UNEXPECTED ERROR !!!</h1>
+            <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
         </>
     }
         </div>
