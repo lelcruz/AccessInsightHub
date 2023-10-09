@@ -16,7 +16,7 @@ const NavbarComponent = () => {
                     <Link to="/" className="nav-link active" aria-current="page">Surveys</Link>
                     <Link to="/research" className="nav-link active" aria-current="page">Studies</Link>
                     <Link to="/" className="nav-link active" aria-current="page">Profile</Link>
-                    <form onSubmit={submitHandler} className="d-flex" role="search">
+                    <form onSubmit={submitHandler} className="search-bar" role="search">
                         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
                             <button className="btn btn-dark" type="submit">Search</button>
                     </form>

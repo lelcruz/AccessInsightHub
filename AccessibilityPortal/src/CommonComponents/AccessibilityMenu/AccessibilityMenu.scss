@@ -4,6 +4,10 @@
     border: none;
     height: 0;
     width: 0;
+    
+    &:hover, :focus{
+        opacity: 0.7;
+    }
 }
 
 .img-bottom-right{
@@ -12,7 +16,7 @@
     border: none;
     background: transparent;
     position: absolute;
-    top: 90%; //65rem
+    top: 90%; 
     right: 5%;
 
     @media (max-width: 600px), (max-height: 800px) {
@@ -23,9 +27,9 @@
 .accessibility-menu{
     position: fixed;
     top: 25%;
-    right: 4.1rem; 
+    right: 3.2rem; 
     height: 35rem;
-    width: 0; //25rem
+    width: 0; 
     background-color: $dark-teal;
     overflow: hidden;
     z-index: 5;

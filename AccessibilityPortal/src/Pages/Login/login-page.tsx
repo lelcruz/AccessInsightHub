@@ -21,9 +21,9 @@ function LoginPage() {
       <input></input>
         {/* Need href for the Forgot password anchor*/}
         <span style={{fontWeight: "bold", paddingBottom: "30px"}} className="text-end">Forgot password?</span>
-        <BasicButtonComponent title={"Sign In"}></BasicButtonComponent>
+        <BasicButtonComponent color={"light"} title={"Sign In"}></BasicButtonComponent>
         <span className="formatted-text">or</span>
-        <BasicButtonComponent title={"Register"} onClick={directToRegister}></BasicButtonComponent>
+        <BasicButtonComponent color={"light"} title={"Register"} onClick={directToRegister}></BasicButtonComponent>
     <div className="bg-image"></div>
     </div>
   );
