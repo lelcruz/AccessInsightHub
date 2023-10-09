@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import '../../Styles/ProfilePage.scss';
+import React, { useState } from "react";
+import "../../Styles/ProfilePage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import EditModal from "./EditModal";
 import ProfileImage from "../../CommonComponents/Profile Image/ProfileImage";
@@ -58,6 +58,7 @@ function ProfilePage(){
     
 
     );
+
 
 }
 
