@@ -168,6 +168,7 @@ function LoginPage() {
             <div className="bg-image"></div>
         </div>
     );
+
 }
 
 export default LoginPage;

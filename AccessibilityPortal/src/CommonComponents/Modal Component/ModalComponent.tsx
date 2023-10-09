@@ -5,7 +5,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  size: "s" | "m";
+  size: "s" | "m" |"l";
 }
 
 const ModalComponent: React.FC<ModalProps> = ({isOpen, onClose, children, size}) => {
@@ -13,7 +13,7 @@ const ModalComponent: React.FC<ModalProps> = ({isOpen, onClose, children, size})
   if (!isOpen) return null;
   return (
       <div className="modal-overlay" onClick={onClose}>
-        <div className={`modal-main ${size === "s" ? "small" : "medium"}`}>
+        <div className={`modal-main ${size === "s" ? "small" : size === "m" ? "medium" : "large"}`}>
           <button className="modal-close-button" onClick={onClose}>
             &times;
           </button>
