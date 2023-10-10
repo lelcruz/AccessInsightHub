@@ -103,7 +103,7 @@ function ChangePassword() {
                     >Change password</Button>
                     
                     <span className="btn-right-space"></span>
-                    <BasicButtonComponent title={"Cancel"} onClick={directToMainPage}></BasicButtonComponent>
+                    <BasicButtonComponent color='light' title={"Cancel"} onClick={directToMainPage}></BasicButtonComponent>
                 </div>
 
                 <ErrorMessage error={error}/>
