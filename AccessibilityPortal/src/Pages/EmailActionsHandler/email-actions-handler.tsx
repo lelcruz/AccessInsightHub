@@ -4,8 +4,7 @@ import { Button } from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
 import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
-import { confirmPasswordReset, applyActionCode } from 'firebase/auth';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -105,7 +104,7 @@ function ResetPasswordPage() {
                 </Button>
                 { doneReset ? 
                     <>
-                    <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
+                    <BasicButtonComponent color='light' title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
                     </> : <>
                     <ErrorMessage error={error}/>
                     </>
@@ -140,7 +139,8 @@ function ResetPasswordPage() {
                     </Button>
                     { doneVerify ? 
                         <>
-                        <BasicButtonComponent title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
+                        <h1>SUCCESSFULLY RESET PASSWORD</h1>
+                        <BasicButtonComponent color='light' title={"Close Tab"} onClick={closeOpenedWindow}></BasicButtonComponent>
                         </> : <>
                         <ErrorMessage error={error}/>
                         </>
@@ -149,7 +149,7 @@ function ResetPasswordPage() {
                 : /* Neither verifyEmail or resetPassword are called, invalid link - design later */
                 <>
                 <h1>INVALID LINK - UNAUTHORIZED USER</h1>
-                <BasicButtonComponent title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+                <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
                 </>
             }
         </div>
