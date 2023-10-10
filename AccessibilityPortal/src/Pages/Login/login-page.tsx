@@ -29,29 +29,6 @@ function LoginPage() {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected.' + user.email);
-                    // User.mail to lead to correct main page
-
-                    const q = query(collection(db, "users"), where("email", "==", user.email));
-                    const querySnapshot = await getDocs(q);
-
-                    querySnapshot.forEach((doc) => {
-                        console.log(doc.id, ' => ', doc.data().role);
-                        // Detect ROLE of user
-                        let userRole = doc.data().role;
-                        switch(userRole) {
-                            case 'admin':
-                                navigate('/mainadmin');
-                                break
-                            case 'researcher':
-                                navigate('/mainresearcher');
-                                break
-                            case 'participant':
-                                navigate('/mainparticipant');
-                                break
-                            default:
-                                return 'unknown';
-                        }
-                    });
             }}
     })}, []);
 
@@ -63,33 +40,13 @@ function LoginPage() {
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(async userCredential => {
             logging.info(userCredential);
+            navigate('/main');
             
             // Verify if the verification email is clicked
             const user = userCredential.user;
             if (user) {
                 if(user.emailVerified) {
                     logging.info('Email verified');
-
-                    const q = query(collection(db, "users"), where("email", "==", user.email));
-                    const querySnapshot = await getDocs(q);
-
-                    querySnapshot.forEach((doc) => {
-                        console.log(doc.id, ' => ', doc.data().role);
-                        let userRole = doc.data().role;
-                        switch(userRole) {
-                            case 'admin':
-                                navigate('/mainadmin');
-                                break
-                            case 'researcher':
-                                navigate('/mainresearcher');
-                                break
-                            case 'participant':
-                                navigate('/mainparticipant');
-                                break
-                            default:
-                                return 'unknown';
-                        }
-                    });
                 } else {
                     logging.error('Email has not been verified! User deleted');
                     navigate('/login');
@@ -122,7 +79,7 @@ function LoginPage() {
         SignInWithSocialMedia(provider)
         .then(result => {
             logging.info(result);
-            navigate('/mainparticipant');
+            navigate('/main');
         })
         .catch(error => {
             logging.error(error);
@@ -168,6 +125,7 @@ function LoginPage() {
             <div className="bg-image"></div>
         </div>
     );
+
 }
 
 export default LoginPage;

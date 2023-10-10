@@ -1,9 +1,13 @@
 @import "Variables";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import '../CommonComponents/Profile Image/ProfileImage.scss';
+
 
 .main-page {
     width: 100%;
     height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: $lilac;
 }
 
@@ -13,8 +17,80 @@
     }
 }
 
+.avatar{
+    position: absolute;
+    padding-top: 80px;
+    padding-left: 5%;
+
+    //Rearrange profile image
+    @media (max-width: 1000px){
+       right: 15px;
+       top: 0;
+
+       .img-upload{
+        width: 100px;
+        height: 100px;
+
+        &:before{
+            font-size: 30px;
+        }
+       }
+    }
+}
+
+.container-wrap{
+    position: relative;
+    top: 10%;
+    left: 35%;
+    width: 700px;
+    
+    @media (max-width: 1000px){
+       left: 10%;
+    }
+
+    @media (max-width: 500px){
+        width: 370px;
+    }
+}
+
+
+.table-wrap{
+    padding-left: calc(35% - 40px); 
+    padding-right: calc(15% - 80px); 
+    padding-top: 10%;
+
+    @media (max-width: 1000px){
+        padding: 0;
+        margin-top: 15%;
+     }
+ 
+     @media (max-width: 1200px){
+         
+     }
+}
+
+.table{
+    
+    h4{
+        margin-bottom: 3rem;
+    }
+   
+    tr{
+        height: 60px;
+        vertical-align: middle;
+        td{
+            text-align: center;
+        }
+    }
+    
+    .edit{
+        margin-top: 40px;
+    }
+
+}
 
 
 
+  
 
 
