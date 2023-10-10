@@ -1,7 +1,6 @@
 import React from 'react';
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 import '../../Styles/main.scss';
-import '../../Styles/custom.scss';
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
@@ -70,11 +69,11 @@ function MainPageAdmin(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
+                    <BasicButtonComponent color={"light"} title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
 
                 <div>
-                    <BasicButtonComponent title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <BasicButtonComponent color={"light"} title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
                 </div>
                 
             </div>

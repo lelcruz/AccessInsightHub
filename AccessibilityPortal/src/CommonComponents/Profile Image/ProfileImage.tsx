@@ -11,6 +11,7 @@ function ProfileImage() {
     const [img, setImg] = useState("");
     const [preview, setPreview] = useState("");
     const [show, setModalShow] = useState(false); 
+    const [isMatched, setIsMatched] = useState(false);
    
     const openModal = () => {
         setModalShow(true);
@@ -23,11 +24,24 @@ function ProfileImage() {
 
     const onClose = () => {
         setPreview("");
-    }
+    };
 
     const onCrop = (view: string) => {
         setPreview(view);
+    };
+    
+    //Function to set width for small screen 
+    const setWidthSize = () => {
+        if (window.matchMedia("(max-width: 500px)").matches) {
+            return Number(300);
+        }
+        else{
+            return Number(400);
+        }
     }
+
+    
+    const widthSize: number = setWidthSize();
 
     //Handle a big file 
     const onBeforeFileLoad = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +51,24 @@ function ProfileImage() {
         }
     }
 
+    useEffect(() => {
+        const setWidthSize = () => {
+            const mediaQuery = window.matchMedia('(max-width: 500px)');
+
+            setIsMatched(mediaQuery.matches);
+
+            const updateMatchedState = (e: MediaQueryListEvent) => {
+                setIsMatched(e.matches);
+            };
+
+            mediaQuery.addEventListener('change', updateMatchedState);
+
+            return() => {
+                mediaQuery.removeEventListener('change', updateMatchedState);
+            };
+        }
+
+    }, []);
 
     return (
         <div>
@@ -48,7 +80,7 @@ function ProfileImage() {
         <Modal isOpen={show} onClose={closeModal} size="l">
             <div className="crop-modal">
                 <AvatarEditor 
-                    width={400}
+                    width={widthSize}
                     height={300}
                     onCrop={onCrop}
                     onClose={onClose}
