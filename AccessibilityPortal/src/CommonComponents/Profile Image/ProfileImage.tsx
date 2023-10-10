@@ -51,25 +51,6 @@ function ProfileImage() {
         }
     }
 
-    useEffect(() => {
-        const setWidthSize = () => {
-            const mediaQuery = window.matchMedia('(max-width: 500px)');
-
-            setIsMatched(mediaQuery.matches);
-
-            const updateMatchedState = (e: MediaQueryListEvent) => {
-                setIsMatched(e.matches);
-            };
-
-            mediaQuery.addEventListener('change', updateMatchedState);
-
-            return() => {
-                mediaQuery.removeEventListener('change', updateMatchedState);
-            };
-        }
-
-    }, []);
-
     return (
         <div>
             
