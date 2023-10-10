@@ -1,0 +1,46 @@
+
+@import "../../Styles/Variables.scss";
+
+.logo-button{
+    border: none;
+    height: 0;
+    width: 0;
+    
+    &:hover, :focus{
+        opacity: 0.7;
+    }
+}
+
+.img-bottom-right{
+    height: 60px;
+    width: 60px;
+    border: none;
+    background: transparent;
+    position: absolute;
+    top: 90%; 
+    right: 5%;
+
+    @media (max-width: 600px), (max-height: 800px) {
+        display: none;
+    }
+}
+
+.accessibility-menu{
+    position: fixed;
+    top: 25%;
+    right: 3.2rem; 
+    height: 35rem;
+    width: 0; 
+    background-color: $dark-teal;
+    overflow: hidden;
+    z-index: 5;
+    transform: translateX(-50px);
+    transition: ease-in-out 0.4s;
+}
+
+.show-menu{
+    width: 25rem;
+    transition: ease-in-out 0.4s;
+    transform: translateX(50px);
+}
+

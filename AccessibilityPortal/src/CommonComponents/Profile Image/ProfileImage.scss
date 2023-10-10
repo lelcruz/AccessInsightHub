@@ -1,0 +1,51 @@
+
+.img-upload{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+
+    &:before{
+    content: "\f093";
+    font-family: "Font Awesome 5 Free";  //Font family for icon
+    font-weight: 900;
+    font-size: 50px;
+    position: absolute;
+    padding-top: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: gray;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #fff;
+  }
+  
+    &:hover:before{
+    opacity: 0.8;
+    cursor: pointer;
+    }
+}
+
+img{
+    width: auto;
+    height: 100%;
+}
+
+.crop-modal{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    row-gap: 40px;
+
+    .save-button{
+      position: absolute;
+      margin-top: 85%;
+      right: 30px;
+    }
+}

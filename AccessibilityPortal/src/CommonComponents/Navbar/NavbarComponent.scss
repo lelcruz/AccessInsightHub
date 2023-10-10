@@ -1,4 +1,6 @@
 @import "../../styles/variables";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 .nav-link{
   transition: all 0.2s;
@@ -16,3 +18,10 @@
 }
 
 
+.search-bar{
+  display: flex;
+
+  @media (max-width: 600px){
+    display: none;
+  }
+}
