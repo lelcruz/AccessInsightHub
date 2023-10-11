@@ -12,6 +12,7 @@ import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
+import Logout from "../LogoutPage/logout";
 
 function MainPage(){
 
@@ -107,27 +108,31 @@ function MainPage(){
                     ></BasicCardComponent>
                 </div>
                 <div>
-                    <BasicCardComponent
+                    <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
+                        handleClick={directToSurveyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={studiesIcon}
                         title={"Studies"}
+                        handleClick={directToStudyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={profileIcon}
                         title={"Profile"}
+                        handleClick={directToProfilePage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
                         title={"Templates"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
 
@@ -136,7 +141,7 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
                 
             </div>
@@ -148,24 +153,28 @@ function MainPage(){
                     <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
+                        handleClick={directToSurveyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={studiesIcon}
                         title={"Studies"}
+                        handleClick={directToStudyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={profileIcon}
                         title={"Profile"}
+                        handleClick={directToProfilePage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
                         title={"Templates"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
 
@@ -174,7 +183,7 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
                 
             </div>
@@ -216,9 +225,8 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
-                
             </div>
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
