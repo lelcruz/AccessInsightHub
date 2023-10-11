@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "../../Styles/ProfilePage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import EditModal from "./EditModal";
+import PasswordModal from "./PasswordModal";
 import ProfileImage from "../../CommonComponents/Profile Image/ProfileImage";
+import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
 
 
 function ProfilePage(){
@@ -46,16 +48,21 @@ function ProfilePage(){
                             <th scope="row">Preferences</th>
                             <td><a href="#">Edit Preferences</a></td>
                             </tr>
+                            <tr>
+                            <th scope="row">Password</th>
+                            <td><PasswordModal /></td>
+                            </tr>
                         </tbody>
-                        <div className="edit"><EditModal/> </div>
+                        <div className="edit">
+                            <EditModal/>
+                            <span style={{"marginRight": "30px"}}></span>
+                            <Button title={"Log out"} color={"light"}/>
+                        </div>
                     </table>
                 </div>
            </div>
         </div>   
     </div>
-
-
-    
 
     );
 

@@ -23,6 +23,11 @@
   }
 
   /* Size guide for modal body */
+  .extra-small{
+    width: 400px;
+    height: 320px;
+  }
+
   .small{
     width: 420px;
     height: 520px;
@@ -66,6 +71,7 @@
       font-weight: 600;
       font-size: 16px;
       margin-bottom: -10px;
+      text-align: start;
     }
 
     .single-item{
