@@ -38,6 +38,10 @@ function LoginPage() {
 
         setVerification(true);
 
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        //auth.setPersistence('session') 
+
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(async userCredential => {
             logging.info(userCredential);
@@ -76,6 +80,10 @@ function LoginPage() {
         if (error !== '') setError('');
 
         setVerification(true);
+
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        //auth.setPersistence('session') 
 
         SignInWithSocialMedia(provider)
         .then(result => {
