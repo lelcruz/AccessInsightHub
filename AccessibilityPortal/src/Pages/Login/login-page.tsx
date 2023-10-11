@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc} from "firebase/firestore";
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from 'reactstrap';
@@ -28,7 +28,8 @@ function LoginPage() {
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
+                    logging.info('User detected. Email: ' + user.email);
+                    navigate('/main')
             }}
     })}, []);
 
@@ -79,6 +80,21 @@ function LoginPage() {
         SignInWithSocialMedia(provider)
         .then(result => {
             logging.info(result);
+
+            // Save user's information
+            const user = result.user
+            if (user) {
+                // Store data to Firestore
+                const docRef = addDoc(collection(db, "users"), {
+                    firstName: user.email,
+                    lastName: "null",
+                    dob: "01/01/1900",
+                    email: user.email,
+                    role: "participant",
+                });
+            } else {
+                logging.error('User is null');
+            }
             navigate('/main');
         })
         .catch(error => {
