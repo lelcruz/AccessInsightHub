@@ -37,7 +37,7 @@ function EditModal() {
                     <input type="password" className="full-length-item"></input> {/* exclude */}
                     <label htmlFor='confirmPass'>Confirm Password</label>
                     <input type="password" className="full-length-item"></input> {/* exclude */}
-            
+                  
                     <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
                     <Button color={"dark"} type="submit" title={"Save"}/>
                  </form>

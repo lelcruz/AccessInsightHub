@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./NavbarComponent.scss";
 
 const NavbarComponent = () => {
+
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Submit!");
@@ -22,7 +23,7 @@ const NavbarComponent = () => {
         <Link to="/profile" className="nav-link active" aria-current="page">
           Profile
         </Link>
-        <form onSubmit={submitHandler} className="d-flex" role="search">
+        <form onSubmit={submitHandler} className="search-bar" role="search">
           <input
             className="form-control me-2"
             type="search"
@@ -36,6 +37,7 @@ const NavbarComponent = () => {
       </div>
     </nav>
   );
+
 };
 
 export default NavbarComponent;

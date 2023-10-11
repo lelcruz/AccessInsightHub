@@ -9,7 +9,6 @@
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Ensure the modal is on top of other elements */
-
 }
 
 /* Modal container styles */
@@ -23,36 +22,36 @@
 }
 
 /* Size guide for modal body */
-.small{
-  width: 420px;
-  height: 520px;
-}
+  .small{
+    width: 420px;
+    height: 520px;
+  }
 
-.medium{
-  width: 500px;
-  height: 590px;
-}
+  .medium{
+    width: 500px;
+    height: 590px;
+  }
 
-.large{
-  width: 800px;
-  height: 750px;
-}
-
-/* Close button styles */
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* Modal content styles */
-.modal-content {
-  margin-top: 20px;
-}
+  .large{
+    width: 800px;
+    height: 750px;
+  }
+  
+  /* Close button styles */
+  .modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  /* Modal content styles */
+  .modal-content {
+    margin-top: 20px;
+  }
 
 .form-box{
   margin-top: 10px;
