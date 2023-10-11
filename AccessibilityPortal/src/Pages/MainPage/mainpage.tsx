@@ -26,10 +26,6 @@ function MainPage(){
         navigate('/change');
     };
 
-    const directToLogoutPage = () => {
-        navigate('/logout');
-    };
-
     const directToStudyPage = () => {
         navigate('/studies');
     }
@@ -54,7 +50,7 @@ function MainPage(){
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
+                    logging.info('User detected. Email: ' + user.email);
                     // User.mail to lead to correct main page
 
                     const q = query(collection(db, "users"), where("email", "==", user.email));

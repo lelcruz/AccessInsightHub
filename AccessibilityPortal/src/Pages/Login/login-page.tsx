@@ -28,7 +28,8 @@ function LoginPage() {
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
+                    logging.info('User detected. Email: ' + user.email);
+                    navigate('/main')
             }}
     })}, []);
 
