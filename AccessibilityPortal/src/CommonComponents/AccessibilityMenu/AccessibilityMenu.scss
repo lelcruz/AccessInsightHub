@@ -17,8 +17,8 @@
     border: none;
     background: transparent;
     position: absolute;
-    top: 90%; 
-    right: 5%;
+    top: 91%; 
+    right: 2.5%;
 
     @media (max-width: 600px), (max-height: 800px) {
         display: none;
@@ -27,19 +27,20 @@
 
 .accessibility-menu{
     position: fixed;
-    top: 25%;
-    right: 3.2rem; 
-    height: 35rem;
+    top: 15%;
+    right: 5rem; 
+    height: 41rem;
     width: 0; 
-    background-color: $dark-teal;
+    background-color: $grey-purple;
     overflow: hidden;
     z-index: 5;
     transform: translateX(-50px);
     transition: ease-in-out 0.4s;
 }
 
+
 .show-menu{
-    width: 25rem;
+    width: 30rem;
     transition: ease-in-out 0.4s;
     transform: translateX(50px);
 }
