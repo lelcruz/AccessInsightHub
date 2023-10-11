@@ -27,7 +27,7 @@ function LogoutPage() {
             <p className='text-center'>Are you sure you want to logout?</p>
             <div className='text-center'> 
                 <Button color="info" className="mr-2" onClick={() => Logout()}>Logout</Button>
-                <BasicButtonComponent title={"Cancel"} onClick={directToMainPage}></BasicButtonComponent>
+                <BasicButtonComponent color='light' title={"Cancel"} onClick={directToMainPage}></BasicButtonComponent>
             </div>
         </div>
     );
