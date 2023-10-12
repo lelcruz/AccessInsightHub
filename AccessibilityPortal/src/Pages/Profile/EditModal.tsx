@@ -11,6 +11,9 @@ function EditModal() {
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [dob, setDob] = useState<string>("");
+    const [newLastName, setNewLastName] = useState<string>("");
+    const [newFirstName, setNewFirstName] = useState<string>("");
+    const [newDob, setNewDob] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [userID, setUserID] = useState<string>("");
 
@@ -20,6 +23,11 @@ function EditModal() {
 
     const closeModal = () => {
         setModalShow(false);
+
+        // Reset all the unsaved information to display the current info properly
+        setNewFirstName(firstName);
+        setNewLastName(lastName);
+        setNewDob(dob);
     }
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -30,9 +38,9 @@ function EditModal() {
     const editProfile = () => {
         const docRef = doc(db, "users", userID);
         const newData = {
-            firstName: firstName,
-            lastName: lastName,
-            dob: dob,
+            firstName: newFirstName,
+            lastName: newLastName,
+            dob: newDob,
             email: email,
             role: role,
         };
@@ -57,6 +65,9 @@ function EditModal() {
                     setFirstName(doc.data().firstName);
                     setLastName(doc.data().lastName);
                     setDob(doc.data().dob);
+                    setNewFirstName(doc.data().firstName);
+                    setNewLastName(doc.data().lastName);
+                    setNewDob(doc.data().dob);
                     setEmail(doc.data().email);
                     setRole(doc.data().role);
                     setUserID(doc.id);
@@ -72,11 +83,11 @@ function EditModal() {
             <form className="form-box" style={{rowGap: "8px"}} onSubmit={handleSubmit}>
               
                 <label htmlFor='firstName'>First Name</label>
-                <input type="text" className="full-length-item" value={firstName} onChange={(e) => setFirstName(e.target.value)}></input>
+                <input type="text" className="full-length-item" value={newFirstName} onChange={(e) => {setNewFirstName(e.target.value)}}></input>
                 <label htmlFor='lastName'>Last Name</label>
-                <input type="text" className="full-length-item" value={lastName} onChange={(e) => setLastName(e.target.value)}></input> 
+                <input type="text" className="full-length-item" value={newLastName} onChange={(e) => setNewLastName(e.target.value)}></input> 
                 <label htmlFor='DOB'>Date of Birth</label>
-                <input type="date" className="full-length-item" value={dob} min="1900-01-01" max="2023-01-01" onChange={(e) => setDob(e.target.value)}></input>
+                <input type="date" className="full-length-item" value={newDob} min="1900-01-01" max="2023-01-01" onChange={(e) => setNewDob(e.target.value)}></input>
         
                 <Button color={"dark"} onClick={editProfile} title={"Save"}/>
                 <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>

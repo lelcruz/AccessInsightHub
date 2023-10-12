@@ -92,7 +92,7 @@ function LoginPage() {
             if (user) {
                 
                 /* 
-                Author: Minh Hien Luong
+                Author: Shane Luong
                 -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore. It causes the system
                 detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
                 */
@@ -108,6 +108,7 @@ function LoginPage() {
                         dob: dob, // Default
                         email: user.email,
                         role: "participant", // Default
+                        //password  ask for creating here or synchronize
                     });
                 }
                 navigate('/main');

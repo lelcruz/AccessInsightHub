@@ -129,11 +129,6 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-            
             </div>
         </>
         : isResearcher ?
@@ -166,12 +161,7 @@ function MainPage(){
                         title={"Templates"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-                
+                </div>   
             </div>
         </>
         : isParticipant ?
@@ -205,11 +195,6 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-                
             </div>
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
