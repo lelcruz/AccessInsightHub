@@ -110,7 +110,12 @@ function PasswordModal() {
                     
                     <label htmlFor="password">Confirm Password</label>
                     <input type="password" placeholder="****************" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
-            
+
+                    {/* 
+                    Author: Shane Luong
+                    -> First time hitting SAVE will force the page to reload (ISSUE), the cause not yet found. Fix later
+                    */}
+
                     <Button color={"dark"} onClick={changePassword} title={"Save"}/>
                     <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
 

@@ -9,6 +9,7 @@ import '../../Styles/login.scss';
 import { Providers, auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import { SignInWithSocialMedia } from './login-socialmedia';
+import RegisterWithGoogle from '../Registration/RegisterWithGoogleModal';
 
 function LoginPage() {
     
@@ -90,7 +91,6 @@ function LoginPage() {
             // Save user's information
             const user = result.user
             if (user) {
-                
                 /* 
                 Author: Shane Luong
                 -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore. It causes the system
@@ -108,9 +108,12 @@ function LoginPage() {
                         dob: dob, // Default
                         email: user.email,
                         role: "participant", // Default
-                        //password  ask for creating here or synchronize
                     });
+
+                    // Create password with Google sign-in accounts
+                    RegisterWithGoogle;
                 }
+                // Direct to main
                 navigate('/main');
             }
         })
