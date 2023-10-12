@@ -88,7 +88,7 @@ function MainPage(){
 
         { isAdmin ?
         <>
-            <div className="display-box">
+            <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
                         imageUrl={profileIcon}
