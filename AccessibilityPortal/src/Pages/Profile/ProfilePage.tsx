@@ -20,9 +20,9 @@ function ProfilePage(){
             {/* Data table storing user information */}
             <div className="table-wrap">
                 <div className="table-responsive">
+                    <h1>Profile Information</h1>
+                    <h4>Manage your personal information</h4>
                     <table className="table table-hover">
-                        <h1>Profile Information</h1>
-                        <h4>Manage your personal information</h4>
                         <tbody>
                             <tr>
                             <th scope="row">Name</th>
@@ -53,12 +53,12 @@ function ProfilePage(){
                             <td><PasswordModal /></td>
                             </tr>
                         </tbody>
-                        <div className="edit">
+                    </table>
+                    <div className="edit">
                             <EditModal/>
                             <span style={{"marginRight": "30px"}}></span>
                             <Button title={"Log out"} color={"light"}/>
-                        </div>
-                    </table>
+                    </div>
                 </div>
            </div>
         </div>   
