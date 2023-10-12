@@ -15,6 +15,7 @@ function LoginPage() {
     const [verify, setVerification] = useState<boolean>(false);
     const [login_email, setEmail] = useState<string>("");
     const [login_password, setPassword] = useState<string>("");
+    const [dob, setDob] = useState<string>("null");
     const [error, setError] = useState<string>("");
 
     const navigate = useNavigate();
@@ -38,6 +39,10 @@ function LoginPage() {
 
         setVerification(true);
 
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        auth.setPersistence('session') 
+
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(async userCredential => {
             logging.info(userCredential);
@@ -60,10 +65,7 @@ function LoginPage() {
                             logging.error('Error deleting user:', error);
                         });
                 }
-            } else {
-                logging.error('User is null');
-            }
-
+            } 
         })
         .catch(error => {
             logging.error(error);
@@ -77,25 +79,39 @@ function LoginPage() {
 
         setVerification(true);
 
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        auth.setPersistence('session') 
+
         SignInWithSocialMedia(provider)
-        .then(result => {
+        .then(async result => {
             logging.info(result);
 
             // Save user's information
             const user = result.user
             if (user) {
-                // Store data to Firestore
-                const docRef = addDoc(collection(db, "users"), {
-                    firstName: user.email,
-                    lastName: "null",
-                    dob: "01/01/1900",
-                    email: user.email,
-                    role: "participant",
-                });
-            } else {
-                logging.error('User is null');
+                
+                /* 
+                Author: Minh Hien Luong
+                -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore. It causes the system
+                detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
+                */
+
+                // Check if the email already exists in Firestore
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    // Store data to Firestore
+                    const docRef = addDoc(collection(db, "users"), {
+                        firstName: user.email,
+                        lastName: "null", // Default
+                        dob: dob, // Default
+                        email: user.email,
+                        role: "participant", // Default
+                    });
+                }
+                navigate('/main');
             }
-            navigate('/main');
         })
         .catch(error => {
             logging.error(error);
