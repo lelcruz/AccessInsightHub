@@ -11,7 +11,6 @@ import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
-import Logout from "../LogoutPage/logout";
 
 function MainPage(){
 
@@ -134,11 +133,7 @@ function MainPage(){
                 <div>
                     <BasicButtonComponent color='light' title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
-
-                <div>
-                    <Logout></Logout>
-                </div>
-                
+            
             </div>
         </>
         : isResearcher ?
@@ -175,10 +170,6 @@ function MainPage(){
 
                 <div>
                     <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <Logout></Logout>
                 </div>
                 
             </div>
@@ -218,10 +209,7 @@ function MainPage(){
                 <div>
                     <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
                 </div>
-
-                <div>
-                    <Logout></Logout>
-                </div>
+                
             </div>
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
