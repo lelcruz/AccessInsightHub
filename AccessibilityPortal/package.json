@@ -26,7 +26,8 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.15.0",
     "reactstrap": "^9.2.0",
-    "styled-components": "^6.0.8"
+    "styled-components": "^6.0.8",
+    "survey-creator-react": "^1.9.112"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.4",

@@ -3334,7 +3334,7 @@ react-bootstrap@^2.8.0:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
-"react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react-dom@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.8.0 || ^17 || ^18", react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.14.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0:
+"react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react-dom@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.5.0 || ^17.0.1 || ^18.1.0", "react-dom@^16.8.0 || ^17 || ^18", react-dom@^18.2.0, "react-dom@>= 16.8.0", react-dom@>=16.14.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -3405,7 +3405,7 @@ react-transition-group@^4.4.2, react-transition-group@^4.4.5:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-"react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.x || ^17 || ^18", react@^18.2.0, "react@>= 16.8.0", react@>=0.14.0, react@>=15.0.0, react@>=16.14.0, react@>=16.3, react@>=16.6.0, react@>=16.8, react@>=16.8.0:
+"react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.5.0 || ^17.0.1 || ^18.1.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.x || ^17 || ^18", react@^18.2.0, "react@>= 16.8.0", react@>=0.14.0, react@>=15.0.0, react@>=16.14.0, react@>=16.3, react@>=16.6.0, react@>=16.8, react@>=16.8.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -3839,6 +3839,38 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+survey-core@1.9.112:
+  version "1.9.112"
+  resolved "https://registry.npmjs.org/survey-core/-/survey-core-1.9.112.tgz"
+  integrity sha512-4CjeAfIV0W6VK5oR5BKBp/dymX0ZjKx4LyT7BlPZx24M/d0dIGXAigUP8tfne8DQ6cJd3hh3YmEyQvFJbWOhdw==
+
+survey-creator-core@1.9.112:
+  version "1.9.112"
+  resolved "https://registry.npmjs.org/survey-creator-core/-/survey-creator-core-1.9.112.tgz"
+  integrity sha512-D+UI6OahLfumyU5QnIJWRJNefTgupXvwk8hd46eJLATqYg0/VSRxsn8PUxt3JOCVBulX1kwLZZ7tpQKrbOYtDA==
+  dependencies:
+    survey-core "1.9.112"
+
+survey-creator-react@^1.9.112:
+  version "1.9.112"
+  resolved "https://registry.npmjs.org/survey-creator-react/-/survey-creator-react-1.9.112.tgz"
+  integrity sha512-CdvojXRjgsntthNzGEEcBNsVKoYt1pYT5i6k/prRV6CdvOOgKYpF2w566v4hq4vLws9CsKKMrTWodVF65NaJlg==
+  dependencies:
+    react "^16.5.0 || ^17.0.1 || ^18.1.0"
+    react-dom "^16.5.0 || ^17.0.1 || ^18.1.0"
+    survey-core "1.9.112"
+    survey-creator-core "1.9.112"
+    survey-react-ui "1.9.112"
+
+survey-react-ui@1.9.112:
+  version "1.9.112"
+  resolved "https://registry.npmjs.org/survey-react-ui/-/survey-react-ui-1.9.112.tgz"
+  integrity sha512-wowgIumRJPJ+7rd+9dDLRFRKF4T21uihzX/yNls7Fkkhmb4Y4+3BaKZmuD8CAhEtigA+8PdXweNGvCiJ2y5sBw==
+  dependencies:
+    react "^16.5.0 || ^17.0.1 || ^18.1.0"
+    react-dom "^16.5.0 || ^17.0.1 || ^18.1.0"
+    survey-core "1.9.112"
 
 tar@^6.0.2, tar@^6.1.11, tar@^6.1.2:
   version "6.1.13"
