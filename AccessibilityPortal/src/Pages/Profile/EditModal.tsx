@@ -25,16 +25,18 @@ function EditModal() {
 
         <Modal size="xs" isOpen={modalShow} onClose={closeModal}>
             <form className="form-box" style={{rowGap: "8px"}} onSubmit={handleSubmit}>
+              
                 <label htmlFor='firstName'>First Name</label>
-                <input type="text" className="full-length-item"></input>
+                <input type="text" className="full-length-item"></input> {/* display current info */}
                 <label htmlFor='lastName'>Last Name</label>
-                <input type="text" className="full-length-item"></input>
+                <input type="text" className="full-length-item"></input> {/* display current info */}
                 <label htmlFor='DOB'>Date of Birth</label>
-                <input type="date" className="full-length-item"></input>
+                <input type="date" className="full-length-item"></input> {/* display current info */}
         
                 <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
                 <Button color={"dark"} type="submit" title={"Save"}/>
-                </form>
+            
+          </form>
         </Modal>
         </> 
     );

@@ -11,6 +11,7 @@ import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
+import Logout from "../LogoutPage/logout";
 
 function MainPage(){
 
@@ -22,10 +23,6 @@ function MainPage(){
 
     const directToChangePassword = () => {
         navigate('/change');
-    };
-
-    const directToLogoutPage = () => {
-        navigate('/logout');
     };
 
     const directToStudyPage = () => {
@@ -52,7 +49,7 @@ function MainPage(){
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
+                    logging.info('User detected. Email: ' + user.email);
                     // User.mail to lead to correct main page
 
                     const q = query(collection(db, "users"), where("email", "==", user.email));
@@ -106,7 +103,7 @@ function MainPage(){
                     ></BasicCardComponent>
                 </div>
                 <div>
-                    <BasicCardComponent
+                    <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
                         handleClick={directToSurveyPage}
@@ -139,7 +136,7 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
                 
             </div>
@@ -181,7 +178,7 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
                 
             </div>
@@ -223,9 +220,8 @@ function MainPage(){
                 </div>
 
                 <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
+                    <Logout></Logout>
                 </div>
-                
             </div>
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)

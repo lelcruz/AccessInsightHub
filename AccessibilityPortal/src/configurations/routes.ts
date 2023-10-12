@@ -3,7 +3,6 @@ import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
-import LogoutPage from '../Pages/LogoutPage/logout-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
 import MainPage from "../Pages/MainPage/mainpage";
 import StudiesPage from "../Pages/Studies/StudiesPage";
@@ -45,13 +44,6 @@ const routes: IRoute[] = [
         exact: true,
         component: ChangePasswordPage,
         name: 'Change Password Page',
-        protected: true
-    },
-    {
-        path: '/logout',
-        exact: true,
-        component: LogoutPage,
-        name: 'Logout Page',
         protected: true
     },
     {
