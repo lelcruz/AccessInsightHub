@@ -20,10 +20,6 @@ function MainPage(){
         navigate('/login');
     };
 
-    const directToChangePassword = () => {
-        navigate('/change');
-    };
-
     const directToStudyPage = () => {
         navigate('/studies');
     }
@@ -40,17 +36,27 @@ function MainPage(){
         navigate('/template');
     }
 
+    const reload = () => {
+        window.location.reload();
+    }
+
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
-
+    
     useEffect(() => {
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
-                    // User.mail to lead to correct main page
 
+                     /* 
+                    Author: Shane Luong
+                    -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore (sign-in with Google only). It causes the system
+                    detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
+                    */
+
+                    // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
                     const querySnapshot = await getDocs(q);
 
@@ -74,7 +80,6 @@ function MainPage(){
                     });
             }}
     })}, []);
-
 
     return (
         <div className="main-page">
@@ -129,11 +134,6 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-            
             </div>
         </>
         : isResearcher ?
@@ -166,12 +166,7 @@ function MainPage(){
                         title={"Templates"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-                
+                </div>   
             </div>
         </>
         : isParticipant ?
@@ -205,23 +200,16 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-                
             </div>
         </>
-        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
+        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
             <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
         </>
     }
-
         <AccessibilityMenu />
         </div>
-    
     );
 }
 

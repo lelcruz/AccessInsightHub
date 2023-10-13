@@ -40,6 +40,8 @@ function ForgotPasswordPage() {
             setError(error.message);
             setSending(false);
         });
+
+        window.close();
     }
 
     return (
@@ -47,8 +49,8 @@ function ForgotPasswordPage() {
             {sent ?
                 <div>
                 <p>The recovery email has been sent to the entered email with instructions. Please check your mailbox.</p>
-                <BasicButtonComponent title={"Go back"} onClick={directToLoginPage}></BasicButtonComponent>
-                <BasicButtonComponent title={"Resend"} onClick={back}></BasicButtonComponent>
+                <BasicButtonComponent color='light' title={"Go back"} onClick={directToLoginPage}></BasicButtonComponent>
+                <BasicButtonComponent color='light' title={"Resend"} onClick={back}></BasicButtonComponent>
                 </div>
             :
                 <>

@@ -5,9 +5,7 @@ import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import EditModal from "./EditModal";
 import PasswordModal from "./PasswordModal";
 import ProfileImage from "../../CommonComponents/Profile Image/ProfileImage";
-import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
 import { auth, db } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
 import Logout from "../LogoutPage/logout";
 
 

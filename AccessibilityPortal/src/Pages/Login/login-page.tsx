@@ -9,6 +9,7 @@ import '../../Styles/login.scss';
 import { Providers, auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import { SignInWithSocialMedia } from './login-socialmedia';
+import RegisterWithGoogle from '../Registration/RegisterWithGoogleModal';
 
 function LoginPage() {
     
@@ -90,9 +91,8 @@ function LoginPage() {
             // Save user's information
             const user = result.user
             if (user) {
-                
                 /* 
-                Author: Minh Hien Luong
+                Author: Shane Luong
                 -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore. It causes the system
                 detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
                 */
@@ -109,7 +109,11 @@ function LoginPage() {
                         email: user.email,
                         role: "participant", // Default
                     });
+
+                    // Create password with Google sign-in accounts
+                    RegisterWithGoogle;
                 }
+                // Direct to main
                 navigate('/main');
             }
         })
