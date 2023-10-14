@@ -30,10 +30,27 @@
     height: 20rem;
     max-width: 20rem;
     max-height: 30rem;
-    background-color: $grey-purple;
+    background-color: rgba(136, 159, 190, 0.9); /* 0.9 defines 90% opacity */
     overflow: hidden;
     z-index: 5;
     transition: ease-in-out 0.4s;
+}
+
+
+.reset-button {
+    background-color: #071b30;
+    color: white;
+    border: none;
+    padding: 5px 141px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 0px; 
+    left: 0px; 
+}
+
+.reset-button:hover {
+    background-color: #124377;
 }
 
 .show-menu {

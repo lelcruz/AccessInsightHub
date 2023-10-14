@@ -4,7 +4,7 @@ import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
     const [toggle, setToggle] = useState(false);
-    const [showTestButton, setShowTestButton] = useState(true);
+    const [showResetButton, setShowResetButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,9 +29,9 @@ function AccessibilityMenu() {
                 <img src={accessibilityIcon} className="img-bottom-right" alt="Accessibility Icon" />
             </button>
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
-                {showTestButton && ( // Render the test button only if showTestButton is true
-                    <button className="test-button" onClick={() => alert("Test button clicked!")}>
-                        Test
+                {showResetButton && ( // Render the Reset button only if showResetButton is true
+                    <button className="reset-button" onClick={() => alert("Reset button clicked!")}>
+                        Reset
                     </button>
                 )}
             </div>
