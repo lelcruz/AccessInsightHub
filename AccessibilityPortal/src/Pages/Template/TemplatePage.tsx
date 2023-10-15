@@ -1,6 +1,7 @@
 import React from 'react';
 import './SurveyTemplate.scss';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
+import QuestionCard from "./QuestionCard";
 
 
 function TemplatePage(){
@@ -9,11 +10,10 @@ function TemplatePage(){
       <div className="page-body">
         <NavbarComponent />
         <nav className="top-menu-wrapper">
-            <a> Designer</a>
+            <a> Editor</a>
             <a> Preview</a>
-            <a> Designer</a>
-            <a> Designer</a>
-            <a> Designer</a>
+            <a> Theme</a>
+            <a> Settings</a>
         </nav>
 
         <div className="editor">
@@ -23,8 +23,11 @@ function TemplatePage(){
 
             <div className="main-workspace">
                 <div className="title">
-                    <input type="text" placeholder="Survey Title" />
+                    <div className="borderless-input survey-title" aria-label="Survey-Title" role="textbox" contentEditable="true" aria-multiline="true"/>
+                    <div className="borderless-input description" aria-label="Description" role="textbox" contentEditable="true" aria-multiline="true"  />
+                    <hr></hr>
                 </div>
+                <QuestionCard />
             </div>
         </div>
         

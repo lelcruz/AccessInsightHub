@@ -30,8 +30,8 @@
         }
 
         &:active{
-            border-bottom: 3px ridge $english-violet;
-            font-weight: 700;
+            border-bottom: 4px ridge $rose-quartz;
+            box-shadow: 5px 3px 10px inset rgba(128, 128, 128, 0.2);
         }
 
     }
@@ -41,11 +41,14 @@
     position: relative;
     top: 0;
     left: 0;
-    
+    height: 100%;
+
     .side-menu{
         width: 15rem;
         float: left;
         background-color: snow;
+        border-right: 2px ridge rgba(136, 131, 131, 0.2);
+        height: 100%;
     }
     
     .main-workspace{
@@ -53,22 +56,58 @@
         //top: 0;
         //left: 15rem;
         //width: calc(100% - 15rem);
-        //display: flex;
-        //flex-grow: 1;
-        background-color: whitesmoke;
+        display: flex;
+        flex-grow: 1;
+        background-color: snow;
         height: 100%;
-        //overflow-y: scroll;
+        overflow-y: auto;
 
         .title{
-            
-            input[type=text] {
-                border: none;
-                background-color: none;
-                outline: 0;
-                font-size: 30px;
-                width: 300px;
-                height: 40px;
+            padding-top: 50px;
+            padding-left: 100px;
+
+            .borderless-input{
+                &[contentEditable]{
+                    outline: 0px solid transparent;
+
+                    &:focus{
+                        border: 2px solid $rose-quartz;   
+                        box-shadow: 1px 1px 5px 1px $rose-quartz;            
+                    }
+                }
             }
+
+            .survey-title{
+                width: 50rem;
+                min-height: 4rem;
+                font-size: 30px;
+
+                //Placeholder text
+                &[contentEditable]:empty:before{
+                    content: "Survey Title";
+                    color: gray; 
+                    font-weight: 700; 
+                }
+
+            }
+
+            .description{
+                width: 50rem;
+                min-height: 4rem;
+                font-size: 20px;
+
+                //Placeholder text
+                &[contentEditable]:empty:before{
+                    content: "Description";
+                    color: gray;
+                }
+            }
+
+            hr{
+                background-color: $rose-quartz;
+                height: 3px;
+            }
+            
         }
     }
 
