@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import Firebase, { auth } from '../../configurations/firebase';
+import { auth } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
 import '../../Styles/registration.scss';
@@ -115,7 +115,6 @@ function RegisterPage() {
                     lastName: lastName,
                     dob: dob,
                     email: signup_email,
-                    password: signup_password,
                     role: role,
                 });
 

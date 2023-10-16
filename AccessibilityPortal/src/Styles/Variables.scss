@@ -3,6 +3,7 @@ $rose-quartz: #BAA1A7;
 $english-violet: #544E61;
 $light-grey: #D0CDD7;
 $dark-teal: #416165;
+$grey-purple: #5d69ae;
 
 $grid-breakpoints: (
   xs: 0,
@@ -12,3 +13,5 @@ $grid-breakpoints: (
   xl: 1200px,
   xxl: 1400px
 );
+
+$fa-font-path: "./fontawesome-free-6.4.2-web/webfonts";
