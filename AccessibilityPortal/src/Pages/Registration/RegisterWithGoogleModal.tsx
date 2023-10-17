@@ -26,7 +26,7 @@ function RegisterWithGoogle() {
     }
 
     const createPassword = () => {
-        
+
     }
 
 
@@ -37,18 +37,18 @@ function RegisterWithGoogle() {
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
                     // Calling for user's profile from Firestore Database
-                   
+                    
                 });
             }
     })}, []);
 
     return(
         <>
-        <a href="#" onClick={openModal}>Change Password</a>
+        <a href="#" onClick={openModal}>Create a Password</a>
             <Modal size="xs" isOpen={modalShow} onClose={closeModal}>
                 <form className="form-box" style={{rowGap: "8px"}}>
                     
-                    <label htmlFor="password">New Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" placeholder="****************" value={new_password} onChange={(e) => setNewPassword(e.target.value)} className="form-control mb-3"/>
                     
                     <label htmlFor="password">Confirm Password</label>

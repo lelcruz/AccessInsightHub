@@ -111,7 +111,7 @@ function LoginPage() {
                     });
 
                     // Create password with Google sign-in accounts
-                    RegisterWithGoogle;
+                    //RegisterWithGoogle;
                 }
                 // Direct to main
                 navigate('/main');
