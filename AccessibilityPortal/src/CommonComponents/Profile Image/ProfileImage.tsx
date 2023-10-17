@@ -36,11 +36,10 @@ function ProfileImage() {
             return Number(300);
         }
         else{
-            return Number(400);
+            return Number(450);
         }
     }
 
-    
     const widthSize: number = setWidthSize();
 
     //Handle a big file 
@@ -62,6 +61,7 @@ function ProfileImage() {
             <div className="crop-modal">
                 <AvatarEditor 
                     width={widthSize}
+                    imageWidth={widthSize}
                     height={300}
                     onCrop={onCrop}
                     onClose={onClose}
@@ -70,7 +70,7 @@ function ProfileImage() {
                 />
             
                 {preview && <img src={preview} alt="Preview" />}
-                <div className="save-button">
+                <div>
                     <BasicButtonComponent color={"light"} title={"Save"} onClick={() => {setImg(preview); closeModal();}} />
                 </div>
                 

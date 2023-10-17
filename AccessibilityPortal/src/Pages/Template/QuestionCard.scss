@@ -1,0 +1,43 @@
+@import "../../Styles/Variables.scss";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+.card-wrapper{
+    position: absolute;
+    margin-top: 230px;    //change with implement stack of cards
+    margin-left: 100px;
+
+    .card{
+        width: 35rem;
+        box-shadow: 0 0 3px 3px rgba(136, 131, 131, 0.1);
+        
+        &:hover, :focus{
+            border: 2px ridge $lilac;
+        }
+    }
+    
+
+}
+
+.question{
+    font-size: 20px;
+
+    &[contentEditable]{
+        outline: 0px solid transparent;
+
+        &:empty:before{
+            content: "Question";
+            color: gray;
+        }
+
+        &:focus{
+            border: none;
+            border-bottom: 2px groove $rose-quartz;
+         } 
+    }
+ 
+}
+
+.answer{
+    
+}

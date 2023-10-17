@@ -82,7 +82,7 @@ function ProfilePage(){
                     </table>
                     <div className="edit">
                             <EditModal/>
-                            <span style={{"marginRight": "30px"}}></span>
+                            <span style={{marginRight: "30px"}}></span>
                             <Logout/>
                     </div>
                 </div>
