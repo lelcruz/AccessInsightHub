@@ -78,9 +78,7 @@ function RegisterPage() {
 
     const signUpWithEmailAndPassword = () => {
         if (!Validation())
-        {
             return;
-        }
 
         if (error !== '') setError('');
 

@@ -9,6 +9,7 @@ import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import TemplatePage from "../Pages/Template/TemplatePage";
+import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 
 const routes: IRoute[] = [
     {
@@ -44,6 +45,13 @@ const routes: IRoute[] = [
         exact: true,
         component: ChangePasswordPage,
         name: 'Change Password Page',
+        protected: true
+    },
+    {
+        path: '/registerWithGoogle',
+        exact: true,
+        component: CreatePasswordWithGoogleAccount,
+        name: 'Register with Google Page',
         protected: true
     },
     {

@@ -9,7 +9,6 @@ import '../../Styles/login.scss';
 import { Providers, auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 import { SignInWithSocialMedia } from './login-socialmedia';
-import RegisterWithGoogle from '../Registration/RegisterWithGoogleModal';
 
 function LoginPage() {
     
@@ -27,11 +26,13 @@ function LoginPage() {
 
     // If the user is still saved, lead to main page
     useEffect(() => {
-        auth.onAuthStateChanged( async user => {
+        auth.onAuthStateChanged(user => {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
-                    navigate('/main')
+
+                    // Saved user will be directed to main if any error occurs
+                    //navigate('/main')
             }}
     })}, []);
 
@@ -91,15 +92,11 @@ function LoginPage() {
             // Save user's information
             const user = result.user
             if (user) {
-                /* 
-                Author: Shane Luong
-                -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore. It causes the system
-                detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
-                */
 
                 // Check if the email already exists in Firestore
                 const q = query(collection(db, "users"), where("email", "==", user.email));
                 const querySnapshot = await getDocs(q);
+
                 if (querySnapshot.empty) {
                     // Store data to Firestore
                     const docRef = addDoc(collection(db, "users"), {
@@ -110,11 +107,12 @@ function LoginPage() {
                         role: "participant", // Default
                     });
 
-                    // Create password with Google sign-in accounts
-                    //RegisterWithGoogle;
+                     // Create password with Google sign-in accounts
+                    navigate('/main');
                 }
-                // Direct to main
-                navigate('/main');
+                else {
+                    navigate('/main')
+                }
             }
         })
         .catch(error => {
@@ -139,7 +137,6 @@ function LoginPage() {
             {/* Need href for the Forgot password anchor*/}
             <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
 
-            
             <Button
                 disabled={verify}
                 color="success"

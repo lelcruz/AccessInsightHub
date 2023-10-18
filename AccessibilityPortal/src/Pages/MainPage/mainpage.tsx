@@ -36,10 +36,6 @@ function MainPage(){
         navigate('/template');
     }
 
-    const reload = () => {
-        window.location.reload();
-    }
-
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
@@ -206,6 +202,7 @@ function MainPage(){
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
             <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            
         </>
     }
         <AccessibilityMenu />
