@@ -16,6 +16,7 @@ function ProfilePage(){
     const [firstName, setFirstName] = useState<string>("");
     const [dob, setDOB] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [signInWithGG, setSignInWithGG] = useState<boolean>(false);
 
     useEffect(() => {
         auth.onAuthStateChanged( async user => {
@@ -31,6 +32,7 @@ function ProfilePage(){
                         setLastName(doc.data().lastName);
                         setEmail(doc.data().email);
                         setDOB(doc.data().dob);
+                        setSignInWithGG(doc.data().signInWithGoogle);
                     });
             }}
     })}, []);
@@ -76,7 +78,7 @@ function ProfilePage(){
                             </tr>
                             <tr>
                             <th scope="row">Password</th>
-                            <td><PasswordModal /></td>
+                            <td>{signInWithGG ? null : <PasswordModal />}</td>
                             </tr>
                         </tbody>
                     </table>

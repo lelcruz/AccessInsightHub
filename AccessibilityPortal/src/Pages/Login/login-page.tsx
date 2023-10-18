@@ -31,8 +31,8 @@ function LoginPage() {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
 
-                    // Saved user will be directed to main if any error occurs
-                    //navigate('/main')
+                    // Saved user will be directed to main if any error occurs (Not yet)
+                    // navigate('/main')
             }}
     })}, []);
 
@@ -105,6 +105,7 @@ function LoginPage() {
                         dob: dob, // Default
                         email: user.email,
                         role: "participant", // Default
+                        signInWithGoogle: true
                     });
 
                      // Create password with Google sign-in accounts

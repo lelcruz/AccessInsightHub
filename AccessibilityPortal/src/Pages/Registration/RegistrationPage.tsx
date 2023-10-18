@@ -114,6 +114,7 @@ function RegisterPage() {
                     dob: dob,
                     email: signup_email,
                     role: role,
+                    signInWithGoogle: false
                 });
 
                 // Back to login
