@@ -23,11 +23,6 @@ function PasswordModal() {
         setModalShow(false);
     }
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        alert('Successully changed password!');
-    }
-
     // Text-fields are required
     function isItEmpty(str: any) {
         return str == null || str.match(/^ *$/) !== null;
@@ -56,22 +51,22 @@ function PasswordModal() {
                 //console.log('Current password is reauthenticated successfully!');
             })
             .catch((error) => {
-                logging.error("The current password is incorrect!");
-                //setError("The current password is incorrect!");
+                //logging.error("The current password is incorrect!");
+                setError("The current password is incorrect!");
                 return false;
             });
 
         // Match password-regex
         if(!passwordRegex.test(new_password)) {
-            logging.error("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
-            //setError("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
+            //logging.error("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
+            setError("Password should contain at least 8 characters, at least 1 UPPERCASE, 1 lowercase, 1 number, and a special character");
             return false;
         }
 
         // Confirm Password
         if(!new_password.match(confirm_newpassword)) {
-            logging.error("Passwords do not match!");
-            //setError("Passwords do not match!");
+            //logging.error("Passwords do not match!");
+            setError("Passwords do not match!");
             return false;
         }
 
@@ -86,15 +81,23 @@ function PasswordModal() {
 
         if (error !== '') setError('');
 
-        auth.currentUser?.updatePassword(new_password)
-        .then(() => {
-            logging.info("Password is changed successfully");
-            setModalShow(false);
-        })
-        .catch(error => {
-            logging.error(error);
-            setError(error.message);
-        });
+        const user = auth.currentUser
+        if (user && user.emailVerified) {
+            try {
+                logging.info("User signed-in: " + user.email);
+                user.updatePassword(new_password)
+                    .then(() => {
+                        logging.info("Password is changed successfully");
+                        setModalShow(false);
+                    })
+                    .catch(error => {
+                        logging.error(error);
+                        setError(error.message);
+                    });
+            } catch (error) {
+                logging.error("Cannot change the password!");
+            }
+        }
     }
 
     return(
@@ -103,13 +106,13 @@ function PasswordModal() {
             <Modal size="xs" isOpen={modalShow} onClose={closeModal}>
                 <form className="form-box" style={{rowGap: "8px"}}>
                     <label htmlFor="password">Current Password</label>
-                    <input type="password" placeholder="****************" value={old_password} onChange={(e) => setOldPassword(e.target.value)} className="form-control mb-3"/>
+                    <input type="password" placeholder="***********" value={old_password} onChange={(e) => setOldPassword(e.target.value)} className="form-control mb-3"/>
                     
                     <label htmlFor="password">New Password</label>
-                    <input type="password" placeholder="****************" value={new_password} onChange={(e) => setNewPassword(e.target.value)} className="form-control mb-3"/>
+                    <input type="password" placeholder="***********" value={new_password} onChange={(e) => setNewPassword(e.target.value)} className="form-control mb-3"/>
                     
                     <label htmlFor="password">Confirm Password</label>
-                    <input type="password" placeholder="****************" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
+                    <input type="password" placeholder="***********" value={confirm_newpassword} onChange={(e) => setConfirmNewPassword(e.target.value)} className="form-control mb-3"/>
 
                     {/* 
                     Author: Shane Luong
@@ -118,9 +121,9 @@ function PasswordModal() {
 
                     <Button color={"dark"} onClick={changePassword} title={"Save"}/>
                     <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
-
-                    {/*<ErrorMessage error={error}/>*/}
                 </form>
+
+                <ErrorMessage error={error}></ErrorMessage> 
             </Modal> 
         </>
     );

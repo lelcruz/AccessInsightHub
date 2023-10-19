@@ -36,10 +36,6 @@ function MainPage(){
         navigate('/template');
     }
 
-    const reload = () => {
-        window.location.reload();
-    }
-
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
@@ -49,12 +45,6 @@ function MainPage(){
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
-
-                     /* 
-                    Author: Shane Luong
-                    -> There is an issue where the system first calls the MAIN before the user profile is stored in Firestore (sign-in with Google only). It causes the system
-                    detected the user as non-role (error in mainpage), but after refreshing once, it works normally. Might check on this later for no logic-conflicts
-                    */
 
                     // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
@@ -206,6 +196,7 @@ function MainPage(){
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
             <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            
         </>
     }
         <AccessibilityMenu />

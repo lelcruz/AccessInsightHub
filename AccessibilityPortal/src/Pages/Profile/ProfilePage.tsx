@@ -7,7 +7,7 @@ import PasswordModal from "./PasswordModal";
 import ProfileImage from "../../CommonComponents/Profile Image/ProfileImage";
 import { auth, db } from '../../configurations/firebase';
 import Logout from "../LogoutPage/logout";
-
+import { useNavigate } from "react-router-dom";
 
 function ProfilePage(){
 
@@ -16,25 +16,44 @@ function ProfilePage(){
     const [firstName, setFirstName] = useState<string>("");
     const [dob, setDOB] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [signInWithGG, setSignInWithGG] = useState<boolean>(false);
+    const [reload, setReload] = useState<boolean>(false);
+
+    const navigate = useNavigate();
+
+    const triggerReload = () => {
+        setReload(prev => !prev); // Toggle the reload state
+      };
+
+    const fetchUserProfile = async () => {
+        const user = auth.currentUser;
+        if (user && user.emailVerified) {
+            try {
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // Calling for user's profile from Firestore Database
+                    setRole(doc.data().role);
+                    setFirstName(doc.data().firstName);
+                    setLastName(doc.data().lastName);
+                    setEmail(doc.data().email);
+                    setDOB(doc.data().dob);
+                    setSignInWithGG(doc.data().signInWithGoogle);
+                });
+            } catch (error) {
+                navigate('/login');
+            }
+        }
+    }
 
     useEffect(() => {
-        auth.onAuthStateChanged( async user => {
-            if (user) {
-                if(user.emailVerified) {
-                
-                    const q = query(collection(db, "users"), where("email", "==", user.email));
-                    const querySnapshot = await getDocs(q);
-                    querySnapshot.forEach((doc) => {
-                        // Calling for user's profile from Firestore Database
-                        setRole(doc.data().role);
-                        setFirstName(doc.data().firstName);
-                        setLastName(doc.data().lastName);
-                        setEmail(doc.data().email);
-                        setDOB(doc.data().dob);
-                    });
-            }}
-    })}, []);
-
+        fetchUserProfile();
+        if(reload) {
+            fetchUserProfile();
+            setReload(false)
+        }
+    }, [reload]);
+    
     return (
         <div className="main-page">
             <NavbarComponent/>
@@ -76,12 +95,12 @@ function ProfilePage(){
                             </tr>
                             <tr>
                             <th scope="row">Password</th>
-                            <td><PasswordModal /></td>
+                            <td>{signInWithGG ? <PasswordModal /> : <p>Unavailable</p>}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div className="edit">
-                            <EditModal/>
+                            <EditModal triggerReload={triggerReload} />
                             <span style={{marginRight: "30px"}}></span>
                             <Logout/>
                     </div>
