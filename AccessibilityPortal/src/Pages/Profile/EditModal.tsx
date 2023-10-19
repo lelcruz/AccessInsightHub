@@ -3,14 +3,20 @@ import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
 import { auth, db } from '../../configurations/firebase';
 import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore";
+import triggerEffect from "./ProfilePage"
 
-function EditModal() {
+interface Props {
+    triggerReload: () => void;
+  }
+
+function EditModal({ triggerReload }: Props) {
 
     const [modalShow, setModalShow] = useState(false);
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [dob, setDob] = useState<string>("");
+    const [signInWithGG, setSignInWithGG] = useState(false);
     const [newLastName, setNewLastName] = useState<string>("");
     const [newFirstName, setNewFirstName] = useState<string>("");
     const [newDob, setNewDob] = useState<string>("");
@@ -43,21 +49,25 @@ function EditModal() {
             dob: newDob,
             email: email,
             role: role,
+            signInWithGoogle: signInWithGG
         };
         // Updating infos
         setDoc(docRef, newData)
         .then(() => {
             console.log("Document updated successfully!");
-            window.location.reload();
+            triggerReload();
+            setModalShow(false)
+            
         })
         .catch((error) => {
             console.error("Error updating document: ", error);
         });
     }
 
-    useEffect(() => {
-        auth.onAuthStateChanged( async user => {
-            if (user) {
+    const fetchUser = async () => {
+        const user = auth.currentUser;
+        if (user && user.emailVerified) {
+            try {
                 const q = query(collection(db, "users"), where("email", "==", user.email));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
@@ -70,10 +80,18 @@ function EditModal() {
                     setNewDob(doc.data().dob);
                     setEmail(doc.data().email);
                     setRole(doc.data().role);
+                    setSignInWithGG(doc.data().signInWithGoogle)
                     setUserID(doc.id);
                 });
+            } catch (error) {
+                
             }
-    })}, []);
+        }
+    }
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
 
     return(
         <>
