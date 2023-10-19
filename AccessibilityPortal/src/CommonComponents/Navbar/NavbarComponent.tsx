@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavbarComponent.scss";
+import BubbleProfile from "../BubbleProfile/BubbleProfile"
 
 const NavbarComponent = () => {
 
@@ -33,7 +34,9 @@ const NavbarComponent = () => {
           <button className="btn btn-dark" type="submit">
             Search
           </button>
+          <BubbleProfile />
         </form>
+        
       </div>
     </nav>
   );

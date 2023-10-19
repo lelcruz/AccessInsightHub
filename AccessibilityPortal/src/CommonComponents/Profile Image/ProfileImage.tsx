@@ -4,8 +4,7 @@ import AvatarEditor from 'react-avatar-edit';
 import Modal from "../Modal Component/ModalComponent";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import BasicButtonComponent from '../Buttons/BasicButtonComponent';
-import { faDraftingCompass } from '@fortawesome/free-solid-svg-icons';
-import { Providers, auth, db, upload } from '../../configurations/firebase';
+import { auth, upload } from '../../configurations/firebase';
 
 function Draft() {
     const [src, setSrc] = useState("");
