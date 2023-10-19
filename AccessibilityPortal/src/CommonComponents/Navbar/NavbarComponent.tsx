@@ -34,9 +34,9 @@ const NavbarComponent = () => {
           <button className="btn btn-dark" type="submit">
             Search
           </button>
-          <BubbleProfile />
+          
         </form>
-        
+        <BubbleProfile />
       </div>
     </nav>
   );
