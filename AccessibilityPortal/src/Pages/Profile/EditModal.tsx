@@ -55,9 +55,8 @@ function EditModal({ triggerReload }: Props) {
         setDoc(docRef, newData)
         .then(() => {
             console.log("Document updated successfully!");
-            triggerReload();
+            triggerReload(); // Reload the Profile Page for update new information
             setModalShow(false)
-            
         })
         .catch((error) => {
             console.error("Error updating document: ", error);
