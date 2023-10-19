@@ -44,7 +44,7 @@
     height: 100%;
 
     .side-menu{
-        width: 15rem;
+        width: 13.65rem;
         float: left;
         background-color: snow;
         border-right: 2px ridge rgba(136, 131, 131, 0.2);
@@ -81,12 +81,12 @@
                 width: 50rem;
                 min-height: 4rem;
                 font-size: 30px;
+                font-weight: 700; 
 
                 //Placeholder text
                 &[contentEditable]:empty:before{
                     content: "Survey Title";
                     color: gray; 
-                    font-weight: 700; 
                 }
 
             }
@@ -109,6 +109,24 @@
             }
             
         }
+
+        .card-wrapper{
+            position: relative;
+            margin-top: 180px;   
+            margin-left: -60rem; 
+
+            .adding-function{
+                //position: absolute;
+                margin-top: 10px;
+                margin-left: 9.4rem;
+                height: 3rem;
+                width: 100%;
+                background-color: gainsboro;
+                border-radius: 5px;
+            }
+        
+        }
+        
     }
 
     

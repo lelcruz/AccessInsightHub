@@ -1,21 +1,28 @@
-import React from "react";
+import React, {useState} from "react";
 import "./QuestionCard.scss";
+import DraggableIcon from "../../assets/grip-horizontal-s.svg";
 
-function QuestionCard(){
+interface QuestionCardProps{
+    children: string;
+}
+
+function QuestionCard(props: QuestionCardProps){
+
     return(
-        <div className="card-wrapper">
+        <div className="question-card">
             <div className="card">
                 <div className="card-header">
-                    <div className="question" aria-label="Question" role="textbox" contentEditable="true" aria-multiline="true" />
+                    <img src={DraggableIcon} />
                 </div>
                 <div className="card-body">
-                    <div className="answer">
-                        
-                    </div>
+                    <div className="question" aria-label="Question" role="textbox" contentEditable="true" aria-multiline="true" />
+                        {props.children}
                 </div>
                 <div className="card-footer"> Function</div>
             </div>
         </div>
+        
+       
     );
 }
 export default QuestionCard;

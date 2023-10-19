@@ -11,7 +11,6 @@ function ProfileImage() {
     const [img, setImg] = useState("");
     const [preview, setPreview] = useState("");
     const [show, setModalShow] = useState(false); 
-    const [isMatched, setIsMatched] = useState(false);
    
     const openModal = () => {
         setModalShow(true);
@@ -61,7 +60,7 @@ function ProfileImage() {
             <div className="crop-modal">
                 <AvatarEditor 
                     width={widthSize}
-                    imageWidth={widthSize}
+                    //imageWidth={widthSize}
                     height={300}
                     onCrop={onCrop}
                     onClose={onClose}
