@@ -2,7 +2,7 @@ import LogoutIcon from "../../assets/logout.svg";
 import ProfileIcon from "../../assets/profile.svg"
 import ContactUsIcon from "../../assets/contactus.svg"
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
-import "../../Styles/bubbleProfile.scss";
+import "./bubbleProfile.scss";
 import { auth, db } from '../../configurations/firebase';
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -12,16 +12,15 @@ interface DropdownItemProps {
   text: string;
 }
 
-interface DropdownProps {
-  open: boolean;
-}
+//interface DropdownProps {
+  //open: boolean;
+//}
 
 function BubbleProfile() {
     const user = auth.currentUser
     const [open, setOpen] = useState(false);
     const [role, setRole] = useState("");
     const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
 
 
@@ -38,7 +37,6 @@ function BubbleProfile() {
                         // Calling for user's profile from Firestore Database
                         setRole(doc.data().role);
                         setFirstName(doc.data().firstName);
-                        setLastName(doc.data().lastName);
                     });
                 } catch (error) {
                     
@@ -48,9 +46,12 @@ function BubbleProfile() {
 
         fetchUserProfile();
 
+    }, []);
+
+    useEffect (() => {
         const handler = (e: any) => {
             console.log("Clicked inside handler");
-            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+            if (open && menuRef.current && !menuRef.current.contains(e.target as Node)) {
                 console.log("IF");
                 setOpen(false);
             }
@@ -61,10 +62,10 @@ function BubbleProfile() {
         
         document.addEventListener("mousedown", handler);
 
-        return () => {
-            document.removeEventListener("mousedown", handler);
-        }
-    }, []);
+        //return () => {
+            //document.removeEventListener("mousedown", handler);
+        //}
+    }, [open]);
 
     return (
         <div className="BubbleProfile">
@@ -73,8 +74,8 @@ function BubbleProfile() {
                     {photoURL ? <img src={photoURL} alt="user avatar" /> : <img src={profileIcon} alt="default avatar" />}
                 </div>
 
-                <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`} >
-                    <h3>{firstName + lastName}<br /><span>{role}</span></h3>
+                <div className={`bubble-menu ${open ? 'active' : 'inactive'}`} >
+                    <h3 className="heading">{firstName}<br /><span>{role}</span></h3>
                     <ul>   
                         <DropdownItem img={ProfileIcon} text={"Profile"} />
                         <DropdownItem img={LogoutIcon} text={"Logout"} />
