@@ -12,10 +12,6 @@ interface DropdownItemProps {
   text: string;
 }
 
-interface DropdownProps {
-  open: boolean;
-}
-
 function BubbleProfile() {
     const user = auth.currentUser
     const [open, setOpen] = useState(false);
@@ -23,8 +19,6 @@ function BubbleProfile() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
-
-
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -47,15 +41,18 @@ function BubbleProfile() {
         }
 
         fetchUserProfile();
+        if(user) {
+            setPhotoURL(user.photoURL)
+        }
 
+        // Whenever click outside --> CLOSE
         const handler = (e: any) => {
-            console.log("Clicked inside handler");
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-                console.log("IF");
+                console.log("Click outside");
                 setOpen(false);
             }
             else {
-                console.log("ELSE");
+                console.log("Click in the bubble");
             }
         };
         
@@ -68,7 +65,7 @@ function BubbleProfile() {
 
     return (
         <div className="BubbleProfile">
-            <div className='menu-container' ref={menuRef}>
+            <div ref={menuRef}>
                 <div className='menu-trigger' onClick={() => { setOpen(!open); console.log(!open) }}>
                     {photoURL ? <img src={photoURL} alt="user avatar" /> : <img src={profileIcon} alt="default avatar" />}
                 </div>

@@ -9,6 +9,8 @@ import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
+import usersIcon from "../../assets/users-svgrepo-com.svg"
+import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 
@@ -34,6 +36,10 @@ function MainPage(){
 
     const directToTemplatePage = () => {
         navigate('/template');
+    }
+
+    const directToUserManagement = () => {
+        navigate('/usermanage');
     }
 
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -86,13 +92,14 @@ function MainPage(){
             <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
-                        imageUrl={profileIcon}
+                        imageUrl={usersIcon}
                         title={"Users"}
+                        handleClick={directToUserManagement}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
-                        imageUrl={templateIcon}
+                        imageUrl={messageIcon}
                         title={"Messages"}
                     ></BasicCardComponent>
                 </div>

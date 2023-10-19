@@ -3,7 +3,6 @@ import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
 import { auth, db } from '../../configurations/firebase';
 import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore";
-import triggerEffect from "./ProfilePage"
 
 interface Props {
     triggerReload: () => void;
