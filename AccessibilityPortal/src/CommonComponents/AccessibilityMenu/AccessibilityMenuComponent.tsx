@@ -40,6 +40,9 @@ function AccessibilityMenu() {
                 <img src={accessibilityIcon} className="img-bottom-right" alt="Accessibility Icon" />
             </button>
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
+                <div className = "menu-header">
+                    Accessibility Menu
+                </div>
                 {showCloseButton && (
                     <button className = "close-button">
                         Close
