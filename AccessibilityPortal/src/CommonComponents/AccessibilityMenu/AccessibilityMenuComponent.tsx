@@ -13,6 +13,7 @@ function AccessibilityMenu() {
     const [showImageButton] = useState(true);
     const [showDyslexiaButton] = useState(true);
     const [showReadingAidButton] = useState(true);
+    const [showLineHeightButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -80,6 +81,11 @@ function AccessibilityMenu() {
                 {showReadingAidButton && ( 
                     <button className= "readingaid-button">
                         Cursor
+                    </button>
+                )}
+                {showLineHeightButton && ( 
+                    <button className= "lineheight-button">
+                        Line Height
                     </button>
                 )}
             </div>
