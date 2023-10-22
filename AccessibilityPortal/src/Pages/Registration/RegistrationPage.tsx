@@ -78,9 +78,7 @@ function RegisterPage() {
 
     const signUpWithEmailAndPassword = () => {
         if (!Validation())
-        {
             return;
-        }
 
         if (error !== '') setError('');
 
@@ -116,6 +114,7 @@ function RegisterPage() {
                     dob: dob,
                     email: signup_email,
                     role: role,
+                    signInWithGoogle: false
                 });
 
                 // Back to login

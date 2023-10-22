@@ -21,7 +21,12 @@
   position: relative;
 }
 
-/* Size guide for modal body */
+  /* Size guide for modal body */
+  .extra-small{
+    width: 400px;
+    height: 320px;
+  }
+
   .small{
     width: 420px;
     height: 520px;
@@ -59,13 +64,14 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 30px 20px;
   padding: 10px;
-
-  & label{
-    font-family: sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: -10px;
-  }
+  
+    & label{
+      font-family: sans-serif;
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: -10px;
+      text-align: start;
+    }
 
   .single-item{
     width: 100%;
@@ -78,5 +84,4 @@
   .text-box{
     grid-row: 3 / span 6;
   }
-
 }

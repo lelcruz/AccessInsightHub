@@ -38,6 +38,7 @@
   align-content: center;
   z-index: 1;
 
+
   @media (max-width: 660px) {
     grid-template-columns: auto;
     align-content: space-between;
@@ -63,7 +64,6 @@
       margin-top: -20px;
     }
   }
-
 }
 
 .card-img-top {
@@ -71,6 +71,14 @@
   height: 200px;
   padding: 0 20px;
 }
+
+
+/* Adjust grid for admin interface*/
+.admin{
+  align-content: space-between;
+  margin-top: 90px;
+}
+
 
 
 
