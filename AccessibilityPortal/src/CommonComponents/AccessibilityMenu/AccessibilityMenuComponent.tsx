@@ -7,6 +7,7 @@ function AccessibilityMenu() {
     const [showResetButton] = useState(true);
     const [showCloseButton] = useState(true);
     const [showContrastButton] = useState(true);
+    const [showLinkButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +45,11 @@ function AccessibilityMenu() {
                 {showContrastButton && ( 
                     <button className="contrast-button">
                         Contrast
+                    </button>
+                )}
+                {showLinkButton && ( 
+                    <button className="link-button">
+                        Highlight Links
                     </button>
                 )}
             </div>
