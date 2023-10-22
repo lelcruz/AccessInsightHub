@@ -9,6 +9,7 @@ function AccessibilityMenu() {
     const [showContrastButton] = useState(true);
     const [showLinkButton] = useState(true);
     const [showTextButton] = useState(true);
+    const [showSpacingButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -56,6 +57,11 @@ function AccessibilityMenu() {
                 {showTextButton && ( 
                     <button className="text-button">
                         Bigger Text
+                    </button>
+                )}
+                {showSpacingButton && ( 
+                    <button className="spacing-button">
+                        Text Spacing
                     </button>
                 )}
             </div>
