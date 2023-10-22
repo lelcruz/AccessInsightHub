@@ -23,7 +23,7 @@ function ProfilePage(){
 
     const triggerReload = () => {
         setReload(prev => !prev); // Toggle the reload state
-      };
+    };
 
     const fetchUserProfile = async () => {
         const user = auth.currentUser;

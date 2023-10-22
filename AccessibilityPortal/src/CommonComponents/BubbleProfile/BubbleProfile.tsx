@@ -6,15 +6,17 @@ import "./bubbleProfile.scss";
 import { auth, db } from '../../configurations/firebase';
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 interface DropdownItemProps {
   img: string;
   text: string;
+  to: string;
 }
 
-//interface DropdownProps {
-  //open: boolean;
-//}
+interface DropdownProps {
+  open: boolean;
+}
 
 function BubbleProfile() {
     const user = auth.currentUser
@@ -22,8 +24,6 @@ function BubbleProfile() {
     const [role, setRole] = useState("");
     const [firstName, setFirstName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
-
-
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -45,41 +45,31 @@ function BubbleProfile() {
         }
 
         fetchUserProfile();
+        if(user) {
+            setPhotoURL(user.photoURL)
+        }
 
-    }, []);
-
-    useEffect (() => {
         const handler = (e: any) => {
-            console.log("Clicked inside handler");
-            if (open && menuRef.current && !menuRef.current.contains(e.target as Node)) {
-                console.log("IF");
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
                 setOpen(false);
             }
-            else {
-                console.log("ELSE");
-            }
         };
-        
         document.addEventListener("mousedown", handler);
-
-        //return () => {
-            //document.removeEventListener("mousedown", handler);
-        //}
     }, [open]);
 
     return (
         <div className="BubbleProfile">
-            <div className='menu-container' ref={menuRef}>
-                <div className='menu-trigger' onClick={() => { setOpen(!open); console.log(!open) }}>
+            <div ref={menuRef}>
+                <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
                     {photoURL ? <img src={photoURL} alt="user avatar" /> : <img src={profileIcon} alt="default avatar" />}
                 </div>
 
                 <div className={`bubble-menu ${open ? 'active' : 'inactive'}`} >
                     <h3 className="heading">{firstName}<br /><span>{role}</span></h3>
                     <ul>   
-                        <DropdownItem img={ProfileIcon} text={"Profile"} />
-                        <DropdownItem img={LogoutIcon} text={"Logout"} />
-                        <DropdownItem img={ContactUsIcon} text={"Contact Us"} />
+                        <DropdownItem img={ProfileIcon} text={"Profile"} to="/profile" />
+                        <DropdownItem img={LogoutIcon} text={"Logout"} to="/login"/>
+                        <DropdownItem img={ContactUsIcon} text={"Contact Us"} to="/template" />
                     </ul>
                 </div>
             </div>
@@ -88,8 +78,15 @@ function BubbleProfile() {
     }
 
     function DropdownItem(props: DropdownItemProps) {
+
+        const navigate = useNavigate();
+
+        const directTo = () => {
+            navigate(props.to)
+        }
+    
         return (
-        <li className='dropdownItem'>
+        <li className='dropdownItem' onClick={directTo}>
             <img src={props.img} alt={props.text} />
             <a> {props.text} </a>
         </li>
