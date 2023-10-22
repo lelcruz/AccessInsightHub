@@ -1,14 +1,14 @@
-import firebase from 'firebase/compat/app';
-import { collection, query, where, getDocs, addDoc} from "firebase/firestore";
-import React, { useEffect, useState } from 'react';
+import firebase from "firebase/compat/app";
+import { addDoc, collection } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
-import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import '../../Styles/login.scss';
-import { Providers, auth, db } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
-import { SignInWithSocialMedia } from './login-socialmedia';
+import ErrorMessage from "../../CommonComponents/ErrorMessage";
+import "../../Styles/login.scss";
+import { auth, db, Providers } from "../../configurations/firebase";
+import logging from "../../configurations/logging";
+import { SignInWithSocialMedia } from "./login-socialmedia";
 
 function LoginPage() {
     
@@ -161,5 +161,4 @@ function LoginPage() {
     );
 
 }
-
 export default LoginPage;
