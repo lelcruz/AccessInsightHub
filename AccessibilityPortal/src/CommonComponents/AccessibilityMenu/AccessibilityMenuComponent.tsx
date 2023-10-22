@@ -15,6 +15,7 @@ function AccessibilityMenu() {
     const [showReadingAidButton] = useState(true);
     const [showLineHeightButton] = useState(true);
     const [showTextAlignButton] = useState(true);
+    const [showSaturationButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -92,6 +93,11 @@ function AccessibilityMenu() {
                 {showTextAlignButton && ( 
                     <button className= "textalign-button">
                         Text Align
+                    </button>
+                )}
+                {showSaturationButton && ( 
+                    <button className= "saturation-button">
+                        Saturation
                     </button>
                 )}
             </div>
