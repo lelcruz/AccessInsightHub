@@ -10,6 +10,8 @@ function AccessibilityMenu() {
     const [showLinkButton] = useState(true);
     const [showTextButton] = useState(true);
     const [showSpacingButton] = useState(true);
+    const [showImageButton] = useState(true);
+    const [showDyslexiaButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -62,6 +64,16 @@ function AccessibilityMenu() {
                 {showSpacingButton && ( 
                     <button className="spacing-button">
                         Text Spacing
+                    </button>
+                )}
+                {showImageButton && ( 
+                    <button className="image-button">
+                        Hide Images
+                    </button>
+                )}
+                {showDyslexiaButton && ( 
+                    <button className="dyslexia-button">
+                        Dyslexia Friendly
                     </button>
                 )}
             </div>
