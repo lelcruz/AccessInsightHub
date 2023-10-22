@@ -7,6 +7,7 @@ import { auth } from './configurations/firebase';
 import logging from './configurations/logging';
 import routes from './configurations/routes';
 
+
 function App() {
 
   const [loading, setLoading] = useState<boolean>(true);

@@ -1,15 +1,16 @@
-import React, {DragEventHandler, useState, DragEvent} from 'react';
+import React, {useState} from 'react';
 import './SurveyTemplate.scss';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import QuestionCard from "./QuestionCard";
 import Container from "react-bootstrap/Container";
-import SortableItem from "./SortableItem";
+import SortableCard from "./SortableCard";
 import {DndContext, closestCenter} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 function TemplatePage(){
-    const [questions, setQuestion] = useState(["One", "Two", "Three", "Four"]);
+    
+    const [questions, setQuestion] = useState([1]);
 
     function handleDragEnd(e: any) {
         console.log("Drag end called");
@@ -59,15 +60,22 @@ function TemplatePage(){
                                 items={questions}
                                 strategy={verticalListSortingStrategy}
                             >
-                                    {questions.map(question => <SortableItem key={question} id={question} />)}
+                                    {questions.map(question => <SortableCard key={question} id={question} />)}
                             </SortableContext>
                         </Container>
                     </DndContext>
 
-                    <div className="adding-function">
-                        Add Card
+                    <div className="adding-function" onClick={() => {
+                        let lastId = questions.length;
+                        setQuestion([...questions, ++lastId]);
+                        console.log(questions);
+                       }}>
+                         
+                        <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                        <span style={{"marginLeft": "5px"}}>Add Card</span>
                     </div>
                 </div>
+                
                 
             </div>
         </div>
