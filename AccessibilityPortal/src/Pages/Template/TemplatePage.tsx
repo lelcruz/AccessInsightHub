@@ -1,22 +1,15 @@
-import React from 'react';
-import '../../Styles/ResearchPage.scss';
+import React from "react";
+import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-function TemplatePage(){
+import StudyFormTemplate from "./StudyFormTemplate";
 
-    return (
-        <div className="ResearchPageBody">
-            <NavbarComponent/>
-
-
-
-
-        </div>
-
-
-
-
-    );
-
+function TemplatePage() {
+  return (
+    <div className="ResearchPageBody">
+      <NavbarComponent />
+      <StudyFormTemplate />
+    </div>
+  );
 }
 
 export default TemplatePage;
