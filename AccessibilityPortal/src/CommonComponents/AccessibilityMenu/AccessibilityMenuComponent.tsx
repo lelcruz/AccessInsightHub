@@ -8,6 +8,7 @@ function AccessibilityMenu() {
     const [showCloseButton] = useState(true);
     const [showContrastButton] = useState(true);
     const [showLinkButton] = useState(true);
+    const [showTextButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +51,11 @@ function AccessibilityMenu() {
                 {showLinkButton && ( 
                     <button className="link-button">
                         Highlight Links
+                    </button>
+                )}
+                {showTextButton && ( 
+                    <button className="text-button">
+                        Bigger Text
                     </button>
                 )}
             </div>
