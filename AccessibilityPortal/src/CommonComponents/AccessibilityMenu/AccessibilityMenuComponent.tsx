@@ -4,8 +4,9 @@ import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
     const [toggle, setToggle] = useState(false);
-    const [showResetButton, setShowResetButton] = useState(true);
-    const [showCloseButton, setShowCloseButton] = useState(true);
+    const [showResetButton] = useState(true);
+    const [showCloseButton] = useState(true);
+    const [showContrastButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -35,9 +36,14 @@ function AccessibilityMenu() {
                         Close
                     </button>
                 )}
-                {showResetButton && ( // Render the Reset button only if showResetButton is true
-                    <button className="reset-button" onClick={() => alert("Reset button clicked!")}>
+                {showResetButton && ( 
+                    <button className="reset-button">
                         Reset
+                    </button>
+                )}
+                {showContrastButton && ( 
+                    <button className="contrast-button">
+                        Contrast
                     </button>
                 )}
             </div>
