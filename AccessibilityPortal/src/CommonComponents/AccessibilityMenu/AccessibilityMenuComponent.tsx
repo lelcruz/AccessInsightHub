@@ -12,6 +12,7 @@ function AccessibilityMenu() {
     const [showSpacingButton] = useState(true);
     const [showImageButton] = useState(true);
     const [showDyslexiaButton] = useState(true);
+    const [showReadingAidButton] = useState(true);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -74,6 +75,11 @@ function AccessibilityMenu() {
                 {showDyslexiaButton && ( 
                     <button className="dyslexia-button">
                         Dyslexia Friendly
+                    </button>
+                )}
+                {showReadingAidButton && ( 
+                    <button className= "readingaid-button">
+                        Cursor
                     </button>
                 )}
             </div>
