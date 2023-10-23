@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
-import '../../Styles/custom.scss';
-import '../../Styles/login.scss';
+import AccessibilityMenu from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import '../../Styles/main.scss';
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
+import usersIcon from "../../assets/users-svgrepo-com.svg"
+import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
 
@@ -19,14 +20,6 @@ function MainPage(){
 
     const directToLoginPage = () => {
         navigate('/login');
-    };
-
-    const directToChangePassword = () => {
-        navigate('/change');
-    };
-
-    const directToLogoutPage = () => {
-        navigate('/logout');
     };
 
     const directToStudyPage = () => {
@@ -45,17 +38,21 @@ function MainPage(){
         navigate('/template');
     }
 
+    const directToUserManagement = () => {
+        navigate('/usermanage');
+    }
+
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
-
+    
     useEffect(() => {
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
-                    // User.mail to lead to correct main page
+                    logging.info('User detected. Email: ' + user.email);
 
+                    // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
                     const querySnapshot = await getDocs(q);
 
@@ -80,7 +77,6 @@ function MainPage(){
             }}
     })}, []);
 
-
     return (
         <div className="main-page">
 
@@ -93,52 +89,48 @@ function MainPage(){
 
         { isAdmin ?
         <>
-            <div className="display-box">
+            <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
-                        imageUrl={profileIcon}
+                        imageUrl={usersIcon}
                         title={"Users"}
+                        handleClick={directToUserManagement}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
-                        imageUrl={templateIcon}
+                        imageUrl={messageIcon}
                         title={"Messages"}
                     ></BasicCardComponent>
                 </div>
                 <div>
-                    <BasicCardComponent
+                    <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
+                        handleClick={directToSurveyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={studiesIcon}
                         title={"Studies"}
+                        handleClick={directToStudyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={profileIcon}
                         title={"Profile"}
+                        handleClick={directToProfilePage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
                         title={"Templates"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
-                </div>
-                
             </div>
         </>
         : isResearcher ?
@@ -148,35 +140,30 @@ function MainPage(){
                     <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
+                        handleClick={directToSurveyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={studiesIcon}
                         title={"Studies"}
+                        handleClick={directToStudyPage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={profileIcon}
                         title={"Profile"}
+                        handleClick={directToProfilePage}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
                         title={"Templates"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
-                </div>
-                
+                </div>   
             </div>
         </>
         : isParticipant ?
@@ -210,23 +197,16 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Log Out"} onClick={directToLogoutPage}></BasicButtonComponent>
-                </div>
-                
             </div>
         </>
-        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
+        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
             <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            
         </>
     }
+        <AccessibilityMenu />
         </div>
     );
 }

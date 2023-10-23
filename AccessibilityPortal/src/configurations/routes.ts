@@ -3,13 +3,14 @@ import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
 import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
-import LogoutPage from '../Pages/LogoutPage/logout-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
 import MainPage from "../Pages/MainPage/mainpage";
 import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import TemplatePage from "../Pages/Template/TemplatePage";
+import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
+import UserManagePage from "../Pages/UserManagement/UserManagementPage";
 
 const routes: IRoute[] = [
     {
@@ -47,13 +48,13 @@ const routes: IRoute[] = [
         name: 'Change Password Page',
         protected: true
     },
-    {
-        path: '/logout',
+    /*{
+        path: '/registerWithGoogle',
         exact: true,
-        component: LogoutPage,
-        name: 'Logout Page',
+        component: CreatePasswordWithGoogleAccount,
+        name: 'Register with Google Page',
         protected: true
-    },
+    },*/
     {
         path: '/forgot',
         exact: true,
@@ -94,6 +95,13 @@ const routes: IRoute[] = [
         exact: true,
         component: TemplatePage,
         name: 'Template Page',
+        protected: false
+    },
+    {
+        path: '/usermanage',
+        exact: true,
+        component: UserManagePage,
+        name: 'User Management Page',
         protected: false
     },
 ];

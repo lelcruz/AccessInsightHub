@@ -1,0 +1,144 @@
+@import "../../Styles/Variables.scss";
+
+.page-body{
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: $lilac;
+}
+
+.top-menu-wrapper{
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    background-color: white;
+    height: 80px;
+    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.2) ;
+    overflow: hidden;
+
+    a{
+        padding: 0 25px ;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 20px;
+        font-weight: lighter;
+        border-inline: 0.7px solid rgba(128, 128, 128, 0.5);
+
+        &:hover, :focus{
+            height: 100%;
+            padding-top: 25px;
+            background-color: rgba(128, 128, 128, 0.2);
+        }
+
+        &:active{
+            border-bottom: 4px ridge $rose-quartz;
+            box-shadow: 5px 3px 10px inset rgba(128, 128, 128, 0.2);
+        }
+
+    }
+}
+
+.editor{
+    position: relative;
+    top: 0;
+    left: 0;
+    background-color: snow;
+    height: auto;
+
+    .side-menu{
+        position: sticky;
+        top: 0;
+        width: 13.65rem;
+        float: left;
+        border-right: 2px ridge rgba(136, 131, 131, 0.2);
+        height: auto;
+
+        @media (max-width: 900px){
+            display: none;
+        }
+    }
+    
+    .main-workspace{
+        //position: absolute;
+        //top: 0;
+        //left: 15rem;
+        //width: calc(100% - 15rem);
+        display: flex;
+        flex-grow: 1;
+        height: 100vh;
+        overflow-y: scroll;
+
+        .title{
+            padding-top: 50px;
+            padding-left: 100px;
+
+            .borderless-input{
+                &[contentEditable]{
+                    outline: 0px solid transparent;
+
+                    &:focus{
+                        border: 2px solid $rose-quartz;   
+                        box-shadow: 1px 1px 5px 1px $rose-quartz;            
+                    }
+                }
+            }
+
+            .survey-title{
+                width: 50rem;
+                min-height: 4rem;
+                font-size: 30px;
+                font-weight: 700; 
+
+                //Placeholder text
+                &[contentEditable]:empty:before{
+                    content: "Survey Title";
+                    color: gray; 
+                }
+
+            }
+
+            .description{
+                width: 50rem;
+                min-height: 4rem;
+                font-size: 20px;
+
+                //Placeholder text
+                &[contentEditable]:empty:before{
+                    content: "Description";
+                    color: gray;
+                }
+            }
+
+            hr{
+                background-color: $rose-quartz;
+                height: 3px;
+            }
+            
+        }
+
+        .card-wrapper{
+            position: relative;
+            margin-top: 180px;   
+            margin-left: -60rem; 
+
+            .adding-function{
+                position: absolute;
+                margin-top: 10px;
+                margin-left: 10.3rem;
+                height: 3rem;
+                width: 35rem;
+                background-color: whitesmoke;
+                border-radius: 5px;
+                box-shadow: 1px 1px 5px 2px rgba(136, 131, 131, 0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            
+            }
+        
+        }
+        
+    }
+
+    
+}
+

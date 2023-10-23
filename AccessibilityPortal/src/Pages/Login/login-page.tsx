@@ -1,20 +1,21 @@
-import firebase from 'firebase/compat/app';
-import { collection, query, where, getDocs } from "firebase/firestore";
-import React, { useEffect, useState } from 'react';
+import firebase from "firebase/compat/app";
+import { addDoc, collection } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
-import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import '../../Styles/login.scss';
-import { Providers, auth, db } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
-import { SignInWithSocialMedia } from './login-socialmedia';
+import ErrorMessage from "../../CommonComponents/ErrorMessage";
+import "../../Styles/login.scss";
+import { auth, db, Providers } from "../../configurations/firebase";
+import logging from "../../configurations/logging";
+import { SignInWithSocialMedia } from "./login-socialmedia";
 
 function LoginPage() {
     
     const [verify, setVerification] = useState<boolean>(false);
     const [login_email, setEmail] = useState<string>("");
     const [login_password, setPassword] = useState<string>("");
+    const [dob, setDob] = useState<string>("null");
     const [error, setError] = useState<string>("");
 
     const navigate = useNavigate();
@@ -25,10 +26,13 @@ function LoginPage() {
 
     // If the user is still saved, lead to main page
     useEffect(() => {
-        auth.onAuthStateChanged( async user => {
+        auth.onAuthStateChanged(user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected.' + user.email);
+                    logging.info('User detected. Email: ' + user.email);
+
+                    // Saved user will be directed to main if any error occurs (Not yet)
+                    // navigate('/main')
             }}
     })}, []);
 
@@ -36,6 +40,10 @@ function LoginPage() {
         if (error !== '') setError('');
 
         setVerification(true);
+
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        auth.setPersistence('session') 
 
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(async userCredential => {
@@ -59,10 +67,7 @@ function LoginPage() {
                             logging.error('Error deleting user:', error);
                         });
                 }
-            } else {
-                logging.error('User is null');
-            }
-
+            } 
         })
         .catch(error => {
             logging.error(error);
@@ -76,10 +81,40 @@ function LoginPage() {
 
         setVerification(true);
 
+        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
+        // and will be cleared when the tab or window in which the user authenticated is closed. 
+        auth.setPersistence('session') 
+
         SignInWithSocialMedia(provider)
-        .then(result => {
+        .then(async result => {
             logging.info(result);
-            navigate('/main');
+
+            // Save user's information
+            const user = result.user
+            if (user) {
+
+                // Check if the email already exists in Firestore
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    // Store data to Firestore
+                    const docRef = addDoc(collection(db, "users"), {
+                        firstName: user.email,
+                        lastName: "null", // Default
+                        dob: dob, // Default
+                        email: user.email,
+                        role: "participant", // Default
+                        signInWithGoogle: true
+                    });
+
+                     // Create password with Google sign-in accounts
+                    navigate('/main');
+                }
+                else {
+                    navigate('/main')
+                }
+            }
         })
         .catch(error => {
             logging.error(error);
@@ -103,7 +138,6 @@ function LoginPage() {
             {/* Need href for the Forgot password anchor*/}
             <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
 
-            
             <Button
                 disabled={verify}
                 color="success"
@@ -127,5 +161,4 @@ function LoginPage() {
     );
 
 }
-
 export default LoginPage;

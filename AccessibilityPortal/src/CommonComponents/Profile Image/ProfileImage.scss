@@ -1,4 +1,3 @@
-
 .img-upload{
     border-radius: 50%;
     width: 200px;
@@ -41,11 +40,8 @@ img{
     display: flex;
     flex-flow: column wrap;
     align-items: center;
-    row-gap: 40px;
+    justify-content: space-between;
+    row-gap: 30px;
 
-    .save-button{
-      position: absolute;
-      margin-top: 85%;
-      right: 30px;
-    }
 }
+
