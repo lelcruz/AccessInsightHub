@@ -2,23 +2,25 @@ import { ChangeEvent, useState } from "react";
 
 type ValidationFunction = (value: string) => boolean;
 
-interface UseInputReturn {
+interface UseInputReturn<T> {
   value: string;
   isValid: boolean;
   hasError: boolean;
-  valueChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
+  valueChangeHandler: (event: ChangeEvent<T>) => void;
   inputBlurHandler: () => void;
   reset: () => void;
 }
 
-const useInput = (validateValue: ValidationFunction): UseInputReturn => {
+const userInput = <T extends HTMLInputElement | HTMLTextAreaElement>(
+  validateValue: ValidationFunction,
+): UseInputReturn<T> => {
   const [enteredValue, setEnteredValue] = useState<string>("");
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
   const valueIsValid: boolean = validateValue(enteredValue);
   const hasError: boolean = !valueIsValid && isTouched;
 
-  const valueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const valueChangeHandler = (event: ChangeEvent<T>) => {
     setEnteredValue(event.target.value);
   };
 
@@ -41,4 +43,4 @@ const useInput = (validateValue: ValidationFunction): UseInputReturn => {
   };
 };
 
-export default useInput;
+export default userInput;
