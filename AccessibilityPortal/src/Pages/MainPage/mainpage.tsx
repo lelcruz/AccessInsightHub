@@ -86,8 +86,8 @@ function MainPage(){
                 <button className="btn btn-dark">Search</button>
             </div>
             </div>
-
-        { isAdmin ?
+        {/* ADMIN MAIN PAGE */}
+        { isAdmin ? 
         <>
             <div className="display-box admin">
                 <div>
@@ -133,6 +133,7 @@ function MainPage(){
                 </div>
             </div>
         </>
+        /* RESEARCHER MAIN PAGE */
         : isResearcher ?
         <>
             <div className="display-box">
@@ -166,6 +167,7 @@ function MainPage(){
                 </div>   
             </div>
         </>
+        /* PARTICIPANT MAIN PAGE */
         : isParticipant ?
         <>
             <div className="display-box">
@@ -193,7 +195,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Templates"}
+                        title={"Something else"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>

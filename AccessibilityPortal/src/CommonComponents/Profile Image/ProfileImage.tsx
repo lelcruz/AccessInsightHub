@@ -6,7 +6,7 @@ import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import BasicButtonComponent from '../Buttons/BasicButtonComponent';
 import { auth, upload } from '../../configurations/firebase';
 
-function Draft() {
+function ProfileImage() {
     const [src, setSrc] = useState("");
     const [photoURL, setPhotoURL] = useState<string>("");
     const [photo, setPhoto] = useState<File | null>(null);
@@ -103,5 +103,5 @@ function Draft() {
     )
 }
 
-export default Draft;
+export default ProfileImage;
 

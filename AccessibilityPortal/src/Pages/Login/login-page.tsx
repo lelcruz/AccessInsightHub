@@ -9,6 +9,7 @@ import "../../Styles/login.scss";
 import { auth, db, Providers } from "../../configurations/firebase";
 import logging from "../../configurations/logging";
 import { SignInWithSocialMedia } from "./login-socialmedia";
+import { getDocs, query, where } from "firebase/firestore";
 
 function LoginPage() {
     

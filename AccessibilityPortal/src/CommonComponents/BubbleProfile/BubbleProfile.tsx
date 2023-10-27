@@ -37,6 +37,7 @@ function BubbleProfile() {
                         // Calling for user's profile from Firestore Database
                         setRole(doc.data().role);
                         setFirstName(doc.data().firstName);
+                        setPhotoURL(user.photoURL)
                     });
                 } catch (error) {
                     
@@ -45,9 +46,6 @@ function BubbleProfile() {
         }
 
         fetchUserProfile();
-        if(user) {
-            setPhotoURL(user.photoURL)
-        }
 
         const handler = (e: any) => {
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -77,20 +75,20 @@ function BubbleProfile() {
         );
     }
 
-    function DropdownItem(props: DropdownItemProps) {
+function DropdownItem(props: DropdownItemProps) {
 
-        const navigate = useNavigate();
+    const navigate = useNavigate();
 
-        const directTo = () => {
-            navigate(props.to)
-        }
-    
-        return (
-        <li className='dropdownItem' onClick={directTo}>
-            <img src={props.img} alt={props.text} />
-            <a> {props.text} </a>
-        </li>
-        );
+    const directTo = () => {
+        navigate(props.to)
     }
 
-    export default BubbleProfile;
+    return (
+    <li className='dropdownItem' onClick={directTo}>
+        <img src={props.img} alt={props.text} />
+        <a> {props.text} </a>
+    </li>
+    );
+}
+
+export default BubbleProfile;
