@@ -18,9 +18,14 @@ function MainPage(){
 
     const navigate = useNavigate();
 
-    const directToLoginPage = () => {
-        navigate('/login');
-    };
+    const logout = () => {
+        auth.signOut()
+        .then(result => {
+            logging.info(result);
+            navigate('/login');
+        })
+        .catch(error => logging.error(error));
+    }
 
     const directToStudyPage = () => {
         navigate('/studies');
@@ -204,7 +209,7 @@ function MainPage(){
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
-            <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            <BasicButtonComponent color='light' title={"BACK"} onClick={logout}></BasicButtonComponent>
             
         </>
     }

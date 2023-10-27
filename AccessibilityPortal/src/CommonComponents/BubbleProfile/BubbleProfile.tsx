@@ -7,6 +7,8 @@ import { auth, db } from '../../configurations/firebase';
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Logout from "../../Pages/LogoutPage/logout";
+import ContactUsModal from "./ContactUsModal";
 
 interface DropdownItemProps {
   img: string;
@@ -25,6 +27,24 @@ function BubbleProfile() {
     const [firstName, setFirstName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const navigate = useNavigate();
+
+    const directToProfilePage = () => {
+      navigate('/profile');
+    } 
+    
+    const logOut = () => {
+      return (
+        <><Logout/></>
+      )
+    }
+
+    const contactUs = () => {
+      return (
+        <><ContactUsModal/></>
+      )
+    }
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -65,9 +85,15 @@ function BubbleProfile() {
                 <div className={`bubble-menu ${open ? 'active' : 'inactive'}`} >
                     <h3 className="heading">{firstName}<br /><span>{role}</span></h3>
                     <ul>   
-                        <DropdownItem img={ProfileIcon} text={"Profile"} to="/profile" />
-                        <DropdownItem img={LogoutIcon} text={"Logout"} to="/login"/>
-                        <DropdownItem img={ContactUsIcon} text={"Contact Us"} to="/template" />
+                      <li className='dropdownItem'>
+                        <img src={ProfileIcon} alt={"Profile"} onClick={directToProfilePage} />
+                      </li>
+                      <li className='dropdownItem'>
+                        <img src={ContactUsIcon} alt={"Contact Us"} onClick={contactUs} />
+                      </li>
+                      <li className='dropdownItem'>
+                        <img src={LogoutIcon} alt={"Log Out"} onClick={logOut} />
+                      </li>
                     </ul>
                 </div>
             </div>
