@@ -69,7 +69,6 @@ function Draft() {
             return Number(450);
         }
     }
-
     const widthSize: number = setWidthSize();
 
     return (

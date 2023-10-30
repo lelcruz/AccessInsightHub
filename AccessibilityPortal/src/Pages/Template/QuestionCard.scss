@@ -3,9 +3,13 @@
 
 .question-card{
     .card{
-        width: 35rem;
+        width: 40rem;
         box-shadow: 0 0 3px 3px rgba(136, 131, 131, 0.1);
         margin-top: 3rem;
+
+        @media (max-width: 800px){
+            width: (100vw - 25vw);
+        }
         
         &:hover, :focus{
             border: 2px ridge $lilac;
@@ -23,28 +27,68 @@
             img{
                 height: 1em;
                 width: 1em;
-                
+                cursor: all-scroll;
             }
         }
 
-    }
-}
-
-.question{
-    font-size: 18px;
-
-    &[contentEditable]{
-        outline: 0px solid transparent;
-
-        &:empty:before{
-            content: "Question";
-            color: gray;
+        .dropdown{
+            button{
+                border: 0;
+            }
         }
 
-        &:focus{
-            border: none;
-            border-bottom: 2px groove $rose-quartz;
-         } 
+        .dropdown-menu{
+            img{
+                height: 1em;
+                width: 1em;
+                margin-right: 10px;
+            }
+        }
+
+        .card-body{
+            .question{
+                font-size: 18px;
+            
+                &[contentEditable]{
+                    outline: 0px solid transparent;
+            
+                    &:empty:before{
+                        content: "Question";
+                        color: gray;
+                    }
+            
+                    &:focus{
+                        border: none;
+                        border-bottom: 2px groove $rose-quartz;
+                     } 
+                }
+            }
+
+  
+        }
+
+        .card-footer{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .footer-menu{
+        
+                img{
+                    height: 1.2em;
+                    width: 1.2em;
+                    
+                    &:hover, :focus{
+                        border-radius: 5px;
+                        box-shadow: 1px 1px 5px 8px lavender;
+                        background-color: lavender;
+                    }
+                }
+            }
+        }
+        
+
     }
- 
 }
+
+
+

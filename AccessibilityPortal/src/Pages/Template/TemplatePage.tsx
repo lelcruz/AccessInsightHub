@@ -7,6 +7,11 @@ import {DndContext, closestCenter} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import RadioButtonIcon from "../../assets/radio-button-checked-svgrepo-com.svg";
+import CheckBoxesIcon from "../../assets/checkbox-svgrepo-com.svg";
+import DropDownIcon from "../../assets/circle-arrow-up-svgrepo-com.svg";
+import FileUploadIcon from "../../assets/folder-upload-svgrepo-com.svg";
+import Logout from "../../Pages/LogoutPage/logout";
 
 function TemplatePage(){
     
@@ -27,6 +32,12 @@ function TemplatePage(){
         }
     }
 
+    //Remove card from question list by filtering its id number
+    function removeCard (id: number){
+        setQuestion(questions.filter(question => question !== id));
+            
+    }
+
     return (
       <div className="page-body">
         <NavbarComponent />
@@ -39,7 +50,16 @@ function TemplatePage(){
 
         <div className="editor">
             <div className="side-menu">
-                Menu for drag and drop question creator.
+                <ul>
+                    <li><a href="#">
+                        <img src={RadioButtonIcon} /> Multiple choice</a></li>
+                    <li><a href="#">
+                        <img src={CheckBoxesIcon} /> Checkboxes</a></li>
+                    <li><a href="#">
+                        <img src={DropDownIcon} /> Dropdown</a></li>
+                    <li><a href="#">
+                        <img src={FileUploadIcon} /> File upload</a></li>
+                </ul>
             </div>
 
             <div className="main-workspace">
@@ -49,22 +69,23 @@ function TemplatePage(){
                     <hr></hr>
                 </div>
 
+                {/* Sortable question cards */} 
                 <div className="card-wrapper">
-                    {/* Sortable question cards */}
                     <DndContext
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}  
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}  
                     >  
-                        <Container className="p-3" style={{"width": "50%"}}>
-                            <SortableContext
-                                items={questions}
-                                strategy={verticalListSortingStrategy}
-                            >
-                                    {questions.map(question => <SortableCard key={question} id={question} />)}
-                            </SortableContext>
-                        </Container>
+                    
+                        <SortableContext
+                            items={questions}
+                            strategy={verticalListSortingStrategy}
+                        >
+                                {questions.map(question => <SortableCard key={question} id={question} deleted={removeCard}/>)}
+                        </SortableContext>
+                        
                     </DndContext>
 
+                    {/* Function to add card by concatenating */}
                     <div className="adding-function" onClick={() => {
                         let lastId = questions.length;
                         setQuestion([...questions, ++lastId]);
@@ -74,9 +95,9 @@ function TemplatePage(){
                         <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                         <span style={{"marginLeft": "5px"}}>Add Card</span>
                     </div>
+
                 </div>
-                
-                
+            
             </div>
         </div>
         

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 import AccessibilityMenu from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
+import BubbleProfile from "../../CommonComponents/BubbleProfile/BubbleProfile";
 import '../../Styles/main.scss';
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
@@ -81,10 +82,11 @@ function MainPage(){
         <div className="main-page">
 
             <div className="header">
-            <div className="input-group">
-                <input type="search" className="form-control"></input>
-                <button className="btn btn-dark">Search</button>
-            </div>
+                <div className="input-group">
+                    <input type="search" className="form-control"></input>
+                    <button className="btn btn-dark">Search</button>
+                </div>
+                <div style={{"position": "relative", "right" : "2vw" }}><BubbleProfile /></div>
             </div>
 
         { isAdmin ?
