@@ -27,6 +27,7 @@ function BubbleProfile() {
     const [firstName, setFirstName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
     const menuRef = useRef<HTMLDivElement>(null);
+    const [openLogout, setOpenLogout] = useState(false);
 
     const navigate = useNavigate();
 
@@ -34,16 +35,14 @@ function BubbleProfile() {
       navigate('/profile');
     } 
     
-    const logOut = () => {
-      return (
-        <Logout/>
-      )
+    const handleLogout = () => {
+      setOpenLogout(!openLogout);
     }
 
     const contactUs = () => {
       return (
         <ContactUsModal/>
-      )
+      );
     }
 
     useEffect(() => {
@@ -91,7 +90,8 @@ function BubbleProfile() {
                       <li onClick={contactUs} className='dropdownItem'>
                         <img src={ContactUsIcon} alt={"Contact Us"}  />Contact us
                       </li>
-                      <li  onClick={logOut} className='dropdownItem'>
+                      <li  onClick={handleLogout} className='dropdownItem'>
+                        {openLogout && <Logout opened={true} />}
                         <img src={LogoutIcon} alt={"Log Out"}/>Logout
                       </li>
                     </ul>
