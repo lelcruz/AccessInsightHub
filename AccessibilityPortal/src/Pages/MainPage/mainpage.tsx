@@ -14,14 +14,20 @@ import usersIcon from "../../assets/users-svgrepo-com.svg"
 import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
+import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
 function MainPage(){
 
     const navigate = useNavigate();
 
-    const directToLoginPage = () => {
-        navigate('/login');
-    };
+    const logout = () => {
+        auth.signOut()
+        .then(result => {
+            logging.info(result);
+            navigate('/login');
+        })
+        .catch(error => logging.error(error));
+    }
 
     const directToStudyPage = () => {
         navigate('/studies');
@@ -51,7 +57,7 @@ function MainPage(){
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected. Email: ' + user.email);
+                    //logging.info('User detected. Email: ' + user.email);
 
                     // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
@@ -80,16 +86,9 @@ function MainPage(){
 
     return (
         <div className="main-page">
-
-            <div className="header">
-                <div className="input-group">
-                    <input type="search" className="form-control"></input>
-                    <button className="btn btn-dark">Search</button>
-                </div>
-                <div style={{"position": "relative", "right" : "2vw" }}><BubbleProfile /></div>
-            </div>
-
-        { isAdmin ?
+            <NavbarComponent/>
+        {/* ADMIN MAIN PAGE */}
+        { isAdmin ? 
         <>
             <div className="display-box admin">
                 <div>
@@ -102,7 +101,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={messageIcon}
-                        title={"Messages"}
+                        title={"Mail"}
                     ></BasicCardComponent>
                 </div>
                 <div>
@@ -135,6 +134,7 @@ function MainPage(){
                 </div>
             </div>
         </>
+        /* RESEARCHER MAIN PAGE */
         : isResearcher ?
         <>
             <div className="display-box">
@@ -168,6 +168,7 @@ function MainPage(){
                 </div>   
             </div>
         </>
+        /* PARTICIPANT MAIN PAGE */
         : isParticipant ?
         <>
             <div className="display-box">
@@ -195,7 +196,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Templates"}
+                        title={"Something else"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
@@ -204,7 +205,7 @@ function MainPage(){
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
             <h1>!!! UNEXPECTED ERROR !!!</h1>
-            <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            <BasicButtonComponent color='light' title={"BACK"} onClick={logout}></BasicButtonComponent>
             
         </>
     }

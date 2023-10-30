@@ -1,7 +1,6 @@
 import IRoute from "../interfaces/route";
 import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
-import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
 import MainPage from "../Pages/MainPage/mainpage";
@@ -11,6 +10,7 @@ import ProfilePage from "../Pages/Profile/ProfilePage";
 import TemplatePage from "../Pages/Template/TemplatePage";
 import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
+import MessagePage from "../Pages/MessagePage/MessagePage"
 
 const routes: IRoute[] = [
     {
@@ -39,13 +39,6 @@ const routes: IRoute[] = [
         exact: true,
         component: MainPage,
         name: 'Main Page',
-        protected: true
-    },
-    {
-        path: '/change',
-        exact: true,
-        component: ChangePasswordPage,
-        name: 'Change Password Page',
         protected: true
     },
     /*{
@@ -102,6 +95,13 @@ const routes: IRoute[] = [
         exact: true,
         component: UserManagePage,
         name: 'User Management Page',
+        protected: false
+    },
+    {
+        path: '/message',
+        exact: true,
+        component: MessagePage,
+        name: 'Message Page',
         protected: false
     },
 ];

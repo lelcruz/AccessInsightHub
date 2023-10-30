@@ -17,6 +17,7 @@ function ProfilePage(){
     const [dob, setDOB] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [signInWithGG, setSignInWithGG] = useState<boolean>(false);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [reload, setReload] = useState<boolean>(false);
 
     const navigate = useNavigate();
@@ -51,6 +52,9 @@ function ProfilePage(){
         if(reload) {
             fetchUserProfile();
             setReload(false)
+        }
+        if(role == "admin") {
+            setIsAdmin(true)
         }
     }, [reload]);
     
@@ -95,7 +99,7 @@ function ProfilePage(){
                             </tr>
                             <tr>
                             <th scope="row">Password</th>
-                            <td>{signInWithGG ? <PasswordModal /> : <p>Unavailable</p>}</td>
+                            <td>{(isAdmin && signInWithGG) ? <PasswordModal /> : <p>Unavailable</p>}</td>
                             </tr>
                         </tbody>
                     </table>
