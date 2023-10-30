@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './Styles/App.scss'
 import React, { useEffect, useState } from 'react';
 import { Spinner } from 'reactstrap';
@@ -6,7 +6,6 @@ import AuthRoute from '../src/CommonComponents/AuthRoute';
 import { auth } from './configurations/firebase';
 import logging from './configurations/logging';
 import routes from './configurations/routes';
-
 
 function App() {
 
@@ -16,11 +15,18 @@ function App() {
       auth.onAuthStateChanged(user => {
         if (user)
         {
-            logging.info('User detected.' + user.email);
+            logging.info('App.tsx: User detected.' + user.email);
+            if (window.location.pathname === '/login') {
+                auth.signOut()
+                  .then(() => {
+                    logging.info('App.tsx: User logged out due to errors');
+                  })
+                  .catch(error => logging.error(error));
+              }
         }
         else
         {
-           logging.info('No user detected');
+           logging.info('App.tsx: No user detected');
         }
 
         setLoading(false);

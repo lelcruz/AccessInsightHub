@@ -1,5 +1,5 @@
 import { auth, db } from '../../configurations/firebase';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "../../Styles/UserManagement.scss"
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
@@ -21,6 +21,8 @@ class User {
     }
 
     getFullName(): string {
+        if(this.lastName == "null") 
+            this.lastName = "";
         return `${this.firstName} ${this.lastName}`;
     }
 }
@@ -47,26 +49,42 @@ function UserManagePage() {
         }
     }
 
-    fetchUserProfile();
+    useEffect(() => {
+        fetchUserProfile();
+    }, []);
 
-   
     function userTable() {
-        const userElements = users.map((user, index) => (
-            <div key={index}>
-                <p>
-                    <b>  Email: </b> {user.email} 
-                    <b>  Role: </b> {user.role}
-                    <b>  Name: </b> {user.getFullName()} 
-                    <b>  DOB: </b> {user.dob}</p>
-            </div>
+        
+        const tableRows = users.map((user, index) => (
+            <tr key={index}>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td>{user.getFullName()}</td>
+                <td>{user.dob != "null" ? user.dob : ""}</td>
+            </tr>
         ));
+
+        console.log("Fetched")
 
         return (
             <div>
-                {userElements}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Name</th>
+                            <th>DOB</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tableRows}
+                    </tbody>
+                </table>
             </div>
         ); 
     }
+    
 
     return (
         <>

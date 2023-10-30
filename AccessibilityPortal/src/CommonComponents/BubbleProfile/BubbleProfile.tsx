@@ -36,13 +36,13 @@ function BubbleProfile() {
     
     const logOut = () => {
       return (
-        <><Logout/></>
+        <Logout/>
       )
     }
 
     const contactUs = () => {
       return (
-        <><ContactUsModal/></>
+        <ContactUsModal/>
       )
     }
 
@@ -85,14 +85,14 @@ function BubbleProfile() {
                 <div className={`bubble-menu ${open ? 'active' : 'inactive'}`} >
                     <h3 className="heading">{firstName}<br /><span>{role}</span></h3>
                     <ul>   
-                      <li className='dropdownItem'>
-                        <img src={ProfileIcon} alt={"Profile"} onClick={directToProfilePage} />
+                      <li onClick={directToProfilePage} className='dropdownItem'>
+                        <img src={ProfileIcon} alt={"Profile"} />Profile
                       </li>
-                      <li className='dropdownItem'>
-                        <img src={ContactUsIcon} alt={"Contact Us"} onClick={contactUs} />
+                      <li onClick={contactUs} className='dropdownItem'>
+                        <img src={ContactUsIcon} alt={"Contact Us"}  />Contact us
                       </li>
-                      <li className='dropdownItem'>
-                        <img src={LogoutIcon} alt={"Log Out"} onClick={logOut} />
+                      <li  onClick={logOut} className='dropdownItem'>
+                        <img src={LogoutIcon} alt={"Log Out"}/>Logout
                       </li>
                     </ul>
                 </div>
@@ -100,21 +100,5 @@ function BubbleProfile() {
         </div>
         );
     }
-
-function DropdownItem(props: DropdownItemProps) {
-
-    const navigate = useNavigate();
-
-    const directTo = () => {
-        navigate(props.to)
-    }
-
-    return (
-    <li className='dropdownItem' onClick={directTo}>
-        <img src={props.img} alt={props.text} />
-        <a> {props.text} </a>
-    </li>
-    );
-}
 
 export default BubbleProfile;

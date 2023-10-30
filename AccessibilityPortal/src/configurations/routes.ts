@@ -10,6 +10,7 @@ import ProfilePage from "../Pages/Profile/ProfilePage";
 import TemplatePage from "../Pages/Template/TemplatePage";
 import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
+import MessagePage from "../Pages/MessagePage/MessagePage"
 
 const routes: IRoute[] = [
     {
@@ -94,6 +95,13 @@ const routes: IRoute[] = [
         exact: true,
         component: UserManagePage,
         name: 'User Management Page',
+        protected: false
+    },
+    {
+        path: '/message',
+        exact: true,
+        component: MessagePage,
+        name: 'Message Page',
         protected: false
     },
 ];

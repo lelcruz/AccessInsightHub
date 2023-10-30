@@ -13,6 +13,7 @@ import usersIcon from "../../assets/users-svgrepo-com.svg"
 import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import logging from '../../configurations/logging';
+import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
 function MainPage(){
 
@@ -55,7 +56,7 @@ function MainPage(){
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected. Email: ' + user.email);
+                    //logging.info('User detected. Email: ' + user.email);
 
                     // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
@@ -84,13 +85,7 @@ function MainPage(){
 
     return (
         <div className="main-page">
-
-            <div className="header">
-            <div className="input-group">
-                <input type="search" className="form-control"></input>
-                <button className="btn btn-dark">Search</button>
-            </div>
-            </div>
+            <NavbarComponent/>
         {/* ADMIN MAIN PAGE */}
         { isAdmin ? 
         <>
@@ -105,7 +100,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={messageIcon}
-                        title={"Messages"}
+                        title={"Mail"}
                     ></BasicCardComponent>
                 </div>
                 <div>

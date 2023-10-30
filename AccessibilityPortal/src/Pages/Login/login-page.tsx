@@ -31,9 +31,6 @@ function LoginPage() {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
-
-                    // Saved user will be directed to main if any error occurs (Not yet)
-                    // navigate('/main')
             }}
     })}, []);
 
