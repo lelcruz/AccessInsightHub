@@ -31,8 +31,25 @@ function Logout(props: LogoutProps) {
     .catch(error => logging.error(error));
 }
 
+useEffect(() => {
+  // Set isOPen to be true if props.opened is true
+  if(props.opened) {
+    setIsOpen(true);
+  }
+}, [props.opened]);
+
  return (
     <>
+    {props.opened
+    ? <>
+      <Modal size='m' isOpen={isOpen} onClose={closeModal}>
+        
+        <Button color={"dark"} onClick={logout} title={"Logout"}/>
+        <Button color={"light"} onClick={closeModal} title={"Cancel"}/>
+
+    </Modal>
+    </>
+    : <>
       <Button color={"light"} onClick={openModal} title={"Logout"}/>
       <Modal size='m' isOpen={isOpen} onClose={closeModal}>
         
@@ -40,6 +57,8 @@ function Logout(props: LogoutProps) {
           <Button color={"light"} onClick={closeModal} title={"Cancel"}/>
 
       </Modal>
+    </>
+  }
     </>
   );
 }

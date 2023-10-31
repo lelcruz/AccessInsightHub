@@ -75,6 +75,8 @@ function BubbleProfile() {
     }, [open]);
 
     return (
+      <>
+        {openLogout && <Logout opened={true} />}
         <div className="BubbleProfile">
             <div ref={menuRef}>
                 <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
@@ -91,14 +93,15 @@ function BubbleProfile() {
                         <img src={ContactUsIcon} alt={"Contact Us"}  />Contact us
                       </li>
                       <li  onClick={handleLogout} className='dropdownItem'>
-                        {openLogout && <Logout opened={true} />}
                         <img src={LogoutIcon} alt={"Log Out"}/>Logout
                       </li>
                     </ul>
                 </div>
             </div>
         </div>
+        </>
         );
+        
     }
 
 export default BubbleProfile;
