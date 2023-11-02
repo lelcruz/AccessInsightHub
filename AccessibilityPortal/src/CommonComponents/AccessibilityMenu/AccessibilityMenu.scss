@@ -113,7 +113,7 @@
 }
 
 .link-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -155,7 +155,7 @@
 }
 
 .image-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -169,7 +169,7 @@
 }
 
 .dyslexia-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -183,7 +183,7 @@
 }
 
 .readingaid-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -197,7 +197,7 @@
 }
 
 .lineheight-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -211,7 +211,7 @@
 }
 
 .textalign-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -225,7 +225,7 @@
 }
 
 .saturation-button {
-    background-color: white;
+    background-color: pink;
     color: black;
     border: none;
     height: 105px;
@@ -243,3 +243,18 @@
     width: 100%;
     height: 100%;
 }
+
+
+// Button Functions
+.bigger-text {
+    font-size: 18px;
+}
+
+.high-contrast {
+    filter: contrast(150%);
+}
+
+.increased-spacing {
+    letter-spacing: 2px;
+}
+
