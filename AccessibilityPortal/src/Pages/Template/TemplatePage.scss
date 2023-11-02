@@ -1,0 +1,48 @@
+@import "../../Styles/Variables.scss";
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.main-page {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: $lilac;
+  }
+
+  .display-box-template {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    justify-items: center;
+    height: 90vh;
+    gap: 100px 200px;
+    justify-content: center;
+    align-content: center;
+    z-index: 1;
+  
+  
+    @media (max-width: 660px) {
+      grid-template-columns: auto;
+      align-content: space-between;
+      margin: 5rem 0;
+    }
+  
+  }
+  
+  /* Customize card style */
+  .card {
+    box-shadow: 10px 10px 5px #aaaaaa;
+    width: 14rem;
+  
+    @media (max-width: 660px) {
+      width: 11rem;
+      .card-title {
+        margin-top: -20px;
+      }
+    }
+  }
+  
+  .card-img-top {
+    width: 200px;
+    height: 200px;
+    padding: 20px 20px;
+  }
+  
