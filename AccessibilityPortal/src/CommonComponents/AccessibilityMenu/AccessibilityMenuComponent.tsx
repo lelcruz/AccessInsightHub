@@ -17,6 +17,11 @@ function AccessibilityMenu() {
     const [showTextAlignButton] = useState(true);
     const [showSaturationButton] = useState(true);
 
+    const resetWebsite = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
+    };
+
     const toggleContrast = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('high-contrast');
@@ -63,56 +68,67 @@ function AccessibilityMenu() {
                         Close
                     </button>
                 )}
+
                 {showResetButton && ( 
-                    <button className="reset-button">
+                    <button className="reset-button" onClick={resetWebsite}>
                         Reset
                     </button>
                 )}
+
                 {showContrastButton && ( 
                     <button className="contrast-button" onClick={toggleContrast}>
                         Contrast
                     </button>
                 )}
+
                 {showLinkButton && ( 
                     <button className="link-button">
                         Highlight Links
                     </button>
                 )}
+
                 {showTextButton && ( 
                     <button className="text-button" onClick={toggleBiggerText}>
                         Bigger Text
                     </button>
                 )}
+
                 {showSpacingButton && ( 
                     <button className="spacing-button" onClick={toggleTextSpacing}>
                         Text Spacing
                     </button>
                 )}
+
                 {showImageButton && ( 
                     <button className="image-button">
                         Hide Images
                     </button>
                 )}
+
                 {showDyslexiaButton && ( 
                     <button className="dyslexia-button">
                         Dyslexia Friendly
                     </button>
                 )}
+
                 {showReadingAidButton && ( 
                     <button className= "readingaid-button">
                         Cursor
                     </button>
                 )}
+
                 {showLineHeightButton && ( 
-                    <button className= "lineheight-button">
-                        Line Height
+                    <button className="lineheight-button">
+                    Line Height
                     </button>
                 )}
+
                 {showTextAlignButton && ( 
                     <button className= "textalign-button">
                         Text Align
                     </button>
                 )}
+
                 {showSaturationButton && ( 
                     <button className= "saturation-button">
                         Saturation
