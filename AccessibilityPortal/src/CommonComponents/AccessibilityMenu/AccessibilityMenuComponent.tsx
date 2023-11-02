@@ -17,6 +17,10 @@ function AccessibilityMenu() {
     const [showTextAlignButton] = useState(true);
     const [showSaturationButton] = useState(true);
 
+    const handleCloseMenu = () => {
+        setToggle(false);
+    };    
+
     const resetWebsite = () => {
         const rootElement = document.documentElement;
         rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
@@ -64,7 +68,7 @@ function AccessibilityMenu() {
                     Accessibility Menu
                 </div>
                 {showCloseButton && (
-                    <button className = "close-button">
+                    <button className = "close-button" onClick={handleCloseMenu}>
                         Close
                     </button>
                 )}
