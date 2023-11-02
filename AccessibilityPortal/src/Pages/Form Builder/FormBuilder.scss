@@ -1,0 +1,43 @@
+@import "../../Styles/Variables.scss";
+
+
+input[type=radio], [type=checkbox], [type=text]{
+    box-shadow: none;
+}
+
+input[type=file]{
+    margin-top: 30px;
+}
+
+.option{
+    margin-left: 10px;
+    width: 90%;
+
+    &[contentEditable]{
+        outline: 0px solid transparent;
+
+        &:empty:before{
+            content: attr(placeholder);
+        }
+
+        &:focus{
+            border: none !important;
+            border-bottom: 2px groove $rose-quartz !important;
+         } 
+    }
+}
+
+.remove-button{
+    border: none;
+    background-color: transparent;
+    font-size: 25px;
+
+    &:hover, :focus{
+        border-radius: 50%;
+        box-shadow: 0px 0px 3px 1px lavender;
+        background-color: lavender;
+        opacity: 0.7;
+    }
+}
+
+

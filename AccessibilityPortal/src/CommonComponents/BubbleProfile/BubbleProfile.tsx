@@ -7,6 +7,8 @@ import { auth, db } from '../../configurations/firebase';
 import React, { useState, useEffect, useRef, MouseEvent } from 'react';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Logout from "../../Pages/LogoutPage/logout";
+import ContactUsModal from "./ContactUsModal";
 
 interface DropdownItemProps {
   img: string;
@@ -25,6 +27,23 @@ function BubbleProfile() {
     const [firstName, setFirstName] = useState("");
     const [photoURL, setPhotoURL] = useState(user?.photoURL);
     const menuRef = useRef<HTMLDivElement>(null);
+    const [openLogout, setOpenLogout] = useState(false);
+
+    const navigate = useNavigate();
+
+    const directToProfilePage = () => {
+      navigate('/profile');
+    } 
+    
+    const handleLogout = () => {
+      setOpenLogout(!openLogout);
+    }
+
+    const contactUs = () => {
+      return (
+        <ContactUsModal/>
+      );
+    }
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -37,6 +56,7 @@ function BubbleProfile() {
                         // Calling for user's profile from Firestore Database
                         setRole(doc.data().role);
                         setFirstName(doc.data().firstName);
+                        setPhotoURL(user.photoURL)
                     });
                 } catch (error) {
                     
@@ -45,9 +65,6 @@ function BubbleProfile() {
         }
 
         fetchUserProfile();
-        if(user) {
-            setPhotoURL(user.photoURL)
-        }
 
         const handler = (e: any) => {
             if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -58,6 +75,8 @@ function BubbleProfile() {
     }, [open]);
 
     return (
+      <>
+        {openLogout && <Logout opened={true} />}
         <div className="BubbleProfile">
             <div ref={menuRef}>
                 <div className='menu-trigger' onClick={() => { setOpen(!open) }}>
@@ -67,30 +86,22 @@ function BubbleProfile() {
                 <div className={`bubble-menu ${open ? 'active' : 'inactive'}`} >
                     <h3 className="heading">{firstName}<br /><span>{role}</span></h3>
                     <ul>   
-                        <DropdownItem img={ProfileIcon} text={"Profile"} to="/profile" />
-                        <DropdownItem img={LogoutIcon} text={"Logout"} to="/login"/>
-                        <DropdownItem img={ContactUsIcon} text={"Contact Us"} to="/template" />
+                      <li onClick={directToProfilePage} className='dropdownItem'>
+                        <img src={ProfileIcon} alt={"Profile"} />Profile
+                      </li>
+                      <li onClick={contactUs} className='dropdownItem'>
+                        <img src={ContactUsIcon} alt={"Contact Us"}  />Contact us
+                      </li>
+                      <li  onClick={handleLogout} className='dropdownItem'>
+                        <img src={LogoutIcon} alt={"Log Out"}/>Logout
+                      </li>
                     </ul>
                 </div>
             </div>
         </div>
+        </>
         );
+        
     }
 
-    function DropdownItem(props: DropdownItemProps) {
-
-        const navigate = useNavigate();
-
-        const directTo = () => {
-            navigate(props.to)
-        }
-    
-        return (
-        <li className='dropdownItem' onClick={directTo}>
-            <img src={props.img} alt={props.text} />
-            <a> {props.text} </a>
-        </li>
-        );
-    }
-
-    export default BubbleProfile;
+export default BubbleProfile;

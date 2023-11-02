@@ -1,16 +1,19 @@
 import IRoute from "../interfaces/route";
 import RegisterPage from '../Pages/Registration/RegistrationPage';
 import LoginPage from '../Pages/Login/login-page';
-import ChangePasswordPage from '../Pages/ChangePasswordPage/changepassword-page';
 import ForgotPasswordPage from '../Pages/ForgotPasswordPage/forgotpassword-page';
 import ResetPasswordPage from '../Pages/EmailActionsHandler/email-actions-handler';
 import MainPage from "../Pages/MainPage/mainpage";
 import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
-import TemplatePage from "../Pages/Template/TemplatePage";
+import StudyTemplatePage from "../Pages/Template/Study Template/StudyTemplate";
 import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
+import MessagePage from "../Pages/MessagePage/MessagePage"
+import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
+import SurveyPreviewPage from "../Pages/Template/Survey Template/SurveyPreview";
+import TemplatePage from "../Pages/Template/TemplatePage";
 
 const routes: IRoute[] = [
     {
@@ -39,13 +42,6 @@ const routes: IRoute[] = [
         exact: true,
         component: MainPage,
         name: 'Main Page',
-        protected: true
-    },
-    {
-        path: '/change',
-        exact: true,
-        component: ChangePasswordPage,
-        name: 'Change Password Page',
         protected: true
     },
     /*{
@@ -104,6 +100,35 @@ const routes: IRoute[] = [
         name: 'User Management Page',
         protected: false
     },
+    {
+        path: '/message',
+        exact: true,
+        component: MessagePage,
+        name: 'Message Page',
+        protected: false
+    },
+    {
+        path: '/survey-editor',
+        exact: true,
+        component: SurveyEditorPage,
+        name: 'Survey Editor Page',
+        protected: false
+    },
+    {
+        path: '/survey-preview',
+        exact: true,
+        component: SurveyPreviewPage,
+        name: 'Survey Preview Page',
+        protected: false
+    },
+    {
+        path: '/study-template',
+        exact: true,
+        component: StudyTemplatePage,
+        name: 'Study Template Page',
+        protected: false
+    }
+    
 ];
 
 export default routes;

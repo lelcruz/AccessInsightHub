@@ -5,7 +5,7 @@ import logging from '../../configurations/logging';
 import '../../Styles/registration.scss';
 import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
-import { getAuth, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { EmailAuthProvider } from 'firebase/auth';
 
 function PasswordModal() {
 
@@ -82,6 +82,7 @@ function PasswordModal() {
         if (error !== '') setError('');
 
         const user = auth.currentUser
+        
         if (user && user.emailVerified) {
             try {
                 logging.info("User signed-in: " + user.email);
@@ -98,6 +99,10 @@ function PasswordModal() {
                 logging.error("Cannot change the password!");
             }
         }
+
+        setOldPassword("");
+        setNewPassword("");
+        setConfirmNewPassword("");
     }
 
     return(
