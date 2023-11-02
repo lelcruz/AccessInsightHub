@@ -196,7 +196,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Something else"}
+                        title={"Activity Log"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
@@ -204,8 +204,7 @@ function MainPage(){
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
-            <h1>!!! UNEXPECTED ERROR !!!</h1>
-            <BasicButtonComponent color='light' title={"BACK"} onClick={logout}></BasicButtonComponent>
+            
             
         </>
     }
