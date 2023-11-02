@@ -1,10 +1,8 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 import AccessibilityMenu from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
-import BubbleProfile from "../../CommonComponents/BubbleProfile/BubbleProfile";
 import '../../Styles/main.scss';
 import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
@@ -13,21 +11,11 @@ import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
 import usersIcon from "../../assets/users-svgrepo-com.svg"
 import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
 function MainPage(){
 
     const navigate = useNavigate();
-
-    const logout = () => {
-        auth.signOut()
-        .then(result => {
-            logging.info(result);
-            navigate('/login');
-        })
-        .catch(error => logging.error(error));
-    }
 
     const directToStudyPage = () => {
         navigate('/studies');
@@ -203,11 +191,12 @@ function MainPage(){
             </div>
         </>
         : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
-        <>
-            <h1>!!! UNEXPECTED ERROR !!!</h1>
-            <BasicButtonComponent color='light' title={"BACK"} onClick={logout}></BasicButtonComponent>
+        <></>
+        //<>
+            //<h1>!!! UNEXPECTED ERROR !!!</h1>
+            //<BasicButtonComponent color='light' title={"BACK"} onClick={logout}></BasicButtonComponent>
             
-        </>
+        //</>
     }
         <AccessibilityMenu />
         </div>

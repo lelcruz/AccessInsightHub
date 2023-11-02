@@ -31,6 +31,7 @@ function LoginPage() {
             if (user) {
                 if(user.emailVerified) {
                     logging.info('User detected. Email: ' + user.email);
+                    navigate('/main')
             }}
     })}, []);
 
@@ -45,6 +46,7 @@ function LoginPage() {
 
         auth.signInWithEmailAndPassword(login_email, login_password)
         .then(async userCredential => {
+
             logging.info(userCredential);
             navigate('/main');
             

@@ -1,40 +1,33 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './Styles/App.scss'
 import React, { useEffect, useState } from 'react';
-import { Spinner } from 'reactstrap';
-import AuthRoute from '../src/CommonComponents/AuthRoute';
+import AuthRoute from './CommonComponents/AuthRoute';
 import { auth } from './configurations/firebase';
 import logging from './configurations/logging';
 import routes from './configurations/routes';
 
 function App() {
 
-  const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
       auth.onAuthStateChanged(user => {
         if (user)
         {
             logging.info('App.tsx: User detected.' + user.email);
-            if (window.location.pathname === '/login') {
+            
+            /*if (window.location.pathname === '/login') {
                 auth.signOut()
                   .then(() => {
                     logging.info('App.tsx: User logged out due to errors');
                   })
                   .catch(error => logging.error(error));
-              }
+            }*/
         }
-        else
-        {
+        else {
            logging.info('App.tsx: No user detected');
         }
 
-        setLoading(false);
       })
   }, []);
-
-  if (loading)
-      return <Spinner color="info" />
 
   return (
     <Router>
