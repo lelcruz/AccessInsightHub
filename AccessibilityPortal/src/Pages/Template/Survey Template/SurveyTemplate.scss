@@ -184,6 +184,10 @@
 
     .preview{
         padding-left: 25%;
+
+        @media (max-width: 1200px){
+            padding-left: 10%;
+        }
     }
     
 }
