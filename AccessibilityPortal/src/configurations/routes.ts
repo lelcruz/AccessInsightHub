@@ -7,12 +7,13 @@ import MainPage from "../Pages/MainPage/mainpage";
 import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
-import TemplatePage from "../Pages/Template/Survey Template/SurveyEditor";
+import StudyTemplatePage from "../Pages/Template/Study Template/StudyTemplate";
 import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
 import MessagePage from "../Pages/MessagePage/MessagePage"
 import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
 import SurveyPreviewPage from "../Pages/Template/Survey Template/SurveyPreview";
+import TemplatePage from "../Pages/Template/TemplatePage";
 
 const routes: IRoute[] = [
     {
@@ -119,7 +120,15 @@ const routes: IRoute[] = [
         component: SurveyPreviewPage,
         name: 'Survey Preview Page',
         protected: false
+    },
+    {
+        path: '/study-template',
+        exact: true,
+        component: StudyTemplatePage,
+        name: 'Study Template Page',
+        protected: false
     }
+    
 ];
 
 export default routes;
