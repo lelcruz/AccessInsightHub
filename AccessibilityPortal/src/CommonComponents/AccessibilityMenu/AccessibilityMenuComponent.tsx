@@ -17,6 +17,11 @@ function AccessibilityMenu() {
     const [showTextAlignButton] = useState(true);
     const [showSaturationButton] = useState(true);
 
+    const toggleContrast = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('high-contrast');
+    };
+
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -54,7 +59,7 @@ function AccessibilityMenu() {
                     </button>
                 )}
                 {showContrastButton && ( 
-                    <button className="contrast-button">
+                    <button className="contrast-button" onClick={toggleContrast}>
                         Contrast
                     </button>
                 )}
