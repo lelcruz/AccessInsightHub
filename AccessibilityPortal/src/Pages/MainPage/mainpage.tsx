@@ -184,7 +184,7 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Activity Log"}
+                        title={"Template"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>

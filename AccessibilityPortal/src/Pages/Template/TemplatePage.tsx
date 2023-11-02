@@ -37,7 +37,7 @@ function TemplatePage(){
                         handleClick={directToStudiesTemplate}
                     ></BasicCardComponent>
                 </div>
-                <div>
+                <div className="self-center">
                     <BasicCardComponent
                         imageUrl={ActivityLogIcon}
                         title={"Activity Log"}

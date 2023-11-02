@@ -17,16 +17,16 @@
     overflow: hidden;
 
     .link{
-        padding: 0 25px ;
+        padding: 25px 25px ;
         font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         font-size: 20px;
         font-weight: lighter;
         border-inline: 0.7px solid rgba(128, 128, 128, 0.5);
         text-decoration: none;
         color: black;
+        height: 100%;
 
         &:hover, :focus{
-            height: 100%;
             padding-top: 25px;
             background-color: rgba(128, 128, 128, 0.2);
         }
@@ -34,7 +34,6 @@
     }
 
     .active{
-        height: 100%;
         padding-top: 25px;
         border-bottom: 4px ridge $rose-quartz;
         box-shadow: 5px 3px 10px inset rgba(128, 128, 128, 0.2);
