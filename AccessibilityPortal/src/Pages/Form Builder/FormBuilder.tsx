@@ -1,7 +1,8 @@
 import React from "react";
 import RadioForm from "./RadioForm";
 import CheckboxForm from "./CheckboxForm";
-import DropdownForm from "./DropdownForm";
+import SelectForm from "./SelectForm";
+import FileForm from "./FileForm";
 
 interface FormProps{
     FormType: string;   //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";
@@ -17,7 +18,11 @@ function FormBuilder(props: FormProps) {
     }
 
     if (props.FormType === "Dropdown"){
-        return <DropdownForm />;
+        return <SelectForm />;
+    }
+
+    if(props.FormType === "File Upload"){
+        return <FileForm />;
     }
 
     return null;

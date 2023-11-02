@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import {NavLink} from "react-router-dom";
 import './SurveyTemplate.scss';
-import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import Container from "react-bootstrap/Container";
+import NavbarComponent from "../../../CommonComponents/Navbar/NavbarComponent";
 import SortableCard from "./SortableCard";
 import {DndContext, closestCenter} from "@dnd-kit/core";
 import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
@@ -11,9 +11,8 @@ import RadioButtonIcon from "../../assets/radio-button-checked-svgrepo-com.svg";
 import CheckBoxesIcon from "../../assets/checkbox-svgrepo-com.svg";
 import DropDownIcon from "../../assets/circle-arrow-up-svgrepo-com.svg";
 import FileUploadIcon from "../../assets/folder-upload-svgrepo-com.svg";
-import Logout from "../../Pages/LogoutPage/logout";
 
-function TemplatePage(){
+function SurveyPreview(){
     
     const [questions, setQuestion] = useState([1]);
 
@@ -42,27 +41,14 @@ function TemplatePage(){
       <div className="page-body">
         <NavbarComponent />
         <nav className="top-menu-wrapper">
-            <a> Editor</a>
-            <a> Preview</a>
-            <a> Theme</a>
-            <a> Settings</a>
+            <NavLink to="/survey-editor" className={({isActive}) => (isActive ? "link active" : "link")}> Editor </NavLink>
+            <NavLink to="/survey-preview" className={({isActive}) => (isActive ? "link active" : "link")}> Preview </NavLink>
+            <NavLink to="/main" className={({isActive}) => (isActive ? "link active" : "link")}> Theme </NavLink>
+            <NavLink to="/main" className={({isActive}) => (isActive ? "link active" : "link")}> Settings </NavLink>
         </nav>
 
         <div className="editor">
-            <div className="side-menu">
-                <ul>
-                    <li><a href="#">
-                        <img src={RadioButtonIcon} /> Multiple choice</a></li>
-                    <li><a href="#">
-                        <img src={CheckBoxesIcon} /> Checkboxes</a></li>
-                    <li><a href="#">
-                        <img src={DropDownIcon} /> Dropdown</a></li>
-                    <li><a href="#">
-                        <img src={FileUploadIcon} /> File upload</a></li>
-                </ul>
-            </div>
-
-            <div className="main-workspace">
+            <div className="main-workspace preview">
                 <div className="title">
                     <div className="borderless-input survey-title" aria-label="Survey-Title" role="textbox" contentEditable="true" aria-multiline="true"/>
                     <div className="borderless-input description" aria-label="Description" role="textbox" contentEditable="true" aria-multiline="true"  />
@@ -85,16 +71,6 @@ function TemplatePage(){
                         
                     </DndContext>
 
-                    {/* Function to add card by concatenating */}
-                    <div className="adding-function" onClick={() => {
-                        let lastId = questions.length;
-                        setQuestion([...questions, ++lastId]);
-                        console.log(questions);
-                       }}>
-                         
-                        <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                        <span style={{"marginLeft": "5px"}}>Add Card</span>
-                    </div>
 
                 </div>
             
@@ -106,4 +82,4 @@ function TemplatePage(){
 
 }
 
-export default TemplatePage;
+export default SurveyPreview;
