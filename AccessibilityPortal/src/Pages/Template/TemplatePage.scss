@@ -13,17 +13,23 @@
     grid-template-columns: repeat(3, 200px);
     justify-items: center;
     height: 90vh;
-    gap: 100px 200px;
+    column-gap: 200px;
     justify-content: center;
     align-content: center;
     z-index: 1;
   
   
-    @media (max-width: 660px) {
-      grid-template-columns: auto;
-      align-content: space-between;
-      margin: 5rem 0;
+    @media (max-width: 950px) {
+      grid-template-columns: repeat(2, 200px);
+      align-content: space-evenly;
+      margin: 1rem 0;
     }
+
+    @media (max-width: 660px) {
+        grid-template-columns: auto;
+        align-content: space-between;
+        margin: 5rem 0;
+      }
   
   }
   
@@ -44,5 +50,11 @@
     width: 200px;
     height: 200px;
     padding: 20px 20px;
+  }
+
+  .self-center{
+    @media (max-width: 950px) and (min-width: 660px ){
+        margin-left: 50vw;      
+    }
   }
   
