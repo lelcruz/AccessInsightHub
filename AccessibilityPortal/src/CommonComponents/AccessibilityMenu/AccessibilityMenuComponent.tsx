@@ -26,6 +26,11 @@ function AccessibilityMenu() {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('bigger-text');
     };
+
+    const toggleTextSpacing = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('increased-spacing');
+    };
     
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -79,7 +84,7 @@ function AccessibilityMenu() {
                     </button>
                 )}
                 {showSpacingButton && ( 
-                    <button className="spacing-button">
+                    <button className="spacing-button" onClick={toggleTextSpacing}>
                         Text Spacing
                     </button>
                 )}
