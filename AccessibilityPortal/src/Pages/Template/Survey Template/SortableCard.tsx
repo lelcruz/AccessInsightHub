@@ -1,14 +1,15 @@
 import React, {useState} from "react";
 import {useSortable} from "@dnd-kit/sortable";
+import {useDroppable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities";
-import FormBuilder from "../Form Builder/FormBuilder";
+import FormBuilder from "../../Form Builder/FormBuilder";
 import "./QuestionCard.scss";
-import DraggableIcon from "../../assets/grip-horizontal-s.svg";
-import RadioButtonIcon from "../../assets/radio-button-checked-svgrepo-com.svg";
-import CheckBoxesIcon from "../../assets/checkbox-svgrepo-com.svg";
-import DropDownIcon from "../../assets/circle-arrow-up-svgrepo-com.svg";
-import FileUploadIcon from "../../assets/folder-upload-svgrepo-com.svg";
-import DeleteIcon from "../../assets/delete-recycle-bin-trash-can-svgrepo-com.svg";
+import DraggableIcon from "../../../assets/grip-horizontal-s.svg";
+import RadioButtonIcon from "../../../assets/radio-button-checked-svgrepo-com.svg";
+import CheckBoxesIcon from "../../../assets/checkbox-svgrepo-com.svg";
+import DropDownIcon from "../../../assets/circle-arrow-up-svgrepo-com.svg";
+import FileUploadIcon from "../../../assets/folder-upload-svgrepo-com.svg";
+import DeleteIcon from "../../../assets/delete-recycle-bin-trash-can-svgrepo-com.svg";
 
 interface SortableItemProps{
     id: number;
@@ -24,9 +25,9 @@ function SortableCard(props: SortableItemProps) {
     }
 
     const {
-        attributes,
-        listeners,
-        setNodeRef,
+        attributes: draggableAttributes,
+        listeners: draggableListeners,
+        setNodeRef: draggableNodeRef,
         transform,
         transition
      } = useSortable({id: props.id});
@@ -36,17 +37,18 @@ function SortableCard(props: SortableItemProps) {
         transition
      }
 
+
      const handleDelete = () => {
         props.deleted(props.id);
      }
 
      
      return(
-        <div ref={setNodeRef} style={style}>
+        <div ref={draggableNodeRef} style={style}>
             <div className="question-card">
             <div className="card">
-                <div className="card-header" {...listeners}>
-                    <img src={DraggableIcon} {...attributes}/>
+                <div className="card-header" {...draggableListeners}>
+                    <img src={DraggableIcon} {...draggableAttributes}/>
                 </div>
                 <div className="card-body">
                     <div className="question" aria-label="Question" role="textbox" contentEditable="true" aria-multiline="true" />

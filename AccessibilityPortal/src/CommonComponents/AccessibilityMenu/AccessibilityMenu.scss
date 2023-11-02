@@ -1,7 +1,8 @@
 @import "../../Styles/Variables.scss";
 
+// LOGO
 .logo-button {
-    position: fixed; //Fixed position so that logo won't disappear when enlarging screen
+    position: fixed;
     bottom: 1rem;
     right: 2.5rem;
     height: 60px;
@@ -23,37 +24,237 @@
     background: transparent;
 }
 
+// MENU
 .accessibility-menu {
     position: fixed;
-    bottom: 5.75rem;
+    top: 0;
     right: 2rem;
-    height: 20rem;
     max-width: 20rem;
-    max-height: 30rem;
-    background-color: rgba(136, 159, 190, 0.9); /* 0.9 defines 90% opacity */
-    overflow: hidden;
-    z-index: 5;
-    transition: ease-in-out 0.4s;
+    max-height: 100%;
+    background-color: rgba(12, 13, 40, 1);
+    overflow-x: hidden;
+    overflow-y: auto; // Vertical scroll bar
+    z-index: 11;
+    transition: transform 0.3s ease;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 4px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 0;
+        width: 100%;
+        height: 115%;
+        background-color: rgb(206, 208, 227);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;    
+    }
+
 }
 
+.menu-header {
+    position: absolute;
+    top: 51px;
+    left: 73px;
+    padding: 5px 15px;
+    background-color: rgba(12, 13, 40, 1);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: white;
+}
 
+// BUTTONS
 .reset-button {
-    background-color: #071b30;
+    background-color: transparent;
     color: white;
     border: none;
-    padding: 5px 141px;
+    padding: 5px 15px;
     cursor: pointer;
     font-size: 16px;
     position: absolute;
-    top: 0px; 
-    left: 0px; 
+    top: 3px;
+    left: 0px;
 }
 
-.reset-button:hover {
-    background-color: #124377;
+.close-button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 3px;
+    left: 78%;
 }
+
+.contrast-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 100px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.link-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 100px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.text-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 215px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.spacing-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 215px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.image-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 330px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.dyslexia-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 330px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.readingaid-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 445px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.lineheight-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 445px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.textalign-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 560px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.saturation-button {
+    background-color: pink;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 560px;
+    left: 52%;
+    border-radius: 10px;
+}
+
 
 .show-menu {
     width: 100%;
     height: 100%;
 }
+
+
+// Button Functions
+.bigger-text {
+    font-size: 18px;
+}
+
+.high-contrast {
+    filter: contrast(150%);
+}
+
+.increased-spacing {
+    letter-spacing: 2px;
+}
+

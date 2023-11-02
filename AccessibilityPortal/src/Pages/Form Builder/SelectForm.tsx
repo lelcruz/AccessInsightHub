@@ -6,7 +6,7 @@ interface Answer {
     option: string;
 }
 
-function RadioForm() {
+function SelectForm() {
 
     const [answers, setAnswer] = useState<Answer[]>([]);
 
@@ -19,7 +19,7 @@ function RadioForm() {
                 {answers.map((answer) => {
                     return (
                         <>
-                            <input type="select" disabled key={answer.id} />
+                            {/*<input type="select" key={answer.id}/> */}
                             <label className="option" role="textbox" contentEditable="true" aria-multiline="true" placeholder={`${answer.option} ${answer.id}`}>
                                 {/* {`${answer} ${++index}`}*/}
                             </label>
@@ -29,7 +29,7 @@ function RadioForm() {
                     );
                 })}
 
-                <input type="select" disabled/>
+                
                 <label className="option" style={{"color" : "gray"}} aria-label="Answer" role="textbox"  
                     onClick={() => {
                         let id = answers.length + 1;
@@ -41,4 +41,4 @@ function RadioForm() {
     )
 }
 
-export default RadioForm;
+export default SelectForm;

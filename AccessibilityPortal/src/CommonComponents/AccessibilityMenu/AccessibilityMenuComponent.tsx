@@ -4,8 +4,43 @@ import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
     const [toggle, setToggle] = useState(false);
-    const [showResetButton, setShowResetButton] = useState(true);
+    const [showResetButton] = useState(true);
+    const [showCloseButton] = useState(true);
+    const [showContrastButton] = useState(true);
+    const [showLinkButton] = useState(true);
+    const [showTextButton] = useState(true);
+    const [showSpacingButton] = useState(true);
+    const [showImageButton] = useState(true);
+    const [showDyslexiaButton] = useState(true);
+    const [showReadingAidButton] = useState(true);
+    const [showLineHeightButton] = useState(true);
+    const [showTextAlignButton] = useState(true);
+    const [showSaturationButton] = useState(true);
 
+    const handleCloseMenu = () => {
+        setToggle(false);
+    };    
+
+    const resetWebsite = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
+    };
+
+    const toggleContrast = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('high-contrast');
+    };
+
+    const toggleBiggerText = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('bigger-text');
+    };
+
+    const toggleTextSpacing = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('increased-spacing');
+    };
+    
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -29,9 +64,78 @@ function AccessibilityMenu() {
                 <img src={accessibilityIcon} className="img-bottom-right" alt="Accessibility Icon" />
             </button>
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
-                {showResetButton && ( // Render the Reset button only if showResetButton is true
-                    <button className="reset-button" onClick={() => alert("Reset button clicked!")}>
+                <div className = "menu-header">
+                    Accessibility Menu
+                </div>
+                {showCloseButton && (
+                    <button className = "close-button" onClick={handleCloseMenu}>
+                        Close
+                    </button>
+                )}
+
+                {showResetButton && ( 
+                    <button className="reset-button" onClick={resetWebsite}>
                         Reset
+                    </button>
+                )}
+
+                {showContrastButton && ( 
+                    <button className="contrast-button" onClick={toggleContrast}>
+                        Contrast
+                    </button>
+                )}
+
+                {showLinkButton && ( 
+                    <button className="link-button">
+                        Highlight Links
+                    </button>
+                )}
+
+                {showTextButton && ( 
+                    <button className="text-button" onClick={toggleBiggerText}>
+                        Bigger Text
+                    </button>
+                )}
+
+                {showSpacingButton && ( 
+                    <button className="spacing-button" onClick={toggleTextSpacing}>
+                        Text Spacing
+                    </button>
+                )}
+
+                {showImageButton && ( 
+                    <button className="image-button">
+                        Hide Images
+                    </button>
+                )}
+
+                {showDyslexiaButton && ( 
+                    <button className="dyslexia-button">
+                        Dyslexia Friendly
+                    </button>
+                )}
+
+                {showReadingAidButton && ( 
+                    <button className= "readingaid-button">
+                        Cursor
+                    </button>
+                )}
+
+                {showLineHeightButton && ( 
+                    <button className="lineheight-button">
+                    Line Height
+                    </button>
+                )}
+
+                {showTextAlignButton && ( 
+                    <button className= "textalign-button">
+                        Text Align
+                    </button>
+                )}
+
+                {showSaturationButton && ( 
+                    <button className= "saturation-button">
+                        Saturation
                     </button>
                 )}
             </div>

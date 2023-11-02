@@ -1,4 +1,4 @@
-@import "../../Styles/Variables.scss";
+@import "../../../Styles/Variables.scss";
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
 .question-card{
@@ -46,6 +46,11 @@
         }
 
         .card-body{
+            
+            &:hover, :focus{
+                border: none;
+            }
+
             .question{
                 font-size: 18px;
             
@@ -64,7 +69,6 @@
                 }
             }
 
-  
         }
 
         .card-footer{
