@@ -22,6 +22,11 @@ function AccessibilityMenu() {
         rootElement.classList.toggle('high-contrast');
     };
 
+    const toggleBiggerText = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('bigger-text');
+    };
+    
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -69,7 +74,7 @@ function AccessibilityMenu() {
                     </button>
                 )}
                 {showTextButton && ( 
-                    <button className="text-button">
+                    <button className="text-button" onClick={toggleBiggerText}>
                         Bigger Text
                     </button>
                 )}
