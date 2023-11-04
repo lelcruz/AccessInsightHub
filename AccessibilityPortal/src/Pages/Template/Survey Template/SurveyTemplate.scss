@@ -55,7 +55,7 @@
     .side-menu{
         position: sticky;
         top: 0;
-        width: 13.65rem;
+        width: 13.60rem;
         float: left;
         border-right: 2px ridge rgba(136, 131, 131, 0.2);
         height: auto;
@@ -184,7 +184,10 @@
 
     .preview{
         padding-left: 25%;
+
+        @media (max-width: 1200px){
+            padding-left: 10%;
+        }
     }
-    
 }
 

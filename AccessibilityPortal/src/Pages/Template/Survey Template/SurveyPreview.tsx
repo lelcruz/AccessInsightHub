@@ -2,40 +2,12 @@ import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 import './SurveyTemplate.scss';
 import NavbarComponent from "../../../CommonComponents/Navbar/NavbarComponent";
-import SortableCard from "./SortableCard";
-import {DndContext, closestCenter} from "@dnd-kit/core";
-import {arrayMove, SortableContext, verticalListSortingStrategy} from "@dnd-kit/sortable";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import RadioButtonIcon from "../../assets/radio-button-checked-svgrepo-com.svg";
-import CheckBoxesIcon from "../../assets/checkbox-svgrepo-com.svg";
-import DropDownIcon from "../../assets/circle-arrow-up-svgrepo-com.svg";
-import FileUploadIcon from "../../assets/folder-upload-svgrepo-com.svg";
+import SurveyCard from "./SurveyCard";
 
 function SurveyPreview(){
     
     const [questions, setQuestion] = useState([1]);
 
-    function handleDragEnd(e: any) {
-        console.log("Drag end called");
-        const {active, over} = e;
-        console.log("ACTIVE: ", + active.id);
-        console.log("OVER: ", + over.id);
-
-        if (over && active.id !== over.id) {
-            setQuestion((items) => {
-                const activeIndex = items.indexOf(active.id);
-                const overIndex = items.indexOf(over.id);
-                return arrayMove(items, activeIndex, overIndex);
-            });
-        }
-    }
-
-    //Remove card from question list by filtering its id number
-    function removeCard (id: number){
-        setQuestion(questions.filter(question => question !== id));
-            
-    }
 
     return (
       <div className="page-body">
@@ -57,21 +29,7 @@ function SurveyPreview(){
 
                 {/* Sortable question cards */} 
                 <div className="card-wrapper">
-                    <DndContext
-                        collisionDetection={closestCenter}
-                        onDragEnd={handleDragEnd}  
-                    >  
-                    
-                        <SortableContext
-                            items={questions}
-                            strategy={verticalListSortingStrategy}
-                        >
-                                {questions.map(question => <SortableCard key={question} id={question} deleted={removeCard}/>)}
-                        </SortableContext>
-                        
-                    </DndContext>
-
-
+                    {questions.map(question => <SurveyCard />)}
                 </div>
             
             </div>
