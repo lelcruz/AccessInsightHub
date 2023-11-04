@@ -46,7 +46,7 @@ function ForgotPasswordPage() {
     }
 
     return (
-        <div className="main-page">
+        <div className="body-page">
             <div className="form-component">
                 {sent ?
                     <div className="confirmation">
