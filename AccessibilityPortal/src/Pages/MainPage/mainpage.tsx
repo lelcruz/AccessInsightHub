@@ -194,7 +194,7 @@ function MainPage(){
         <>
             
             
-        //</>
+        </>
     }
         <AccessibilityMenu />
         </div>

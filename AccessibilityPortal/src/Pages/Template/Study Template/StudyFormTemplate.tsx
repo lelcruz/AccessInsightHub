@@ -1,8 +1,18 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
+import {useNavigate} from "react-router-dom";
 import userInput from "./UserInput";
 import "./StudyFormStyling.scss";
+import { auth, db } from '../../../configurations/firebase';
+import { collection, addDoc, query, where } from "firebase/firestore";
+import logging from '../../../configurations/logging';
 
 const StudyFormTemplate = () => {
+
+  const [date, setDate] = useState<string>("");
+  const [studyType, setStudyType] = useState<string>("");
+
+  const navigate = useNavigate();
+
   const {
     value: enteredTitle,
     isValid: enteredTitleIsValid,
@@ -28,7 +38,7 @@ const StudyFormTemplate = () => {
     valueChangeHandler: descriptionChangeHandler,
     inputBlurHandler: descriptionBlurHandler,
     reset: resetDescriptionInput,
-  } = userInput((value: string) => value.includes("@"));
+  } = userInput((value: string) => value.includes(""));
 
   let formIsValid = false;
 
@@ -55,6 +65,47 @@ const StudyFormTemplate = () => {
     resetAuthorNameInput();
     resetDescriptionInput();
   };
+
+  const submit = () => {
+
+    console.log(enteredAuthorNameIsValid)
+    console.log(enteredDescriptionIsValid)
+    console.log(enteredTitleIsValid)
+
+
+    if(formIsValid) {
+
+      logging.info('StudyForm: Valid ');
+
+      auth.onAuthStateChanged( async user => {
+        if (user) {
+          logging.info('StudyForm: User detected. Email: ' + user.email);
+
+          // Store data to Firestore
+          const docRef = addDoc(collection(db, "studies"), {
+            author_email: user.email,
+            title: enteredTitle,
+            author_name: enteredAuthorName,
+            date: date,
+            type: studyType,
+            description: enteredDescription,
+          });
+
+          navigate('/template');
+
+          //alert
+          
+        }});} else {
+          logging.info('StudyForm: Not Valid ');
+          return
+        }
+  } 
+
+  const directToTemplatePage = () => {
+    navigate('/template')
+  }
+
+
 
   return (
     <form className="container mt-4" onSubmit={formSubmissionHandler}>
@@ -94,12 +145,12 @@ const StudyFormTemplate = () => {
 
         <div className="form-group">
           <label>Start Date:</label>
-          <input type="date" id="date" name="date" className="form-control" />
+          <input type="date" id="date" name="date" className="form-control" value={date} onChange={(e) => setDate(e.target.value)}/>
         </div>
 
         <div className="form-group">
           <label>Study Type:</label>
-          <select id="studyType" name="studyType" className="form-control">
+          <select id="studyType" name="studyType" className="form-control" onChange={(e) => setStudyType(e.target.value)}>
             <option value="">Select a study type</option>
             <option value="Experimental">Experimental</option>
             <option value="Observational">Observational</option>
@@ -122,10 +173,10 @@ const StudyFormTemplate = () => {
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          <button type="button" className="btn btn-outline-dark">
+          <button type="button" className="btn btn-outline-dark" onClick={directToTemplatePage} >
             Cancel
           </button>
-          <button type="button" className="btn btn-outline-dark">
+          <button type="button" className="btn btn-outline-dark" onClick={submit}>
             Submit
           </button>
         </div>
