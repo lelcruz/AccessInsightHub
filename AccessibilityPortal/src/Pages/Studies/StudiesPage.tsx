@@ -136,7 +136,6 @@ function StudiesPage() {
         </Pagination.Next>
       </Pagination>
       <AccessibilityMenuComponent />
-     
     </div>
   );
 }
