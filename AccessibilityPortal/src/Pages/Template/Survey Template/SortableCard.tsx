@@ -19,6 +19,8 @@ interface SortableItemProps{
 function SortableCard(props: SortableItemProps) {
     
     const [questionType, setQuestionType] = useState<string>("");
+    const [question, setQuestion] = useState<string>();
+    const [answers, setAnswers] = useState<string[]>([]);
 
     const selectedType = (questionType: string) => {
         setQuestionType(questionType);
@@ -36,7 +38,6 @@ function SortableCard(props: SortableItemProps) {
         transform: CSS.Transform.toString(transform),
         transition
      }
-
 
      const handleDelete = () => {
         props.deleted(props.id);
@@ -73,12 +74,12 @@ function SortableCard(props: SortableItemProps) {
                                 <img src={FileUploadIcon} /> File upload</a></li>
                         </ul>
                     </div>
-                    <div className="footer-menu">
-                        <img src={DeleteIcon} onClick={handleDelete} />
+                        <div className="footer-menu">
+                            <img src={DeleteIcon} onClick={handleDelete} />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
      );
 
