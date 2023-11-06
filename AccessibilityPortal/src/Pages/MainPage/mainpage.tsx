@@ -81,19 +81,6 @@ function MainPage(){
             <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
-                        imageUrl={usersIcon}
-                        title={"Users"}
-                        handleClick={directToUserManagement}
-                    ></BasicCardComponent>
-                </div>
-                <div>
-                    <BasicCardComponent
-                        imageUrl={messageIcon}
-                        title={"Mail"}
-                    ></BasicCardComponent>
-                </div>
-                <div>
-                    <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
                         handleClick={directToSurveyPage}
@@ -118,6 +105,13 @@ function MainPage(){
                         imageUrl={templateIcon}
                         title={"Templates"}
                         handleClick={directToTemplatePage}
+                    ></BasicCardComponent>
+                </div>
+                <div>
+                    <BasicCardComponent 
+                        imageUrl={usersIcon}
+                        title={"Users"}
+                        handleClick={directToUserManagement}
                     ></BasicCardComponent>
                 </div>
             </div>

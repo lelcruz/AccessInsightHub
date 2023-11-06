@@ -105,8 +105,6 @@ const StudyFormTemplate = () => {
     navigate('/template')
   }
 
-
-
   return (
     <form className="container mt-4" onSubmit={formSubmissionHandler}>
       <h1 className="text-center">Post a New Study</h1>
@@ -173,11 +171,11 @@ const StudyFormTemplate = () => {
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          <button type="button" className="btn btn-outline-dark" onClick={directToTemplatePage} >
-            Cancel
-          </button>
           <button type="button" className="btn btn-outline-dark" onClick={submit}>
             Submit
+          </button>
+          <button type="button" className="btn btn-outline-dark" onClick={directToTemplatePage} >
+            Cancel
           </button>
         </div>
       </div>

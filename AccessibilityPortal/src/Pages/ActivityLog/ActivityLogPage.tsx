@@ -2,7 +2,7 @@ import React from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
-function SurveyPage() {
+function ActivityLog() {
   return (
     <div className="ResearchPageBody">
       <NavbarComponent />
@@ -11,4 +11,4 @@ function SurveyPage() {
   );
 }
 
-export default SurveyPage;
+export default ActivityLog;

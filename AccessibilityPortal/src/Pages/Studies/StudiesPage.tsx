@@ -1,56 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import { Study } from "./Study";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { auth, db } from '../../configurations/firebase';
+
+interface Study {
+  title: string;
+  author: string;
+  email: string;
+  studyType: string;
+  date: Date;
+  description: string;
+}
+
+async function fetchStudies() {
+  const newStudies: Study[] = [];
+  try {
+      const q = query(collection(db, "studies"));
+      const querySnapshot = await getDocs(q);
+      
+      querySnapshot.forEach((doc) => {
+        const study = {
+          title: doc.data().title,
+          author: doc.data().author_name, 
+          email: doc.data().author_email,
+          studyType: doc.data().type,
+          date: new Date(doc.data().date),
+          description: doc.data().description,
+        };
+        newStudies.push(study);
+      });
+      
+  } catch (error) {
+      console.error("Error fetching studies:", error);
+  }
+
+  return newStudies;
+} 
 
 function StudiesPage() {
 
-  
-  const studiesInformation = [
-    {
-      id: 1,
-      title: "Studies title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Studies title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 3,
-      title: "Studies title 3",
-      author: "Author Name 3",
-      studyType: "N/A",
-      date: new Date("01/28/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-  ];
   const studiesPerPage = 2;
   const [activePage, setActivePage] = useState(1);
   const indexOfLastStudy = activePage * studiesPerPage;
   const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
+  const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
+  
+  useEffect(() => {
+    async function fetchData() {
+      const newStudies = await fetchStudies();
+      setStudiesInformation(newStudies);
+    }
+    fetchData();
+  }, []); 
+
   const currentStudies = studiesInformation.slice(
     indexOfFirstStudy,
     indexOfLastStudy,
   );
-
-  const arrayDataItems = currentStudies.map((study) => (
-    <li key={study.id}>
+  
+  const arrayDataItems = currentStudies.map((study, index) => (
+    <li key={index}>
       <Study
         title={study.title}
         author={study.author}
+        email={study.email}
         type={study.studyType}
         date={study.date}
         description={study.description}

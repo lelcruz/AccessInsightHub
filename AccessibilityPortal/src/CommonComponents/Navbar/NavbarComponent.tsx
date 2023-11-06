@@ -51,9 +51,6 @@ const NavbarComponent = () => {
             <Link to="/usermanage" className="nav-link active" aria-current="page">
               Users
             </Link>
-            <Link to="/message" className="nav-link active" aria-current="page">
-              Mail
-            </Link>
           </>
 
           : <></>
