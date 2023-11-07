@@ -22,15 +22,38 @@ const StudyFormTemplate = () => {
   } = userInput((value: string) => value.trim() !== "");
 
   const {
+    value: enteredDate,
+    isValid: enteredDateIsValid,
+    hasError: dateInputHasError,
+    valueChangeHandler: dateChangedHandler,
+    inputBlurHandler: dateBlurHandler,
+    reset: resetDateInput,
+  } = userInput((value: string) => value.trim() !== "");
+
+  const {
+    value: enteredStudyType,
+    isValid: enteredStudyTypeIsValid,
+    hasError: studyTypeInputHasError,
+    valueChangeHandler: studyTypeChangedHandler,
+    inputBlurHandler: studyTypeBlurHandler,
+    reset: resetStudyTypeInput,
+  } = userInput((value: string) => value.trim() !== "");
+
+  const {
     value: enteredDescription,
     isValid: enteredDescriptionIsValid,
     hasError: descriptionInputHasError,
     valueChangeHandler: descriptionChangeHandler,
     inputBlurHandler: descriptionBlurHandler,
     reset: resetDescriptionInput,
-  } = userInput((value: string) => value.includes("@"));
+  } = userInput((value: string) => value.trim() !== "");
 
-  let formIsValid = false;
+  let formIsValid =
+    enteredTitleIsValid &&
+    enteredAuthorNameIsValid &&
+    enteredDescriptionIsValid &&
+    enteredDateIsValid &&
+    enteredStudyTypeIsValid;
 
   if (
     enteredTitleIsValid &&
@@ -43,23 +66,29 @@ const StudyFormTemplate = () => {
   const formSubmissionHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    if (
-      !enteredTitleIsValid ||
-      !enteredAuthorNameIsValid ||
-      !enteredDescriptionIsValid
-    ) {
+    if (!formIsValid) {
       return;
     }
 
     resetTitleInput();
     resetAuthorNameInput();
     resetDescriptionInput();
+    resetDateInput();
+    resetStudyTypeInput();
+  };
+
+  const formCancelHandler = () => {
+    resetTitleInput();
+    resetAuthorNameInput();
+    resetDescriptionInput();
+    resetDateInput();
+    resetStudyTypeInput();
   };
 
   return (
     <form className="container mt-4" onSubmit={formSubmissionHandler}>
       <h1 className="text-center">Post a New Study</h1>
-      <div className="form-control">
+      <div className="form-template">
         <div className="form-group">
           <label htmlFor="title">Title:</label>
           <input
@@ -94,16 +123,39 @@ const StudyFormTemplate = () => {
 
         <div className="form-group">
           <label>Start Date:</label>
-          <input type="date" id="date" name="date" className="form-control" />
+          <input
+            type="date"
+            id="date"
+            name="date"
+            className={`form-control ${dateInputHasError ? "invalid" : ""}`}
+            value={enteredDate}
+            onChange={dateChangedHandler}
+            onBlur={dateBlurHandler}
+          />
+          {dateInputHasError && (
+            <p className="error-text">Please enter a valid date.</p>
+          )}
         </div>
 
         <div className="form-group">
           <label>Study Type:</label>
-          <select id="studyType" name="studyType" className="form-control">
+          <select
+            id="studyType"
+            name="studyType"
+            className={`form-control ${
+              studyTypeInputHasError ? "invalid" : ""
+            }`}
+            value={enteredStudyType}
+            onChange={studyTypeChangedHandler}
+            onBlur={studyTypeBlurHandler}
+          >
             <option value="">Select a study type</option>
             <option value="Experimental">Experimental</option>
             <option value="Observational">Observational</option>
           </select>
+          {studyTypeInputHasError && (
+            <p className="error-text">Please select a study type.</p>
+          )}
         </div>
 
         <div className="form-group">
@@ -122,10 +174,18 @@ const StudyFormTemplate = () => {
         </div>
 
         <div style={{ marginTop: "20px" }}>
-          <button type="button" className="btn btn-outline-dark">
+          <button
+            type="button"
+            onClick={formCancelHandler}
+            className="btn btn-outline-dark"
+          >
             Cancel
           </button>
-          <button type="button" className="btn btn-outline-dark">
+          <button
+            type="submit"
+            className="btn btn-outline-dark"
+            disabled={!formIsValid}
+          >
             Submit
           </button>
         </div>
