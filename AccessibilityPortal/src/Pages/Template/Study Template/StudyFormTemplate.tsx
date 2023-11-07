@@ -175,6 +175,7 @@ const StudyFormTemplate = () => {
 
         <div style={{ marginTop: "20px" }}>
           <button
+            style={{ marginRight: "20px" }}
             type="button"
             onClick={formCancelHandler}
             className="btn btn-outline-dark"
