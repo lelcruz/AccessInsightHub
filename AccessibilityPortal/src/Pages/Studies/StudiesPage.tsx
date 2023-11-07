@@ -72,6 +72,7 @@ function StudiesPage() {
         date={study.date}
         description={study.description}
       />
+      <hr/>
     </li>
   ));
 
