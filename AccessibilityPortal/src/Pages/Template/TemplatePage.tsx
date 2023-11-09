@@ -19,6 +19,10 @@ function TemplatePage(){
         navigate('/study-template');
     }
 
+    const directToActivityLog = () => {
+        navigate('/activity-log');
+    }
+
     return(
         <div className="main-page">
             <NavbarComponent />
@@ -41,7 +45,7 @@ function TemplatePage(){
                     <BasicCardComponent
                         imageUrl={ActivityLogIcon}
                         title={"Activity Log"}
-                        handleClick={directToStudiesTemplate}
+                        handleClick={directToActivityLog}
                     ></BasicCardComponent>
                 </div>
             </div> 

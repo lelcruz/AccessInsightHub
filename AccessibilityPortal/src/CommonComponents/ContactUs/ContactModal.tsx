@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
-import Modal from "../../CommonComponents/Modal Component/ModalComponent";
+import BasicButtonComponent from "../Buttons/BasicButtonComponent";
+import Modal from "../Modal Component/ModalComponent";
 
 function ContactModal() {
   const [modalShow, setModalShow] = useState(false);
