@@ -6,19 +6,27 @@ interface UseInputReturn {
   value: string;
   isValid: boolean;
   hasError: boolean;
-  valueChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
+  valueChangeHandler: (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => void;
   inputBlurHandler: () => void;
   reset: () => void;
 }
 
-const useInput = (validateValue: ValidationFunction): UseInputReturn => {
+const userInput = (validateValue: ValidationFunction): UseInputReturn => {
   const [enteredValue, setEnteredValue] = useState<string>("");
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
   const valueIsValid: boolean = validateValue(enteredValue);
   const hasError: boolean = !valueIsValid && isTouched;
 
-  const valueChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const valueChangeHandler = (
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setEnteredValue(event.target.value);
   };
 
@@ -41,4 +49,4 @@ const useInput = (validateValue: ValidationFunction): UseInputReturn => {
   };
 };
 
-export default useInput;
+export default userInput;
