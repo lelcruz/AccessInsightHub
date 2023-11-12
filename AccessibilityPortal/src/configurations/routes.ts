@@ -14,6 +14,7 @@ import MessagePage from "../Pages/MessagePage/MessagePage"
 import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
 import SurveyPreviewPage from "../Pages/Template/Survey Template/SurveyPreview";
 import TemplatePage from "../Pages/Template/TemplatePage";
+import ActivityLog from "../Pages/ActivityLog/ActivityLogPage";
 
 const routes: IRoute[] = [
     {
@@ -126,6 +127,13 @@ const routes: IRoute[] = [
         exact: true,
         component: StudyTemplatePage,
         name: 'Study Template Page',
+        protected: false
+    },
+    {
+        path: '/activity-log',
+        exact: true,
+        component: ActivityLog,
+        name: 'Activity Log Page',
         protected: false
     }
     

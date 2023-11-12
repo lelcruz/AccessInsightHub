@@ -37,6 +37,10 @@ function MainPage(){
         navigate('/usermanage');
     }
 
+    const directToActivityLog = () => {
+        navigate('/activity-log');
+    }
+
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
@@ -81,19 +85,6 @@ function MainPage(){
             <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
-                        imageUrl={usersIcon}
-                        title={"Users"}
-                        handleClick={directToUserManagement}
-                    ></BasicCardComponent>
-                </div>
-                <div>
-                    <BasicCardComponent
-                        imageUrl={messageIcon}
-                        title={"Mail"}
-                    ></BasicCardComponent>
-                </div>
-                <div>
-                    <BasicCardComponent 
                         imageUrl={surveyIcon}
                         title={"Surveys"}
                         handleClick={directToSurveyPage}
@@ -118,6 +109,13 @@ function MainPage(){
                         imageUrl={templateIcon}
                         title={"Templates"}
                         handleClick={directToTemplatePage}
+                    ></BasicCardComponent>
+                </div>
+                <div>
+                    <BasicCardComponent 
+                        imageUrl={usersIcon}
+                        title={"Users"}
+                        handleClick={directToUserManagement}
                     ></BasicCardComponent>
                 </div>
             </div>
@@ -184,8 +182,8 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Template"}
-                        handleClick={directToTemplatePage}
+                        title={"Activity Log"}
+                        handleClick={directToActivityLog}
                     ></BasicCardComponent>
                 </div>
             </div>
@@ -194,7 +192,7 @@ function MainPage(){
         <>
             
             
-        //</>
+        </>
     }
         <AccessibilityMenu />
         </div>
