@@ -5,7 +5,7 @@ import SelectForm from "./SelectForm";
 import FileForm from "./FileForm";
 
 interface FormProps{
-    FormType: string;   //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";
+    FormType: string | undefined;   //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";
 }
 
 function FormBuilder(props: FormProps) {

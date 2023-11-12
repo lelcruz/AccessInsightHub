@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {NavLink} from "react-router-dom";
 import './SurveyTemplate.scss';
 import NavbarComponent from "../../../CommonComponents/Navbar/NavbarComponent";
 import SurveyCard from "./SurveyCard";
+import {useTitleDescription} from  "./Context";
 
 function SurveyPreview(){
     
     const [questions, setQuestion] = useState([1]);
-
+    const { title, description } = useTitleDescription();
+    
 
     return (
       <div className="page-body">
@@ -22,8 +24,8 @@ function SurveyPreview(){
         <div className="editor">
             <div className="main-workspace preview">
                 <div className="title">
-                    <div className="borderless-input survey-title" aria-label="Survey-Title" role="textbox" contentEditable="true" aria-multiline="true"/>
-                    <div className="borderless-input description" aria-label="Description" role="textbox" contentEditable="true" aria-multiline="true"  />
+                    <div className="survey-title" aria-label="Survey-Title">{title}</div>
+                    <div className="description" aria-label="Description">{description}</div>
                     <hr></hr>
                 </div>
 

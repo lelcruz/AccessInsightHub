@@ -82,6 +82,18 @@
                 height: 1em;
                 margin-right: 10px;
             }
+
+            a{
+                text-decoration: none;
+                color: grey;
+
+                &:hover, :focus{
+                    color: black;
+                    font-weight: 500;
+                    box-shadow: 1px 1px 5px 8px lavender;
+                    background-color: lavender;
+                }
+            }
         }
     }
     
@@ -94,15 +106,15 @@
         flex-grow: 1;
         padding-top: 50px;
         padding-left: 100px;
-        //height: 100vh;
-        //overflow-y: auto;
+ 
 
         @media (max-width: 1200px){
             padding-left: 40px;
         }
 
         .title{
-            max-height: 20rem;
+            position: absolute;
+            max-height: 30rem;
 
             .borderless-input{
                 &[contentEditable]{
@@ -156,9 +168,9 @@
         }
 
         .card-wrapper{
-            position: absolute;
+            position: relative;
             margin-top: 180px; 
-           
+        
             .adding-function{
                 position: absolute;
                 margin-top: 10px;
