@@ -40,12 +40,22 @@ const StudyFormTemplate = () => {
     reset: resetDescriptionInput,
   } = userInput((value: string) => value.includes(""));
 
+  const {
+    value: enteredTag,
+    isValid: enteredTagIsValid,
+    hasError: tagInputHasError,
+    valueChangeHandler: tagChangedHandler,
+    inputBlurHandler: tagBlurHandler,
+    reset: resetTagInput,
+  } = userInput((value: string) => value.trim() !== "");
+
   let formIsValid = false;
 
   if (
     enteredTitleIsValid &&
     enteredAuthorNameIsValid &&
-    enteredDescriptionIsValid
+    enteredDescriptionIsValid &&
+    enteredTagIsValid 
   ) {
     formIsValid = true;
   }
@@ -56,7 +66,8 @@ const StudyFormTemplate = () => {
     if (
       !enteredTitleIsValid ||
       !enteredAuthorNameIsValid ||
-      !enteredDescriptionIsValid
+      !enteredDescriptionIsValid ||
+      !enteredTagIsValid
     ) {
       return;
     }
@@ -64,14 +75,14 @@ const StudyFormTemplate = () => {
     resetTitleInput();
     resetAuthorNameInput();
     resetDescriptionInput();
+    resetTagInput();
   };
 
   const submit = () => {
 
-    console.log(enteredAuthorNameIsValid)
-    console.log(enteredDescriptionIsValid)
-    console.log(enteredTitleIsValid)
-
+    //console.log(enteredAuthorNameIsValid)
+    //console.log(enteredDescriptionIsValid)
+    //console.log(enteredTitleIsValid)
 
     if(formIsValid) {
 
@@ -83,22 +94,26 @@ const StudyFormTemplate = () => {
 
           // Store data to Firestore
           const docRef = addDoc(collection(db, "studies"), {
+            uid: user.uid,
             author_email: user.email,
             title: enteredTitle,
             author_name: enteredAuthorName,
             date: date,
             type: studyType,
+            tag: enteredTag,
             description: enteredDescription,
           });
 
           navigate('/template');
 
-          //alert
+          // alert pops up succesully...
+
+          // save for activity log
           
         }});} else {
           logging.info('StudyForm: Not Valid ');
           return
-        }
+      }
   } 
 
   const directToTemplatePage = () => {
@@ -153,6 +168,22 @@ const StudyFormTemplate = () => {
             <option value="Experimental">Experimental</option>
             <option value="Observational">Observational</option>
           </select>
+        </div>
+
+        <div className="form-group">
+          <label>Preference Tags (Please use a separate # tag for each topic)</label>
+          <input
+            type="text"   
+            className="form-control"
+            id="floatingInput"
+            placeholder="Tags"
+            onChange={tagChangedHandler}
+            value={enteredTag}
+            onBlur={tagBlurHandler}
+          />
+          {descriptionInputHasError && (
+            <p className="error-text">Tag must not be empty.</p>
+          )}
         </div>
 
         <div className="form-group">

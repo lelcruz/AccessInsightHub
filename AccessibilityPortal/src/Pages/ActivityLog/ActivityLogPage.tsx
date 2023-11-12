@@ -1,5 +1,5 @@
 import React from "react";
-import "../../Styles/ResearchPage.scss";
+import "../../Styles/ActivityLog.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
 function ActivityLog() {
@@ -11,7 +11,7 @@ function ActivityLog() {
 
 
   return (
-    <div className="ResearchPageBody">
+    <div className="ActivityLogBody">
       <NavbarComponent />
       
     </div>

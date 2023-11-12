@@ -4,10 +4,11 @@ import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import { Study } from "./Study";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from '../../configurations/firebase';
 
 interface Study {
+  uid: string;
   title: string;
   author: string;
   email: string;
@@ -24,6 +25,7 @@ async function fetchStudies() {
       
       querySnapshot.forEach((doc) => {
         const study = {
+          uid: doc.data().uid,
           title: doc.data().title,
           author: doc.data().author_name, 
           email: doc.data().author_email,
@@ -38,7 +40,7 @@ async function fetchStudies() {
       console.error("Error fetching studies:", error);
   }
 
-  return newStudies;
+  return newStudies
 } 
 
 function StudiesPage() {
@@ -55,16 +57,17 @@ function StudiesPage() {
       setStudiesInformation(newStudies);
     }
     fetchData();
-  }, []); 
+  }, []); // 
 
   const currentStudies = studiesInformation.slice(
     indexOfFirstStudy,
     indexOfLastStudy,
   );
-  
+
   const arrayDataItems = currentStudies.map((study, index) => (
     <li key={index}>
       <Study
+        uid={study.uid}
         title={study.title}
         author={study.author}
         email={study.email}
@@ -72,7 +75,7 @@ function StudiesPage() {
         date={study.date}
         description={study.description}
       />
-      <hr/>
+
     </li>
   ));
 
@@ -137,6 +140,7 @@ function StudiesPage() {
         </Pagination.Next>
       </Pagination>
       <AccessibilityMenuComponent />
+     
     </div>
   );
 }

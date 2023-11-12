@@ -13,6 +13,7 @@ function App() {
         if (user)
         {
             logging.info('App.tsx: User detected.' + user.email);
+
             
             /*if (window.location.pathname === '/login') {
                 auth.signOut()

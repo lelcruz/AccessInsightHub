@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { collection, getDocs, query, deleteDoc, doc } from "firebase/firestore";
 
 interface StudyProps {
+  uid: string;
   title: string;
   author: string;
   email: string;
@@ -19,6 +21,27 @@ export const Study = (props: StudyProps) => {
     setShowMore(!showMore);
   };
 
+  const handleEdit = (studyId: string) => {
+    
+    console.log(`Editing study with id: ${studyId}`);
+
+
+
+
+  };
+
+  const handleDelete = async (studyId: string) => {
+    try {
+      //await deleteDoc(doc(db, "studies", studyId));
+       //Assuming your data in the state is an array, you need to remove the deleted study
+      
+    } catch (error) {
+      console.error("Error deleting study:", error);
+  }
+
+    console.log(`Try Deteling study with id: ${studyId}`);
+  };
+
   return (
     <div className="central-content">
       <div className="section">
@@ -26,6 +49,10 @@ export const Study = (props: StudyProps) => {
         <h3>Source: {props.author}</h3>
         <h6>Author's email: {props.email}</h6>
       </div>
+      <div>
+          <button onClick={() => handleEdit(props.uid)}>Edit</button>
+          <button onClick={() => handleDelete(props.uid)}>Delete</button>
+        </div>
       <div className="section">
         <p>Type: {props.type}</p>
         <p>Date: {formattedDate}</p>
