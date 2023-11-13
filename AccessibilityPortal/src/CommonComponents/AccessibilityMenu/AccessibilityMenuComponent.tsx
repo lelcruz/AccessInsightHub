@@ -40,6 +40,16 @@ function AccessibilityMenu() {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('increased-spacing');
     };
+
+    const toggleSaturation = () => {
+        const rootElement = document.documentElement;
+        const currentSaturation = rootElement.style.filter;
+        if (currentSaturation === 'grayscale(100%)' ) {
+            rootElement.style.filter = 'grayscale(0%)';
+        } else {
+            rootElement.style.filter = 'grayscale(100%)';
+        }
+    };
     
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -134,7 +144,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showSaturationButton && ( 
-                    <button className= "saturation-button">
+                    <button className= "saturation-button" onClick={toggleSaturation}>
                         Saturation
                     </button>
                 )}
