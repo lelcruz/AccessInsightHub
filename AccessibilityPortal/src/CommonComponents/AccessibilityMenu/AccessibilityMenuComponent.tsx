@@ -22,13 +22,17 @@ function AccessibilityMenu() {
     };    
 
     const resetWebsite = () => {
-        //Reset scss functions
+        // Reset SCSS classes
         const rootElement = document.documentElement;
-        rootElement.classList.remove('bigger-text', 'increased-spacing');
+        rootElement.classList.remove('bigger-text', 'increased-spacing', 'dyslexia-friendly');
     
-        //Reset filters
+        // Reset filters
         rootElement.style.filter = 'none';
+    
+        // Reset font styles
+        document.body.style.fontFamily = 'inherit';
     };
+    
 
     //Adding function on here because of errors on scss
     const toggleContrast = () => {
