@@ -22,14 +22,22 @@ function AccessibilityMenu() {
     };    
 
     const resetWebsite = () => {
+        //Reset scss functions
         const rootElement = document.documentElement;
-        rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
+        rootElement.classList.remove('bigger-text', 'increased-spacing');
+    
+        //Reset filters
+        rootElement.style.filter = 'none';
     };
 
+    //Adding function on here because of errors on scss
     const toggleContrast = () => {
         const rootElement = document.documentElement;
-        rootElement.classList.toggle('high-contrast');
+        const currentContrast = rootElement.style.filter;
+        rootElement.style.filter = currentContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
     };
+    
+    
 
     const toggleBiggerText = () => {
         const rootElement = document.documentElement;
@@ -50,7 +58,7 @@ function AccessibilityMenu() {
             rootElement.style.filter = 'grayscale(100%)';
         }
     };
-    
+  
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
