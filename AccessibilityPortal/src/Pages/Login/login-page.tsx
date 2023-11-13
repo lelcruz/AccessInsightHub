@@ -26,6 +26,7 @@ function LoginPage() {
   // If the user is still saved, lead to main page
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
+
       if (user) {
         if (user.emailVerified) {
           logging.info("User detected. Email: " + user.email);
@@ -82,6 +83,7 @@ function LoginPage() {
 
     setVerification(true);
 
+
     // Source: Firebase - Indicates that the state will only persist in the current session or tab,
     // and will be cleared when the tab or window in which the user authenticated is closed.
     auth.setPersistence("session");
@@ -117,6 +119,7 @@ function LoginPage() {
             navigate("/main");
           }
         }
+
       })
       .catch((error) => {
         logging.error(error);
