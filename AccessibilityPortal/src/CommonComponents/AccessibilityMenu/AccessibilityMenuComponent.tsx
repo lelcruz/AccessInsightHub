@@ -36,8 +36,6 @@ function AccessibilityMenu() {
         const currentContrast = rootElement.style.filter;
         rootElement.style.filter = currentContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
     };
-    
-    
 
     const toggleBiggerText = () => {
         const rootElement = document.documentElement;
@@ -58,6 +56,18 @@ function AccessibilityMenu() {
             rootElement.style.filter = 'grayscale(100%)';
         }
     };
+
+    const toggleDyslexiaFriendly = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('dyslexia-friendly');
+    
+        // Check if dyslexia-friendly class is present
+        const isDyslexiaFriendly = rootElement.classList.contains('dyslexia-friendly');
+    
+        // Change the font for the entire website
+        document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
+    };
+    
   
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -128,7 +138,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showDyslexiaButton && ( 
-                    <button className="dyslexia-button">
+                    <button className="dyslexia-button" onClick={toggleDyslexiaFriendly}>
                         Dyslexia Friendly
                     </button>
                 )}
