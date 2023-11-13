@@ -1,7 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 import AccessibilityMenu from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import '../../Styles/main.scss';
@@ -9,21 +8,16 @@ import studiesIcon from "../../assets/book-education-study-svgrepo-com.svg";
 import templateIcon from "../../assets/dashboard-layout-svgrepo-com.svg";
 import profileIcon from "../../assets/profile-circle-svgrepo-com.svg";
 import surveyIcon from "../../assets/rate-rating-survey-3-svgrepo-com.svg";
+import usersIcon from "../../assets/users-svgrepo-com.svg"
+import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
-import Logout from "../LogoutPage/logout";
+import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
+
 
 function MainPage(){
 
     const navigate = useNavigate();
 
-    const directToLoginPage = () => {
-        navigate('/login');
-    };
-
-    const directToChangePassword = () => {
-        navigate('/change');
-    };
 
     const directToStudyPage = () => {
         navigate('/studies');
@@ -41,17 +35,21 @@ function MainPage(){
         navigate('/template');
     }
 
+    const directToUserManagement = () => {
+        navigate('/usermanage');
+    }
+
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
-
+    
     useEffect(() => {
         auth.onAuthStateChanged( async user => {
             if (user) {
                 if(user.emailVerified) {
-                    logging.info('User detected. Email: ' + user.email);
-                    // User.mail to lead to correct main page
+                    //logging.info('User detected. Email: ' + user.email);
 
+                    // Verify correct role of user
                     const q = query(collection(db, "users"), where("email", "==", user.email));
                     const querySnapshot = await getDocs(q);
 
@@ -76,32 +74,13 @@ function MainPage(){
             }}
     })}, []);
 
-
     return (
         <div className="main-page">
-
-            <div className="header">
-            <div className="input-group">
-                <input type="search" className="form-control"></input>
-                <button className="btn btn-dark">Search</button>
-            </div>
-            </div>
-
-        { isAdmin ?
+            <NavbarComponent/>
+        {/* ADMIN MAIN PAGE */}
+        { isAdmin ? 
         <>
-            <div className="display-box">
-                <div>
-                    <BasicCardComponent 
-                        imageUrl={profileIcon}
-                        title={"Users"}
-                    ></BasicCardComponent>
-                </div>
-                <div>
-                    <BasicCardComponent
-                        imageUrl={templateIcon}
-                        title={"Messages"}
-                    ></BasicCardComponent>
-                </div>
+            <div className="display-box admin">
                 <div>
                     <BasicCardComponent 
                         imageUrl={surveyIcon}
@@ -130,17 +109,16 @@ function MainPage(){
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
                 <div>
-                    <BasicButtonComponent color='light' title={"Do Something"} onClick={directToChangePassword}></BasicButtonComponent>
+                    <BasicCardComponent 
+                        imageUrl={usersIcon}
+                        title={"Users"}
+                        handleClick={directToUserManagement}
+                    ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <Logout></Logout>
-                </div>
-                
             </div>
         </>
+        /* RESEARCHER MAIN PAGE */
         : isResearcher ?
         <>
             <div className="display-box">
@@ -171,18 +149,10 @@ function MainPage(){
                         title={"Templates"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
-                </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <Logout></Logout>
-                </div>
-                
+                </div>   
             </div>
         </>
+        /* PARTICIPANT MAIN PAGE */
         : isParticipant ?
         <>
             <div className="display-box">
@@ -210,27 +180,18 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Templates"}
+                        title={"Template"}
                         handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
-
-                <div>
-                    <BasicButtonComponent color='light' title={"Change My Password"} onClick={directToChangePassword}></BasicButtonComponent>
-                </div>
-
-                <div>
-                    <Logout></Logout>
-                </div>
             </div>
         </>
-        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit)
+        : // ERROR IF OCCURS, BACK TO LOGIN PAGE (Delay a bit) 
         <>
-            <h1>!!! UNEXPECTED ERROR !!!</h1>
-            <BasicButtonComponent color='light' title={"BACK"} onClick={directToLoginPage}></BasicButtonComponent>
+            
+            
         </>
     }
-
         <AccessibilityMenu />
         </div>
     

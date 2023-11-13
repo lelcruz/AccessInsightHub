@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import Modal from "../../CommonComponents/Modal Component/LogOutPopUp";
+import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
+import { useNavigate } from 'react-router-dom';
+import { auth } from '../../configurations/firebase';
+import logging from '../../configurations/logging';
 import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
-import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 
-function ContactModal() {
+function ContactUsModal() {
   const [modalShow, setModalShow] = useState(false);
+
+  const navigate = useNavigate();
 
   const openModal = () => {
     setModalShow(true);
@@ -18,13 +24,13 @@ function ContactModal() {
     alert("Saved");
   }
 
+  const contactUs = () => {
+    
+
+  }
+
   return (
-    <div>
-      <BasicButtonComponent
-        color={"light"}
-        title="Open Modal"
-        onClick={openModal}
-      />
+    <>
       <Modal size="s" isOpen={modalShow} onClose={closeModal}>
         <h4>Have any Question?</h4>
         <h4>Get in touch</h4>
@@ -48,16 +54,13 @@ function ContactModal() {
             className="full-length-item text-box"
             placeholder="Description"
           ></textarea>
-          <BasicButtonComponent
-            color={"dark"}
-            title="Cancel"
-            onClick={closeModal}
-          />
-          <BasicButtonComponent color={"dark"} type="submit" title="Save" />
+
+          <Button color={"dark"} onClick={contactUs} title={"ContactUs"}/>
+          <Button color={"light"} onClick={closeModal} title={"Cancel"}/>
         </form>
       </Modal>
-    </div>
+    </>
   );
 }
 
-export default ContactModal;
+export default ContactUsModal;
