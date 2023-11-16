@@ -28,9 +28,14 @@ function SortableCard(props: SortableItemProps) {
     
     const [questionType, setQuestionType] = useState<string>();
     const [question, setQuestion] = useState<string>("");
-    const [answers, setAnswers] = useState<string[]>([]);
-    //const {query, setQuery} = useQuery();
+    //const [answers, setAnswers] = useState<string[]>([]);
+    const [formAnswers, setFormAnswers] = useState<string[]>([]);
 
+    // Function to handle receiving answers from FormBuilder
+    const handleFormAnswers = (answers: string[]) => {
+        setFormAnswers(answers);
+        // Use the answers as needed in this component or pass them to other functions/components
+    };
 
     const handleQuestionChange = (e: React.FormEvent<HTMLDivElement>) => {
         const enteredQuestion = e.currentTarget.textContent || "";
@@ -83,7 +88,7 @@ function SortableCard(props: SortableItemProps) {
                     className="question"
                 />
                     <div className="answer">
-                        <FormBuilder FormType={questionType} />
+                        <FormBuilder FormType={questionType} setAnswers={handleFormAnswers} />
                 
                     </div>  
                 </div>

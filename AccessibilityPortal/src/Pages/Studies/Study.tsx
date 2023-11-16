@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { collection, getDocs, query, deleteDoc, doc } from "firebase/firestore";
 
 interface StudyProps {
   uid: string;
@@ -41,6 +40,12 @@ export const Study = (props: StudyProps) => {
 
     console.log(`Try Deteling study with id: ${studyId}`);
   };
+
+  const [author, setAuthor] = useState(false);
+  if(props.uid == "author") {
+
+    
+  }
 
   return (
     <div className="central-content">

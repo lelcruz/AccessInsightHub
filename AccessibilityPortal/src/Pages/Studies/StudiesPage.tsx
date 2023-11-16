@@ -4,7 +4,7 @@ import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import { Study } from "./Study";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
-import { collection, getDocs, query, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { auth, db } from '../../configurations/firebase';
 
 interface Study {

@@ -13,31 +13,124 @@ import DropDownIcon from "../../../assets/circle-arrow-up-svgrepo-com.svg";
 import FileUploadIcon from "../../../assets/folder-upload-svgrepo-com.svg";
 import {useTitleDescription} from  "./Context";
 import ContentEditable from "react-contenteditable";
+import { addDoc, collection, doc, getDocs, query, where, updateDoc } from "firebase/firestore";
+import { auth, db } from '../../../configurations/firebase';
+import { useNavigate } from "react-router-dom";
+import debounce from 'lodash.debounce';
 
 interface SurveyProps{    
     title: string;
     description: string;
-    questions: string[];
+    questions: Question[];
+}
+
+interface Question {
+    id: number;
+    title: string;
+    answers: string[];
 }
 
 function SurveyEditor(){
 
     const [type, setType] = useState<string>();
-    const [questions, setQuestion] = useState([1]);
-    const [query, setQuery] = useState<string>();
-    //Synchronize the information entered to preview page
-    const { title, setTitle, description, setDescription } = useTitleDescription();
+    const [questionTitle, setQuestionTitle] = useState("");
+    const [questionAnswers, setQuestionAnswer] = useState<string[]>([]);
+    const [questions, setQuestions] = useState<Question[]>([]);
+    const [surveyAuthor, setSurveyAuthor] = useState("");
+    const [surveyTitle, setSurveyTitle] = useState("");
+    const [surveyDescription, setSurveyDescription] = useState("");
+    //const { title, setTitle, description, setDescription } = useTitleDescription(); //Synchronize the information entered to preview page
+    const navigate = useNavigate();
 
-  
-    // Function to handle changes
-    const handleTitleChange = (e: React.FormEvent<HTMLDivElement>) => {
-        const enteredTitle = e.currentTarget.textContent || "";
-        setTitle(enteredTitle);
+    // BACK //
+    const fetchEdittingSurvey = async () => {
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email)); 
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    throw new Error("No matching documents found"); // Throw an error if the query is empty
+                }
+        
+                // Process the query results if not empty
+                querySnapshot.forEach((doc) => {
+                    
+                    setSurveyAuthor(doc.data().author)
+                    setSurveyTitle(doc.data().title)
+                    setSurveyDescription(doc.data().description)
+
+                });
+                
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
     }
 
-    const handleDescriptionChange = (e: React.FormEvent<HTMLDivElement>) => {
+    // Function to handle changes
+    const handleTitleChange = async (e: React.FormEvent<HTMLDivElement>) => {
+        const enteredTitle = e.currentTarget.textContent || "";
+        setSurveyTitle(enteredTitle);
+        
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        // Update the title field in the Firestore document
+                        updateDoc(doc.ref, {
+                            title: enteredTitle,
+                        })
+                            .then(() => {
+                                console.log("Document updated successfully with new title.");
+                            })
+                            .catch((error) => {
+                                console.error("Error updating document:", error);
+                            });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+                navigate('/template');
+            }
+        }
+    }
+
+    const handleDescriptionChange = async (e: React.FormEvent<HTMLDivElement>) => {
         const enteredDescription = e.currentTarget.textContent || "";
-        setDescription(enteredDescription);
+        setSurveyDescription(enteredDescription);
+        
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        // Update the title field in the Firestore document
+                        updateDoc(doc.ref, {
+                            description: enteredDescription,
+                        })
+                            .then(() => {
+                                console.log("Document updated successfully with new title.");
+                            })
+                            .catch((error) => {
+                                console.error("Error updating document:", error);
+                            });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+                navigate('/template');
+            }
+        }
     }
 
      // Use HTML DOM to control the margin of card wrapper
@@ -46,6 +139,11 @@ function SurveyEditor(){
 
     //Run effect whenever the title or description is updated
     useEffect(() => {
+        
+        // For BACKEND
+        fetchEdittingSurvey();
+
+        // For PREVIEW
         if (titleRef.current && cardWrapperRef.current) {
             // Calculate the height of the title div
             const titleHeight = titleRef.current.offsetHeight;
@@ -53,7 +151,7 @@ function SurveyEditor(){
             // Set the margin-top of the card-wrapper based on title height
             cardWrapperRef.current.style.marginTop = `${titleHeight + 20}px`; 
         }
-    }, [title, description]);
+    }, []);
 
 
     //Handle onDragEnd attribute of sortable cards
@@ -64,7 +162,7 @@ function SurveyEditor(){
         console.log("OVER: ", + over.id);
 
         if (over && active.id !== over.id) {
-            setQuestion((items) => {
+            setQuestions((items) => {
                 const activeIndex = items.indexOf(active.id);
                 const overIndex = items.indexOf(over.id);
                 return arrayMove(items, activeIndex, overIndex);
@@ -75,18 +173,28 @@ function SurveyEditor(){
 
     //Remove card from question list by filtering its id number
     function removeCard (id: number){
-        setQuestion(questions.filter(question => question !== id));      
+        setQuestions(questions.filter(question => question.id !== id));      
     }
 
     //Adding card by concatenating 
     function addCard (){
         //Get the biggest id number to avoid repetition due to sorting cards
-        let biggest= Math.max(...questions);
-        console.log("biggest " + biggest);
-        setQuestion([...questions, ++biggest]);
-        console.log("updatedId: " + biggest);
-    }
+        //let biggest= Math.max(...questions);
+       // console.log("biggest " + biggest);
+        //setQuestion([...questions, ++biggest]);
+        ///console.log("updatedId: " + biggest);
 
+        const newQuestion: Question = {
+            id: questions.length + 1, // Assigning a unique ID, you may use a more robust method
+            title: questionTitle ,
+            answers: questionAnswers ,
+            
+        };
+    
+        // Update the questions state by adding the new question
+        setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
+
+    }
 
     return (
       <div className="page-body">
@@ -131,13 +239,13 @@ function SurveyEditor(){
             <div className="main-workspace">
                 <div ref={(el) => (titleRef.current = el)} className="title">
                 <ContentEditable
-                    html={title} // Set the HTML content
+                    html={surveyTitle} // Set the HTML content
                     onChange={handleTitleChange} // Handle changes
                     tagName="div" // Set the HTML tag name
                     className="borderless-input survey-title"
                 />
                 <ContentEditable
-                    html={description} // Set the HTML content
+                    html={surveyDescription} // Set the HTML content
                     onChange={handleDescriptionChange} // Handle changes
                     tagName="div" // Set the HTML tag name
                     className="borderless-input description"
@@ -156,7 +264,7 @@ function SurveyEditor(){
                             items={questions}
                             strategy={verticalListSortingStrategy}
                         >
-                                {questions.map(question => <SortableCard key={question} id={question} deleted={removeCard} type={type} />)}
+                                {questions.map(question => <SortableCard key={question.id} id={question.id} deleted={removeCard} type={type} />)}
                         </SortableContext>
                         
                     </DndContext>
