@@ -13,9 +13,11 @@ import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 
+
 function MainPage(){
 
     const navigate = useNavigate();
+
 
     const directToStudyPage = () => {
         navigate('/studies');
@@ -192,6 +194,7 @@ function MainPage(){
     }
         <AccessibilityMenu />
         </div>
+    
     );
 }
 

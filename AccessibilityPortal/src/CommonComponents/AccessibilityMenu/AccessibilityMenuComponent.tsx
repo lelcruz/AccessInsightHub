@@ -22,13 +22,23 @@ function AccessibilityMenu() {
     };    
 
     const resetWebsite = () => {
+        // Reset SCSS classes
         const rootElement = document.documentElement;
-        rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
+        rootElement.classList.remove('bigger-text', 'increased-spacing', 'dyslexia-friendly');
+    
+        // Reset filters
+        rootElement.style.filter = 'none';
+    
+        // Reset font styles
+        document.body.style.fontFamily = 'inherit';
     };
+    
 
+    //Adding function on here because of errors on scss
     const toggleContrast = () => {
         const rootElement = document.documentElement;
-        rootElement.classList.toggle('high-contrast');
+        const currentContrast = rootElement.style.filter;
+        rootElement.style.filter = currentContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
     };
 
     const toggleBiggerText = () => {
@@ -40,7 +50,29 @@ function AccessibilityMenu() {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('increased-spacing');
     };
+
+    const toggleSaturation = () => {
+        const rootElement = document.documentElement;
+        const currentSaturation = rootElement.style.filter;
+        if (currentSaturation === 'grayscale(100%)' ) {
+            rootElement.style.filter = 'grayscale(0%)';
+        } else {
+            rootElement.style.filter = 'grayscale(100%)';
+        }
+    };
+
+    const toggleDyslexiaFriendly = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('dyslexia-friendly');
     
+        // Check if dyslexia-friendly class is present
+        const isDyslexiaFriendly = rootElement.classList.contains('dyslexia-friendly');
+    
+        // Change the font for the entire website
+        document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
+    };
+    
+  
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -110,7 +142,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showDyslexiaButton && ( 
-                    <button className="dyslexia-button">
+                    <button className="dyslexia-button" onClick={toggleDyslexiaFriendly}>
                         Dyslexia Friendly
                     </button>
                 )}
@@ -134,7 +166,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showSaturationButton && ( 
-                    <button className= "saturation-button">
+                    <button className= "saturation-button" onClick={toggleSaturation}>
                         Saturation
                     </button>
                 )}
