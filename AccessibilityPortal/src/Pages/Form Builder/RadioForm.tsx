@@ -36,16 +36,20 @@ export function RadioForm(props: FormProps) {
     };
 
     // BACK
-    const updateEdittingCard = async () => {
+    const createEdittingCard = async (id: number) => {
         const user = auth.currentUser;
 
         if (user) {
             // Initilize a card users working on
             
             const docRef = await addDoc(collection(db, "edittingcards"), {
+                author: user.email,
+                id: id,
+
+
 
             });
-    }   
+        }   
     }
 
 

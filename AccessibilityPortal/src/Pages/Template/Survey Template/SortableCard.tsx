@@ -3,8 +3,8 @@ import {useSortable} from "@dnd-kit/sortable";
 import {useDroppable} from "@dnd-kit/core";
 import {CSS} from "@dnd-kit/utilities";
 import FormBuilder from "../../Form Builder/FormBuilder";
-import { addDoc, collection } from "firebase/firestore"; 
-import { db } from "../../../configurations/firebase";
+import { addDoc, collection, doc, getDocs, query, where, updateDoc, deleteDoc } from "firebase/firestore";
+import { auth, db } from '../../../configurations/firebase';
 import "./QuestionCard.scss";
 import DraggableIcon from "../../../assets/grip-horizontal-s.svg";
 import RadioButtonIcon from "../../../assets/radio-button-checked-svgrepo-com.svg";
@@ -17,32 +17,106 @@ import ContentEditable from "react-contenteditable";
 
 
 interface SortableItemProps{
-    id: number;
-    deleted: (id: number) => void;
+    id: string;
+    deleted: (id: string) => void;
     type?: string | undefined;      //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";  
     query?: string | undefined;
+    title?: string;
     answers?: string[]; 
 }
 
 function SortableCard(props: SortableItemProps) {
     
     const [questionType, setQuestionType] = useState<string>();
-    const [question, setQuestion] = useState<string>("");
-    //const [answers, setAnswers] = useState<string[]>([]);
-    const [formAnswers, setFormAnswers] = useState<string[]>([]);
+    const [questionTitle, setQuestionTitle] = useState("");
+    const [questionAnswers, setQuestionAnswers] = useState<string[]>([]);
+
+    const fetchEdittingQuestion = async () => {
+
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email)); 
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    throw new Error("No matching documents found"); // Throw an error if the query is empty
+                }
+                // Process the query results if not empty
+                querySnapshot.forEach(async (doc) => {
+                    const surveyID = doc.id; // Replace with the survey's ID
+                    const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.id));
+
+                    getDocs(nestedQ)
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+
+                                // Title and answers
+                                setQuestionTitle(doc.data().title)
+                                setQuestionAnswers(doc.data().answers)
+
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error updating documents: ', error);
+                        });
+                });      
+            } catch (error) {
+                console.error("Error fetching question title & answers: ", error);
+            }
+        }
+    }
 
     // Function to handle receiving answers from FormBuilder
     const handleFormAnswers = (answers: string[]) => {
-        setFormAnswers(answers);
+        setQuestionAnswers(answers);
         // Use the answers as needed in this component or pass them to other functions/components
     };
 
-    const handleQuestionChange = (e: React.FormEvent<HTMLDivElement>) => {
+    const handleTitleChange = async (e: React.FormEvent<HTMLDivElement>) => {
         const enteredQuestion = e.currentTarget.textContent || "";
-        //setQuery(enteredQuestion);
-        //props.query = enteredQuestion;
-    };
+        setQuestionTitle(enteredQuestion);
+        
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
 
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+
+                        const surveyID = doc.id; // Replace with the survey's ID
+                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.id));
+
+                       getDocs(nestedQ)
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+
+                            // Update the question's title
+                            updateDoc(doc.ref, {
+                                title: enteredQuestion,
+                            })
+                                .then(() => {
+                                    //console.log("Document updated successfully with new title.");
+                                })
+                                .catch((error) => {
+                                    console.error("Error updating document:", error);
+                                });
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error getting documents: ', error);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
+
+    };
 
     const selectedType = (questionType: string) => {
         setQuestionType(questionType);
@@ -69,7 +143,9 @@ function SortableCard(props: SortableItemProps) {
      useEffect(() => {
         if(props.type !== undefined){
             setQuestionType(props.type);
-         }
+        }
+
+        fetchEdittingQuestion();
      }, []);
 
 
@@ -82,8 +158,8 @@ function SortableCard(props: SortableItemProps) {
                 </div>
                 <div className="card-body">
                 <ContentEditable
-                    html={question} // Set the HTML content
-                    onChange={handleQuestionChange} // Handle changes
+                    html={questionTitle} // Set the HTML content
+                    onChange={handleTitleChange} // Handle changes
                     tagName="div" // Set the HTML tag name
                     className="question"
                 />

@@ -14,7 +14,7 @@ function TemplatePage(){
     const navigate = useNavigate();
 
     const directToSurveyTemplate = () => {
-        createSurveyBackend
+        createSurveyBackend();
         navigate('/survey-editor');
     }
 
@@ -29,29 +29,34 @@ function TemplatePage(){
     const createSurveyBackend = async () => {
         const user = auth.currentUser;
         try {
-            if (user) {        
-                const surveyRef = await addDoc(collection(db, "edittingSurveys"), {
-                    author: user.email,
-                    user_uid: user.uid,
-                    title: "",
-                    description: "",
-                });
-                /*
-                // Survey UID in firebase
-                const surveyUID = surveyRef.id;
+            if (user) {       
+                
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email)); 
+                const querySnapshot = await getDocs(q);
 
-                // Add a question collection to the survey editor
-                const subcollectionRef = collection(doc(db, "edittingSurveys", surveyUID), "questions");
-
-                // Initialize a demo question
-                await addDoc(subcollectionRef, {
-                    id: 0,
-                    title: "demo question",
-                    answers: [],
-                });
-                */
-
-                console.log("A new survey template is created");
+                if (querySnapshot.empty) {
+                    const surveyRef = await addDoc(collection(db, "edittingsurveys"), {
+                        author: user.email,
+                        user_uid: user.uid,
+                        title: "",
+                        description: "",
+                    });
+    
+                    // Survey UID in firebase
+                    const surveyUID = surveyRef.id;
+    
+                    // Add a question collection to the survey editor
+                    const subcollectionRef = collection(doc(db, "edittingsurveys", surveyUID), "questions");
+                    
+                    // Initialize a demo question
+                    await addDoc(subcollectionRef, {
+                        id: 0,
+                        title: "demo question",
+                        answers: [],
+                    });
+    
+                    console.log("A new survey template is created");
+                }
             } else {
                 console.error("No user detected");
             } 
