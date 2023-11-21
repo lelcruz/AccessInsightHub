@@ -8,13 +8,13 @@ import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import StudyTemplatePage from "../Pages/Template/Study Template/StudyTemplate";
-import CreatePasswordWithGoogleAccount from "../Pages/Registration/CreatePasswordWithGoogleAccount";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
 import MessagePage from "../Pages/MessagePage/MessagePage"
 import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
 import SurveyPreviewPage from "../Pages/Template/Survey Template/SurveyPreview";
 import TemplatePage from "../Pages/Template/TemplatePage";
 import ActivityLog from "../Pages/ActivityLog/ActivityLogPage";
+import StudyDetailPage from "../Pages/Studies/StudyDetailPage";
 
 const routes: IRoute[] = [
     {
@@ -72,6 +72,13 @@ const routes: IRoute[] = [
         component: StudiesPage,
         name: 'Study Page',
         protected: false
+    },
+    {
+        path: '/study/:studyId',
+        exact: true,
+        component: StudyDetailPage,
+        name: 'Study Detail Page',
+        protected: false // Set to true if the page should be protected
     },
     {
         path: '/survey',
@@ -136,7 +143,7 @@ const routes: IRoute[] = [
         name: 'Activity Log Page',
         protected: false
     }
-    
+
 ];
 
 export default routes;
