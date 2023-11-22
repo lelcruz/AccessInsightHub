@@ -97,10 +97,11 @@ function ResetPasswordPage() {
                             Reset Password
                         </Button>
                         {doneReset ?
-                            <>
-                                <BasicButtonComponent color='light' title={"Close Tab"}
-                                                      onClick={closeOpenedWindow}></BasicButtonComponent>
-                            </> : <>
+                            <div style={{marginTop: "20px"}}>
+                                <BasicButtonComponent
+                                    color='light' title={"Close Tab"}
+                                    onClick={closeOpenedWindow}></BasicButtonComponent>
+                            </div> : <>
                                 <ErrorMessage error={error}/>
                             </>
                         }
@@ -135,8 +136,9 @@ function ResetPasswordPage() {
                             {doneVerify ?
                                 <>
                                     <h1>SUCCESSFULLY RESET PASSWORD</h1>
-                                    <BasicButtonComponent color='light' title={"Close Tab"}
-                                                          onClick={closeOpenedWindow}></BasicButtonComponent>
+                                    <BasicButtonComponent
+                                        color='light' title={"Close Tab"}
+                                        onClick={closeOpenedWindow}></BasicButtonComponent>
                                 </> : <>
                                     <ErrorMessage error={error}/>
                                 </>

@@ -50,6 +50,15 @@ const StudyFormTemplate = () => {
     } = userInput((value: string) => value.trim() !== "");
 
     const {
+        value: enteredRequirement,
+        isValid: enteredRequirementIsValid,
+        hasError: requirementInputHasError,
+        valueChangeHandler: requirementChangeHandler,
+        inputBlurHandler: requirementBlurHandler,
+        reset: resetRequirementInput,
+    } = userInput((value: string) => value.trim() !== "");
+
+    const {
         value: enteredDescription,
         isValid: enteredDescriptionIsValid,
         hasError: descriptionInputHasError,
@@ -64,12 +73,15 @@ const StudyFormTemplate = () => {
         enteredAuthorNameIsValid &&
         enteredDescriptionIsValid &&
         enteredDateIsValid &&
-        enteredStudyTypeIsValid;
+        enteredStudyTypeIsValid &&
+        enteredRequirementIsValid;
 
-    if (
-        enteredTitleIsValid &&
+    if (enteredTitleIsValid &&
         enteredAuthorNameIsValid &&
-        enteredDescriptionIsValid
+        enteredDescriptionIsValid &&
+        enteredDateIsValid &&
+        enteredStudyTypeIsValid &&
+        enteredRequirementIsValid
     ) {
         formIsValid = true;
     }
@@ -86,15 +98,9 @@ const StudyFormTemplate = () => {
         resetDescriptionInput();
         resetDateInput();
         resetStudyTypeInput();
+        resetRequirementInput();
     };
 
-    // const formCancelHandler = () => {
-    //   resetTitleInput();
-    //   resetAuthorNameInput();
-    //   resetDescriptionInput();
-    //   resetDateInput();
-    //   resetStudyTypeInput();
-    // };
 
     const submit = () => {
 
@@ -211,6 +217,21 @@ const StudyFormTemplate = () => {
                     </select>
                     {studyTypeInputHasError && (
                         <p className="error-text">Please select a study type.</p>
+                    )}
+                </div>
+
+                <div className="form-group">
+                    <label>Requirements:</label>
+                    <textarea
+                        className="form-control"
+                        id="floatingInput"
+                        placeholder="Participation Requirements"
+                        onChange={requirementChangeHandler}
+                        value={enteredRequirement}
+                        onBlur={requirementBlurHandler}
+                    />
+                    {descriptionInputHasError && (
+                        <p className="error-text">Requirements must not be empty.</p>
                     )}
                 </div>
 

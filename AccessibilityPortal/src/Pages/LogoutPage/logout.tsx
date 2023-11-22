@@ -42,6 +42,7 @@ useEffect(() => {
     <>
     {props.opened
     ? <>
+
       <Modal size='m' isOpen={isOpen} onClose={closeModal}>
         
         <Button color={"dark"} onClick={logout} title={"Logout"}/>
