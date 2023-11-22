@@ -6,12 +6,14 @@ function AccessibilityMenu() {
     const [toggle, setToggle] = useState(false);
     const [showResetButton] = useState(true);
     const [showCloseButton] = useState(true);
-    const [showContrastButton] = useState(true);
+    const [showHighContrastButton] = useState(true);
+    const [showInvertButton] = useState(true);
     const [showLinkButton] = useState(true);
     const [showTextButton] = useState(true);
     const [showSpacingButton] = useState(true);
     const [showImageButton] = useState(true);
     const [showDyslexiaButton] = useState(true);
+    const [showCursorButton] = useState(true);
     const [showReadingAidButton] = useState(true);
     const [showLineHeightButton] = useState(true);
     const [showTextAlignButton] = useState(true);
@@ -35,10 +37,16 @@ function AccessibilityMenu() {
     
 
     //Adding function on here because of errors on scss
-    const toggleContrast = () => {
+    const toggleHighContrast = () => {
         const rootElement = document.documentElement;
-        const currentContrast = rootElement.style.filter;
-        rootElement.style.filter = currentContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
+        const currentHighContrast = rootElement.style.filter;
+        rootElement.style.filter = currentHighContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
+    };
+
+    const toggleInvert = () => {
+        const rootElement = document.documentElement;
+        const currentInvert = rootElement.style.filter;
+        rootElement.style.filter = currentInvert === 'invert(100%)' ? 'none' : 'invert(100%)';
     };
 
     const toggleBiggerText = () => {
@@ -111,9 +119,15 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showContrastButton && ( 
-                    <button className="contrast-button" onClick={toggleContrast}>
-                        Contrast
+                {showHighContrastButton && ( 
+                    <button className="high-contrast-button" onClick={toggleHighContrast}>
+                        High Contrast
+                    </button>
+                )}
+
+                {showInvertButton && ( 
+                    <button className="invert-button" onClick={toggleInvert}>
+                        Invert
                     </button>
                 )}
 
@@ -147,9 +161,15 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showReadingAidButton && ( 
-                    <button className= "readingaid-button">
+                {showCursorButton && ( 
+                    <button className= "cursor-button">
                         Cursor
+                    </button>
+                )}
+
+                {showReadingAidButton && (
+                    <button className= "readingaid-button">
+                        Reading Aid
                     </button>
                 )}
 
