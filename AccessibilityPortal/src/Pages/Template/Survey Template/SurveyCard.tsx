@@ -9,6 +9,7 @@ import "./QuestionCard.scss";
 
 function SurveyCard() {
 
+   
 
     return(
         <div className="question-card">

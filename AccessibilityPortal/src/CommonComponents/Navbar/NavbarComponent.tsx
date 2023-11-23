@@ -48,8 +48,8 @@ const NavbarComponent = () => {
         {
           isAdmin ? 
           <>
-            <Link to="/usermanage" className="nav-link active" aria-current="page">
-              Users
+            <Link to="/template" className="nav-link active" aria-current="page">
+              Templates
             </Link>
           </>
 

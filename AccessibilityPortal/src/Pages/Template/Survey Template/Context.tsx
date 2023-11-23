@@ -15,7 +15,6 @@ export const TitleDescriptionProvider = ({ children }: { children: ReactNode }) 
   );
 };
 
-{/*}
 export const QueryContext = createContext<any>({ query: '', setQuery: () => {}});
 
 export const useQuery = () => useContext(QueryContext);
@@ -29,7 +28,6 @@ export const QueryProvider = ({ children }: { children: ReactNode }) => {
       </QueryContext.Provider>
     );
   };
-*/}
 
 
 

@@ -6,7 +6,12 @@ interface Answer {
     option: string;
 }
 
-function RadioForm() {
+interface FormProps {
+    handleAnswers: (answers: string[]) => void;
+    // Other necessary props specific to the form component
+}
+
+export function FileForm(props: FormProps) {
 
     const [answers, setAnswer] = useState<Answer[]>([]);
 
@@ -42,4 +47,4 @@ function RadioForm() {
     )
 }
 
-export default RadioForm;
+export default FileForm;

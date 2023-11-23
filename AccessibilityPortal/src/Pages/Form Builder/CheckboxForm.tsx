@@ -6,7 +6,12 @@ interface Answer {
     option: string;
 }
 
-function CheckboxForm() {
+interface FormProps {
+    handleAnswers: (answers: string[]) => void;
+    // Other necessary props specific to the form component
+}
+
+export function CheckboxForm(props: FormProps) {
 
     const [answers, setAnswer] = useState<Answer[]>([]);
 
