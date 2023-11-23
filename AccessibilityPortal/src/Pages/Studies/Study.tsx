@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 interface StudyProps {
+
   uid: string;
   title: string;
   author: string;
@@ -74,4 +75,5 @@ export const Study = (props: StudyProps) => {
       </div>
     </div>
   );
+
 };

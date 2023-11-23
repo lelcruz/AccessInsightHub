@@ -1,5 +1,5 @@
 import firebase from "firebase/compat/app";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
@@ -9,158 +9,193 @@ import "../../Styles/login.scss";
 import { auth, db, Providers } from "../../configurations/firebase";
 import logging from "../../configurations/logging";
 import { SignInWithSocialMedia } from "./login-socialmedia";
-import { getDocs, query, where } from "firebase/firestore";
 
 function LoginPage() {
-    
-    const [verify, setVerification] = useState<boolean>(false);
-    const [login_email, setEmail] = useState<string>("");
-    const [login_password, setPassword] = useState<string>("");
-    const [dob, setDob] = useState<string>("null");
-    const [error, setError] = useState<string>("");
 
-    const navigate = useNavigate();
+  const [verify, setVerification] = useState<boolean>(false);
+  const [login_email, setEmail] = useState<string>("");
+  const [login_password, setPassword] = useState<string>("");
+  const [dob, setDob] = useState<string>("null");
+  const [error, setError] = useState<string>("");
 
-    const directToRegisterPage = () => {
-        navigate('/register');
-    };
+  const navigate = useNavigate();
 
-    // If the user is still saved, lead to main page
-    useEffect(() => {
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                if(user.emailVerified) {
-                    logging.info('User detected. Email: ' + user.email);
-                    navigate('/main')
-            }}
-    })}, []);
+  const directToRegisterPage = () => {
+    navigate("/register");
+  };
 
-    const signInWithEmailAndPassword = () => {
-        if (error !== '') setError('');
+  // If the user is still saved, lead to main page
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
 
-        setVerification(true);
+      if (user) {
+        if (user.emailVerified) {
+          logging.info("User detected. Email: " + user.email);
+          navigate("/main");
+        }
+      }
+    });
+  }, []);
 
-        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
-        // and will be cleared when the tab or window in which the user authenticated is closed. 
-        auth.setPersistence('session') 
+  const signInWithEmailAndPassword = () => {
+    if (error !== "") setError("");
 
-        auth.signInWithEmailAndPassword(login_email, login_password)
-        .then(async userCredential => {
+    setVerification(true);
 
-            logging.info(userCredential);
-            navigate('/main');
-            
-            // Verify if the verification email is clicked
-            const user = userCredential.user;
-            if (user) {
-                if(user.emailVerified) {
-                    logging.info('Email verified');
-                } else {
-                    logging.error('Email has not been verified! User deleted');
-                    navigate('/login');
-                    // Deleting user
-                    user.delete() 
-                        .then(function() {
-                            logging.info('User deleted');
-                        })
-                        .catch(function(error) {
-                            logging.error('Error deleting user:', error);
-                        });
-                }
-            } 
-        })
-        .catch(error => {
-            logging.error(error);
-            setVerification(false);
-            setError(error.message);
-        });
-    }
+    // Source: Firebase - Indicates that the state will only persist in the current session or tab,
+    // and will be cleared when the tab or window in which the user authenticated is closed.
+    auth.setPersistence("session");
 
-    const signInWithSocialMedia = (provider: firebase.auth.AuthProvider) => {
-        if (error !== '') setError('');
+    auth
+      .signInWithEmailAndPassword(login_email, login_password)
+      .then(async (userCredential) => {
+        logging.info(userCredential);
+        navigate("/main");
 
-        setVerification(true);
+        // Verify if the verification email is clicked
+        const user = userCredential.user;
+        if (user) {
+          if (user.emailVerified) {
+            logging.info("Email verified");
+          } else {
+            logging.error("Email has not been verified! User deleted");
+            navigate("/login");
+            // Deleting user
+            user
+              .delete()
+              .then(function () {
+                logging.info("User deleted");
+              })
+              .catch(function (error) {
+                logging.error("Error deleting user:", error);
+              });
+          }
+        }
+      })
+      .catch((error) => {
+        logging.error(error);
+        setVerification(false);
+        setError(error.message);
+      });
+  };
 
-        // Source: Firebase - Indicates that the state will only persist in the current session or tab, 
-        // and will be cleared when the tab or window in which the user authenticated is closed. 
-        auth.setPersistence('session') 
+  const signInWithSocialMedia = (provider: firebase.auth.AuthProvider) => {
+    if (error !== "") setError("");
 
-        SignInWithSocialMedia(provider)
-        .then(async result => {
-            logging.info(result);
+    setVerification(true);
 
-            // Save user's information
-            const user = result.user
-            if (user) {
 
-                // Check if the email already exists in Firestore
-                const q = query(collection(db, "users"), where("email", "==", user.email));
-                const querySnapshot = await getDocs(q);
+    // Source: Firebase - Indicates that the state will only persist in the current session or tab,
+    // and will be cleared when the tab or window in which the user authenticated is closed.
+    auth.setPersistence("session");
 
-                if (querySnapshot.empty) {
-                    // Store data to Firestore
-                    const docRef = addDoc(collection(db, "users"), {
-                        firstName: user.email,
-                        lastName: "null", // Default
-                        dob: dob, // Default
-                        email: user.email,
-                        role: "participant", // Default
-                        signInWithGoogle: true
-                    });
+    SignInWithSocialMedia(provider)
+      .then(async (result) => {
+        logging.info(result);
 
-                     // Create password with Google sign-in accounts
-                    navigate('/main');
-                }
-                else {
-                    navigate('/main')
-                }
-            }
-        })
-        .catch(error => {
-            logging.error(error);
-            setVerification(false);
-            setError(error.message);
-        });
-    }
+        // Save user's information
+        const user = result.user;
+        if (user) {
+          // Check if the email already exists in Firestore
+          const q = query(
+            collection(db, "users"),
+            where("email", "==", user.email),
+          );
+          const querySnapshot = await getDocs(q);
 
-    return (
-        <div className="bg-image">
-            <div className="login-body">
-                <div className="login-header">
-                    <h2>Welcome Back</h2>
-                    <h5>Enter the information you entered while registering</h5>
-                </div>
+          if (querySnapshot.empty) {
+            // Store data to Firestore
+            const docRef = addDoc(collection(db, "users"), {
+              firstName: user.email,
+              lastName: "null", // Default
+              dob: dob, // Default
+              email: user.email,
+              role: "participant", // Default
+              signInWithGoogle: true,
+            });
 
-                <label htmlFor="username" className="form-check-label"> Email Address </label>
-                <input type="text" placeholder="Enter your email" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
-                <label htmlFor="password" className="form-check-label">Password</label>
-                <input type="password" placeholder="Enter your password" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
+            // Create password with Google sign-in accounts
+            navigate("/main");
+          } else {
+            navigate("/main");
+          }
+        }
 
-                {/* Need href for the Forgot password anchor*/}
-                <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
+      })
+      .catch((error) => {
+        logging.error(error);
+        setVerification(false);
+        setError(error.message);
+      });
+  };
 
-                <Button
-                    disabled={verify}
-                    color="success"
-                    block
-                    onClick={() => signInWithEmailAndPassword()}
-                >Sign In</Button>
+  return (
+    <div className="login-body">
+      <div className="login-header">
+        <h2>Welcome Back</h2>
+        <h5>Enter the information you entered while registering</h5>
+      </div>
 
-                <Button
-                    block
-                    disabled={verify}
-                    onClick={() => signInWithSocialMedia(Providers.google)}
-                    style={{ backgroundColor:'#ea4335', borderColor: '#ea4335'}} 
-                ><i className="fab fa-google mr-2"></i> Sign in with Google</Button>
+      <label htmlFor="username" className="form-check-label">
+        {" "}
+        Email Address{" "}
+      </label>
+      <input
+        type="text"
+        placeholder="Enter your email"
+        value={login_email}
+        onChange={(e) => setEmail(e.target.value)}
+        className="form-control mb-3"
+      />
+      <label htmlFor="password" className="form-check-label">
+        Password
+      </label>
+      <input
+        type="password"
+        placeholder="Enter your password"
+        value={login_password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="form-control mb-3"
+      />
 
-                <span className="formatted-text">or</span>
-                <BasicButtonComponent color='light' title={"Register"} onClick={directToRegisterPage}></BasicButtonComponent>
+      {/* Need href for the Forgot password anchor*/}
+      <Link
+        style={{ color: "black", paddingBottom: "20px", textAlign: "right" }}
+        to="/forgot"
+      >
+        Forgot password?
+      </Link>
 
-                <ErrorMessage error={error} />
-                
-            </div>
-        </div>
-    );
+      <Button
+        disabled={verify}
+        color="light"
+        block
+        onClick={() => signInWithEmailAndPassword()}
+      >
+        Sign In
+      </Button>
+
+      <Button
+        block
+        disabled={verify}
+        color="dark"
+        onClick={() => signInWithSocialMedia(Providers.google)}
+      >
+        <i className="fab fa-google mr-2"></i> Sign in with Google
+      </Button>
+
+      <span className="formatted-text">or</span>
+      <BasicButtonComponent
+        color="light"
+        title={"Register"}
+        onClick={directToRegisterPage}
+      ></BasicButtonComponent>
+
+      <ErrorMessage error={error} />
+      <div className="bg-image"></div>
+    </div>
+  );
 
 }
+
 export default LoginPage;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import { Study } from "./Study";
+import {Study} from "./Study";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
+
 import { collection, getDocs, query } from "firebase/firestore";
 import { auth, db } from '../../configurations/firebase';
 
@@ -42,20 +43,66 @@ async function fetchStudies() {
 
   return newStudies
 } 
-
+        
 function StudiesPage() {
 
-  const studiesPerPage = 2;
-  const [activePage, setActivePage] = useState(1);
-  const indexOfLastStudy = activePage * studiesPerPage;
-  const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
-  const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
-  
-  useEffect(() => {
-    async function fetchData() {
-      const newStudies = await fetchStudies();
-      setStudiesInformation(newStudies);
+    const studiesPerPage = 2;
+    const [activePage, setActivePage] = useState(1);
+    const indexOfLastStudy = activePage * studiesPerPage;
+    const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
+    const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const newStudies = await fetchStudies();
+            setStudiesInformation(newStudies);
+        }
+
+        fetchData();
+    }, []);
+
+    const currentStudies = studiesInformation.slice(
+        indexOfFirstStudy,
+        indexOfLastStudy,
+    );
+
+    const arrayDataItems = currentStudies.map((study, index) => (
+        <li key={index}>
+            <Study
+                author={study.author}
+                email={study.email}
+                type={study.studyType}
+                date={study.date}
+                description={study.description}
+                titleElement={
+                    <Link to={`/study/${study.id}`}>{study.title}</Link> // The title as a clickable link
+                }
+            />
+        </li>
+    ));
+
+
+    const totalStudies = Math.ceil(studiesInformation.length / studiesPerPage);
+
+    const pageItems = [];
+    const pageRange = 2;
+
+    for (
+        let number = Math.max(1, activePage - pageRange);
+        number <= Math.min(totalStudies, activePage + pageRange);
+        number++
+    ) {
+        pageItems.push(
+            <Pagination.Item
+                key={number}
+                active={number === activePage}
+                onClick={() => setActivePage(number)}
+            >
+                {number}
+            </Pagination.Item>,
+        );
     }
+
     fetchData();
   }, []); // 
 
@@ -143,6 +190,7 @@ function StudiesPage() {
      
     </div>
   );
+
 }
 
 export default StudiesPage;

@@ -6,12 +6,14 @@ function AccessibilityMenu() {
     const [toggle, setToggle] = useState(false);
     const [showResetButton] = useState(true);
     const [showCloseButton] = useState(true);
-    const [showContrastButton] = useState(true);
+    const [showHighContrastButton] = useState(true);
+    const [showInvertButton] = useState(true);
     const [showLinkButton] = useState(true);
     const [showTextButton] = useState(true);
     const [showSpacingButton] = useState(true);
     const [showImageButton] = useState(true);
     const [showDyslexiaButton] = useState(true);
+    const [showCursorButton] = useState(true);
     const [showReadingAidButton] = useState(true);
     const [showLineHeightButton] = useState(true);
     const [showTextAlignButton] = useState(true);
@@ -22,13 +24,29 @@ function AccessibilityMenu() {
     };    
 
     const resetWebsite = () => {
+        // Reset SCSS classes
         const rootElement = document.documentElement;
-        rootElement.classList.remove('high-contrast', 'bigger-text', 'increased-spacing');
+        rootElement.classList.remove('bigger-text', 'increased-spacing', 'dyslexia-friendly');
+    
+        // Reset filters
+        rootElement.style.filter = 'none';
+    
+        // Reset font styles
+        document.body.style.fontFamily = 'inherit';
+    };
+    
+
+    //Adding function on here because of errors on scss
+    const toggleHighContrast = () => {
+        const rootElement = document.documentElement;
+        const currentHighContrast = rootElement.style.filter;
+        rootElement.style.filter = currentHighContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
     };
 
-    const toggleContrast = () => {
+    const toggleInvert = () => {
         const rootElement = document.documentElement;
-        rootElement.classList.toggle('high-contrast');
+        const currentInvert = rootElement.style.filter;
+        rootElement.style.filter = currentInvert === 'invert(100%)' ? 'none' : 'invert(100%)';
     };
 
     const toggleBiggerText = () => {
@@ -40,7 +58,29 @@ function AccessibilityMenu() {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('increased-spacing');
     };
+
+    const toggleSaturation = () => {
+        const rootElement = document.documentElement;
+        const currentSaturation = rootElement.style.filter;
+        if (currentSaturation === 'grayscale(100%)' ) {
+            rootElement.style.filter = 'grayscale(0%)';
+        } else {
+            rootElement.style.filter = 'grayscale(100%)';
+        }
+    };
+
+    const toggleDyslexiaFriendly = () => {
+        const rootElement = document.documentElement;
+        rootElement.classList.toggle('dyslexia-friendly');
     
+        // Check if dyslexia-friendly class is present
+        const isDyslexiaFriendly = rootElement.classList.contains('dyslexia-friendly');
+    
+        // Change the font for the entire website
+        document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
+    };
+    
+  
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -79,9 +119,15 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showContrastButton && ( 
-                    <button className="contrast-button" onClick={toggleContrast}>
-                        Contrast
+                {showHighContrastButton && ( 
+                    <button className="high-contrast-button" onClick={toggleHighContrast}>
+                        High Contrast
+                    </button>
+                )}
+
+                {showInvertButton && ( 
+                    <button className="invert-button" onClick={toggleInvert}>
+                        Invert
                     </button>
                 )}
 
@@ -110,14 +156,20 @@ function AccessibilityMenu() {
                 )}
 
                 {showDyslexiaButton && ( 
-                    <button className="dyslexia-button">
+                    <button className="dyslexia-button" onClick={toggleDyslexiaFriendly}>
                         Dyslexia Friendly
                     </button>
                 )}
 
-                {showReadingAidButton && ( 
-                    <button className= "readingaid-button">
+                {showCursorButton && ( 
+                    <button className= "cursor-button">
                         Cursor
+                    </button>
+                )}
+
+                {showReadingAidButton && (
+                    <button className= "readingaid-button">
+                        Reading Aid
                     </button>
                 )}
 
@@ -134,7 +186,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showSaturationButton && ( 
-                    <button className= "saturation-button">
+                    <button className= "saturation-button" onClick={toggleSaturation}>
                         Saturation
                     </button>
                 )}

@@ -1,9 +1,9 @@
-import React, { FormEvent, useState, useEffect } from "react";
+import React, {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import userInput from "./UserInput";
 import "./StudyFormStyling.scss";
-import { auth, db } from '../../../configurations/firebase';
-import { collection, addDoc, query, where } from "firebase/firestore";
+import {auth, db} from '../../../configurations/firebase';
+import {addDoc, collection} from "firebase/firestore";
 import logging from '../../../configurations/logging';
 
 const StudyFormTemplate = () => {
@@ -68,9 +68,11 @@ const StudyFormTemplate = () => {
       !enteredAuthorNameIsValid ||
       !enteredDescriptionIsValid ||
       !enteredTagIsValid
+
     ) {
-      return;
+        formIsValid = true;
     }
+
 
     resetTitleInput();
     resetAuthorNameInput();
@@ -78,19 +80,22 @@ const StudyFormTemplate = () => {
     resetTagInput();
   };
 
-  const submit = () => {
+    const submit = () => {
+
 
     //console.log(enteredAuthorNameIsValid)
     //console.log(enteredDescriptionIsValid)
     //console.log(enteredTitleIsValid)
 
-    if(formIsValid) {
 
-      logging.info('StudyForm: Valid ');
+        if (formIsValid) {
 
-      auth.onAuthStateChanged( async user => {
-        if (user) {
-          logging.info('StudyForm: User detected. Email: ' + user.email);
+            logging.info('StudyForm: Valid ');
+
+            auth.onAuthStateChanged(async user => {
+                if (user) {
+                    logging.info('StudyForm: User detected. Email: ' + user.email);
+
 
           // Store data to Firestore
           const docRef = addDoc(collection(db, "studies"), {
@@ -104,7 +109,8 @@ const StudyFormTemplate = () => {
             description: enteredDescription,
           });
 
-          navigate('/template');
+
+                    navigate('/template');
 
           // alert pops up succesully...
 
@@ -212,6 +218,7 @@ const StudyFormTemplate = () => {
       </div>
     </form>
   );
+
 };
 
 export default StudyFormTemplate;
