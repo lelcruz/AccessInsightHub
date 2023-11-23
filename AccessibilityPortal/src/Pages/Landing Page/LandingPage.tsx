@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LandingPage.scss";
 import LoginIcon from "../../assets/login-svgrepo-com.svg";
 import image from "../../assets/Untitled_design-removebg-preview.png";
+import logo from "../../assets/Screenshot_2023-11-21_171255-removebg-preview.png";
 
 function LandingPage() {
 
@@ -18,10 +19,10 @@ function LandingPage() {
 
     return(
         <>
-        <div className="main-page">
+        <div className="landing-page">
             <nav className="navbar">
                 <div className="container-sm">
-                    <h3>Accessibility Portal</h3>
+                    <img src={logo}></img>
                     <div className="task-menu">
                         <button className="login" onClick={directToLogin}>
                             LOGIN 
@@ -41,18 +42,29 @@ function LandingPage() {
             <div className="illustration">
                 <img src={image}></img>
                 <div className="greeting"> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla egestas eros, eu commodo ante dignissim in. Sed quis ultricies justo. Suspendisse lectus sapien, tristique quis neque facilisis, imperdiet ultrices odio. Nulla sagittis sagittis purus, vel facilisis ante faucibus sed. Etiam efficitur justo iaculis erat viverra dapibus at nec lectus. 
+                    At AccessInsightHub, we are dedicated to fostering inclusivity and advancing research for accessibility. Our platform serves as a dynamic hub, connecting researchers and participants in a collaborative space dedicated to understanding and improving the experiences of people with disabilities.
+                    <br/>
+                    Explore a wealth of studies, surveys, and research projects curated to provide valuable insights into various aspects of accessibility. From technological advancements to social inclusion, our platform offers a diverse range of topics that contribute to a deeper understanding of the challenges and opportunities within the disability community.
                 </div>
             </div>
 
             <div className="introduction-grid">
-                <p className="item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla egestas eros, eu commodo ante dignissim in. Sed quis ultricies justo. Suspendisse lectus sapien, tristique quis neque facilisis, imperdiet ultrices odio.</p>
-                <p className="item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla egestas eros, eu commodo ante dignissim in. Sed quis ultricies justo. Suspendisse lectus sapien, tristique quis neque facilisis, imperdiet ultrices odio.</p>
-                <p className="item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fringilla egestas eros, eu commodo ante dignissim in. Sed quis ultricies justo. Suspendisse lectus sapien, tristique quis neque facilisis, imperdiet ultrices odio.</p>
+            <div className="item">
+              <p className="heading">Dive into Insightful Studies</p>
+              Explore and create a collection of cutting-edge studies that delve into the diverse facets of accessibility. From groundbreaking research to nuanced examinations of societal inclusion, our platform hosts a spectrum of research projects for those passionate about driving positive change.
             </div>
-        </div>
-        <div className="footer">
-            <p> Hello</p>
+
+            <div className="item">
+              <p className="heading">Participate in Surveys</p>
+              Our platform empowers researchers with the ability to conduct participatory surveys, enabling them to gather first-hand experiences and perspectives from a diverse community. 
+            </div>
+
+            <div className="item">
+              <p className="heading">Connect with Researchers</p>
+              Forge connections with leading experts and researchers. Our portal facilitates direct communication, allowing you to reach out for more information, collaboration opportunities, or to contribute your unique perspective to ongoing studies.
+            </div>
+            
+            </div>
         </div>
         </>
     )
