@@ -124,39 +124,41 @@ function LoginPage() {
     }
 
     return (
-        <div className="login-body">
-            <div className="login-header">
-                <h2>Welcome Back</h2>
-                <h5>Enter the information you entered while registering</h5>
+        <div className="bg-image">
+            <div className="login-body">
+                <div className="login-header">
+                    <h2>Welcome Back</h2>
+                    <h5>Enter the information you entered while registering</h5>
+                </div>
+
+                <label htmlFor="username" className="form-check-label"> Email Address </label>
+                <input type="text" placeholder="Enter your email" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
+                <label htmlFor="password" className="form-check-label">Password</label>
+                <input type="password" placeholder="Enter your password" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
+
+                {/* Need href for the Forgot password anchor*/}
+                <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
+
+                <Button
+                    disabled={verify}
+                    color="success"
+                    block
+                    onClick={() => signInWithEmailAndPassword()}
+                >Sign In</Button>
+
+                <Button
+                    block
+                    disabled={verify}
+                    onClick={() => signInWithSocialMedia(Providers.google)}
+                    style={{ backgroundColor:'#ea4335', borderColor: '#ea4335'}} 
+                ><i className="fab fa-google mr-2"></i> Sign in with Google</Button>
+
+                <span className="formatted-text">or</span>
+                <BasicButtonComponent color='light' title={"Register"} onClick={directToRegisterPage}></BasicButtonComponent>
+
+                <ErrorMessage error={error} />
+                
             </div>
-
-            <label htmlFor="username" className="form-check-label"> Email Address </label>
-            <input type="text" placeholder="Enter your email" value={login_email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
-            <label htmlFor="password" className="form-check-label">Password</label>
-            <input type="password" placeholder="Enter your password" value={login_password} onChange={(e) => setPassword(e.target.value)} className="form-control mb-3"/>
-
-            {/* Need href for the Forgot password anchor*/}
-            <Link style={{color: "black", paddingBottom: "20px", textAlign: "right"}} to='/forgot'>Forgot password?</Link>
-
-            <Button
-                disabled={verify}
-                color="success"
-                block
-                onClick={() => signInWithEmailAndPassword()}
-            >Sign In</Button>
-
-            <Button
-                block
-                disabled={verify}
-                onClick={() => signInWithSocialMedia(Providers.google)}
-                style={{ backgroundColor:'#ea4335', borderColor: '#ea4335'}} 
-            ><i className="fab fa-google mr-2"></i> Sign in with Google</Button>
-
-            <span className="formatted-text">or</span>
-            <BasicButtonComponent color='light' title={"Register"} onClick={directToRegisterPage}></BasicButtonComponent>
-
-            <ErrorMessage error={error} />
-            <div className="bg-image"></div>
         </div>
     );
 

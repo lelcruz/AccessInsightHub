@@ -1,0 +1,139 @@
+@import "../AccessibilityPortal/src/Styles/Variables.scss";
+
+@mixin resize($x) {
+    width: 500px - $x;
+    height: 500px - $x;
+    margin-left: 50px - $x;
+}
+
+.navbar{
+    background-color: snow;
+    height: 7rem;
+}
+
+.container-sm{
+    justify-content: space-between !important;
+   
+    .task-menu{
+        display: flex;
+
+        .nav-link{
+            margin: 0 40px;
+        }
+
+        button{
+            border: 0;
+            border-radius: 20px;
+            background-color: $lilac;
+            padding: 10px;
+            margin: 0 10px;
+            font-weight: 500;
+            color: $english-violet;
+
+            &:hover, :focus{
+                box-shadow: 4px 5px 4px $rose-quartz;
+                border: 0.5px groove $rose-quartz;
+            }
+        }
+
+        img{
+            width: 2em;
+            height: 2em;
+        }
+
+        .login{
+            background-color: whitesmoke;
+            border: 4px solid $lilac;
+        }
+    }
+}
+
+.illustration{
+    height: calc(100vh - 10rem);
+    width: 70vw;
+    margin: -10vw auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    @media (max-height: 1200px) and (min-height: 1000px){
+        position: relative;
+        top: -4%;
+        left: 50%;
+        transform: translateX(-65%);
+    }
+
+    @media (max-width: 800px) {
+        width: 100vw;
+        display: block;
+        margin-top: 30%;
+    }
+
+    img{
+        width: 500px;
+        height: 500px;
+        filter: hue-rotate(-10deg);
+      
+
+        @media (max-width: 1200px), (max-height: 1200px){
+            @include resize(100px);
+         }
+     
+         @media (max-width: 800px){
+             @include resize(200px);
+             position: relative;
+             left: 50%;
+         }
+
+    }
+
+    .greeting{
+        width: 800px;
+        font-size: 20px;
+        padding: 0 70px;
+
+        @media (max-width: 1200px){
+            padding-right: 0;
+        }
+
+        @media (max-width: 800px) {
+            width: 80vw;
+            margin: 0 auto;
+            padding-top: 50px;
+            padding-left: 0;
+            
+        }
+
+    }
+
+    
+}
+
+.introduction-grid{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 250px);
+    column-gap: 150px;
+
+    @media (max-width: 1100px){
+        grid-template-columns: repeat(1, 180px);
+        row-gap: 50px;
+    }
+
+    @media (min-height: 1000px) and (max-width: 800px){
+        margin-top: -20rem;
+    }
+
+    .item{
+        border-top: 3px solid black;
+    }
+    
+}
+
+.footer{
+    width: 100%;
+    height: 200px;
+    background-color: black;
+    color: white;
+}
+
