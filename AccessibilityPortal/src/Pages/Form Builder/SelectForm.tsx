@@ -6,12 +6,7 @@ interface Answer {
     option: string;
 }
 
-interface FormProps {
-    handleAnswers: (answers: string[]) => void;
-    // Other necessary props specific to the form component
-}
-
-export function SelectForm(props: FormProps) {
+function SelectForm() {
 
     const [answers, setAnswer] = useState<Answer[]>([]);
 

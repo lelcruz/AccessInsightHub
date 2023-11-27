@@ -36,33 +36,20 @@ function ProfilePage(){
                     // Calling for user's profile from Firestore Database
 
                     setRole(doc.data().role); 
-                    if(doc.data().role == "admin") {
-                        setIsAdmin(true)
-                        console.log(role) // Not read as admin, double check
-                        console.log("AN ADMIN!!!")
-                    }
-                    else {
-                        console.log(role)
-                        console.log("NOT AN ADMIN")
-                    }
+                        if(role == "admin") {
+                            setIsAdmin(true)
+                            console.log("ROLE is Admin?:" + role)
+                        }
+
                     setFirstName(doc.data().firstName);
                     setLastName(doc.data().lastName);
                     setEmail(doc.data().email);
                     setDOB(doc.data().dob);
                     setSignInWithGG(doc.data().signInWithGoogle); 
-
-                    console.log(firstName) 
-                    console.log(lastName) 
                 });
             } catch (error) {
-                console.error("Error fetching user profiles:", error);
                 navigate('/login');
             }
-        }
-
-        if(role == "admin") {
-            setIsAdmin(true)
-            console.log("ROLE is Admin?:" + role)
         }
     }
 

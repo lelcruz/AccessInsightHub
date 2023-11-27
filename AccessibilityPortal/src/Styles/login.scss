@@ -9,14 +9,12 @@
 .login-body{
     width: 40%;
     height: 100vh;
+    background-color: $lilac;
     display: flex;
     flex-direction: column;
     text-align: left;
     padding-left: 8vw;
     padding-right: 8vw;
-    margin: 0 auto;
-    backdrop-filter: blur(8px);
-
 
     @media (max-width: 1200px){
        @include resize(1200px, 900px);
@@ -24,10 +22,6 @@
 
     @media (max-width: 800px){
         @include resize(800px, 690px);
-    }
-
-    input[type=password] {
-        box-shadow: none;
     }
 
     label{
@@ -76,16 +70,17 @@
 
 .bg-image {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    left: 40%;
+    width: 60%;
     height: 100%;
     background-image: url('Background.jpg');
     background-position: 0 0;
     background-repeat:no-repeat;
     background-size: cover;
-    
-   
+
+    @media (max-width: 1200px){
+        display: none;
+    }
 }
 
 
