@@ -29,6 +29,7 @@ interface Question {
     type: string;
     title: string;
     answers: string[];
+    order: number;
 }
 
 function SurveyEditor(){
@@ -40,8 +41,13 @@ function SurveyEditor(){
     const [surveyAuthor, setSurveyAuthor] = useState("");
     const [surveyTitle, setSurveyTitle] = useState("");
     const [surveyDescription, setSurveyDescription] = useState("");
+    const [reload, setReload] = useState<boolean>(false);
     //const { title, setTitle, description, setDescription } = useTitleDescription(); //Synchronize the information entered to preview page
     const navigate = useNavigate();
+
+    const triggerReload = () => {
+        setReload(prev => !prev); // Toggle the reload state
+    };
 
     // BACK //
     const fetchEdittingSurvey = async () => {
@@ -75,6 +81,7 @@ function SurveyEditor(){
                             type: doc.data().type as string,
                             title: doc.data().title as string,
                             answers: doc.data().answers as string[],
+                            order: 0,
                         };
                 
                         // Update the questions state by adding the new question
@@ -156,18 +163,49 @@ function SurveyEditor(){
     }
 
     //Handle onDragEnd attribute of sortable cards
-    function handleDragEnd(e: any) {
-        console.log("Drag end called");
-        const {active, over} = e;
-        console.log("ACTIVE: ", + active.id);
-        console.log("OVER: ", + over.id);
-
+    function handleDragEnd(event: any) {
+        const { active, over } = event;
         if (over && active.id !== over.id) {
             setQuestions((items) => {
-                const activeIndex = items.indexOf(active.id);
-                const overIndex = items.indexOf(over.id);
-                return arrayMove(items, activeIndex, overIndex);
+                const activeIndex = items.findIndex(item => item.id === active.id);
+                const overIndex = items.findIndex(item => item.id === over.id);
+                const updatedItems = arrayMove(items, activeIndex, overIndex);
                 
+                // Update order based on the new position
+                updatedItems.forEach(async (item, index) => {
+                    console.log(item.id)
+                    console.log(item.order)
+                    console.log(index)
+                    item.order = index;
+
+                    const user = auth.currentUser;
+                    if (user) {
+                        try {
+                            const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                            const querySnapshot = await getDocs(q);
+                            if (!querySnapshot.empty) {
+                                querySnapshot.forEach((e) => {
+                                    const nestedDocRef = doc(db, 'edittingsurveys', e.id, 'questions', item.id); // Fetch the order of questions
+                                    updateDoc(nestedDocRef, {
+                                        order: item.order,
+                                      })
+                                        .then(() => {
+                                          console.log('Order updated successfully!');
+                                        })
+                                        .catch((error) => {
+                                          console.error('Error updating order: ', error);
+                                        });
+                                });
+                            }
+                        } catch (error) {
+                            console.error("Error fetching user: ", error);
+                            navigate('/template');
+                        }
+                    }
+                    console.log("DONE CHANGING ORDER")
+                });
+  
+                return updatedItems;
             });
         }
     }
@@ -208,6 +246,8 @@ function SurveyEditor(){
                console.error("Error fetching user: ", error);
            }
        }
+
+       triggerReload();
     }
 
     //Adding card by concatenating 
@@ -241,6 +281,8 @@ function SurveyEditor(){
                 console.error("Error fetching user: ", error);
             }
         }
+
+        triggerReload();
     }
 
     // Use HTML DOM to control the margin of card wrapper
@@ -261,6 +303,12 @@ function SurveyEditor(){
         }
         fetchData();
 
+        // Reloading when changes happen
+        if(reload) {
+            fetchData();
+            setReload(false)
+        }
+
         // For PREVIEW
         if (titleRef.current && cardWrapperRef.current) {
             // Calculate the height of the title div
@@ -269,7 +317,7 @@ function SurveyEditor(){
             // Set the margin-top of the card-wrapper based on title height
             cardWrapperRef.current.style.marginTop = `${titleHeight + 20}px`; 
         }
-    }, []);
+    }, [reload]);
 
     return (
       <div className="page-body">
@@ -310,7 +358,6 @@ function SurveyEditor(){
                 </ul>
             </div>
 
-
             <div className="main-workspace">
                 <div ref={(el) => (titleRef.current = el)} className="title">
                 <ContentEditable
@@ -335,12 +382,24 @@ function SurveyEditor(){
                         onDragEnd={handleDragEnd}  
                     >  
                     
-                        <SortableContext
-                            items={questions}
-                            strategy={verticalListSortingStrategy}
-                        >
-                                {questions.map(question => <SortableCard key={question.id} id={question.id} title={question.title} answers={question.answers} deleted={removeCard} type={question.type} />)}
-                        </SortableContext>
+                    <SortableContext
+                        items={questions.sort((a, b) => a.order - b.order)} // Sort based on order
+                        strategy={verticalListSortingStrategy}
+                    >
+                        {questions
+                        .sort((a, b) => a.order - b.order)
+                        .map(question => (
+                            <SortableCard
+                                key={question.id}
+                                id={question.id}
+                                title={question.title}
+                                answers={question.answers}
+                                deleted={removeCard}
+                                type={question.type}
+                                order={question.order}
+                            />
+                        ))}
+                    </SortableContext>
                         
                     </DndContext>
 
@@ -353,9 +412,7 @@ function SurveyEditor(){
                         <span style={{"marginLeft": "5px"}}>Add Card</span>
                     </div>
 
-                    
-                </div>
-            
+                </div>            
             </div>
         </div>
         

@@ -23,12 +23,14 @@ interface SortableItemProps{
     query?: string | undefined;
     title?: string;
     answers?: string[]; 
+    order: number;
 }
 
 function SortableCard(props: SortableItemProps) {
     
     const [questionType, setQuestionType] = useState<string>();
     const [questionTitle, setQuestionTitle] = useState("");
+    const [questionOrder, setQuestionOrder] = useState(0);
     const [questionAnswers, setQuestionAnswers] = useState<string[]>([]);
 
     const fetchEdittingQuestion = async () => {
@@ -54,7 +56,9 @@ function SortableCard(props: SortableItemProps) {
                                 // Title and answers
                                 setQuestionTitle(doc.data().title)
                                 setQuestionAnswers(doc.data().answers)
-
+                                setQuestionType(doc.data().type)
+                                setQuestionOrder(doc.data().order)
+                                
                             });
                         })
                         .catch((error) => {
@@ -102,12 +106,12 @@ function SortableCard(props: SortableItemProps) {
                                     //console.log("Document updated successfully with new title.");
                                 })
                                 .catch((error) => {
-                                    console.error("Error updating document:", error);
+                                    console.error("Error updating question's title:", error);
                                 });
                             });
                         })
                         .catch((error) => {
-                            console.error('Error getting documents: ', error);
+                            console.error("Error updating question's title: ", error);
                         });
                     });
                 }
@@ -118,9 +122,49 @@ function SortableCard(props: SortableItemProps) {
 
     };
 
-    const selectedType = (questionType: string) => {
-        setQuestionType(questionType);
-    }
+    const handleTypeChange = async (type: string) => {
+    
+        setQuestionType(type);
+        
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+
+                        const surveyID = doc.id; // Replace with the survey's ID
+                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.id));
+
+                       getDocs(nestedQ)
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+
+                            // Update the question's title
+                            updateDoc(doc.ref, {
+                                type: type,
+                            })
+                                .then(() => {
+                                    //console.log("Document updated successfully with new title.");
+                                })
+                                .catch((error) => {
+                                    console.error("Error updating question's type:", error);
+                                });
+                            });
+                        })
+                        .catch((error) => {
+                            console.error("Error updating question's type: ", error);
+                        });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
+    };
 
     const {
         attributes: draggableAttributes,
@@ -174,13 +218,13 @@ function SortableCard(props: SortableItemProps) {
                             {questionType === undefined ? "Input Type" : questionType}
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a className="dropdown-item" href="#" onClick={() => {selectedType("Multiple Choice")}}>
+                            <li><a className="dropdown-item" href="#" onClick={() => {handleTypeChange("Multiple Choice")}}>
                                <img src={RadioButtonIcon} /> Multiple choice</a></li>
-                            <li><a className="dropdown-item" href="#" onClick={() => {selectedType("Checkboxes")}}>
+                            <li><a className="dropdown-item" href="#" onClick={() => {handleTypeChange("Checkboxes")}}>
                                 <img src={CheckBoxesIcon} /> Checkboxes</a></li>
-                            <li><a className="dropdown-item" href="#" onClick={() => {selectedType("Dropdown")}}>
+                            <li><a className="dropdown-item" href="#" onClick={() => {handleTypeChange("Dropdown")}}>
                                 <img src={DropDownIcon} /> Dropdown</a></li>
-                            <li><a className="dropdown-item" href="#" onClick={() => {selectedType("File Upload")}}>
+                            <li><a className="dropdown-item" href="#" onClick={() => {handleTypeChange("File Upload")}}>
                                 <img src={FileUploadIcon} /> File upload</a></li>
                         </ul>
                     </div>
