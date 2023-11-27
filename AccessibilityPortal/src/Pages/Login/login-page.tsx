@@ -11,7 +11,6 @@ import logging from "../../configurations/logging";
 import { SignInWithSocialMedia } from "./login-socialmedia";
 
 function LoginPage() {
-
   const [verify, setVerification] = useState<boolean>(false);
   const [login_email, setEmail] = useState<string>("");
   const [login_password, setPassword] = useState<string>("");
@@ -195,7 +194,6 @@ function LoginPage() {
       <div className="bg-image"></div>
     </div>
   );
-
 }
 
 export default LoginPage;

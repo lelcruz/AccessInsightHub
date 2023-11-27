@@ -39,10 +39,6 @@ function MainPage(){
         navigate('/usermanage');
     }
 
-    const directToActivityLog = () => {
-        navigate('/activity-log');
-    }
-
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isResearcher, setIsResearcher] = useState<boolean>(false);
     const [isParticipant, setIsParticipant] = useState<boolean>(false);
@@ -184,8 +180,8 @@ function MainPage(){
                 <div>
                     <BasicCardComponent
                         imageUrl={templateIcon}
-                        title={"Activity Log"}
-                        handleClick={directToActivityLog}
+                        title={"Template"}
+                        handleClick={directToTemplatePage}
                     ></BasicCardComponent>
                 </div>
             </div>
