@@ -13,7 +13,7 @@ import DropDownIcon from "../../../assets/circle-arrow-up-svgrepo-com.svg";
 import FileUploadIcon from "../../../assets/folder-upload-svgrepo-com.svg";
 import DeleteIcon from "../../../assets/delete-recycle-bin-trash-can-svgrepo-com.svg";
 import ContentEditable from "react-contenteditable";
-//import {useQuery} from "./Context";
+import {Answer} from "./SurveyEditor"
 
 
 interface SortableItemProps{
@@ -22,16 +22,17 @@ interface SortableItemProps{
     type?: string | undefined;      //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";  
     query?: string | undefined;
     title?: string;
-    answers?: string[]; 
+    answers?: Answer[]; 
     order: number;
 }
 
 function SortableCard(props: SortableItemProps) {
     
     const [questionType, setQuestionType] = useState<string>();
+    const [questionID, setQuestionID] = useState<string>();
     const [questionTitle, setQuestionTitle] = useState("");
     const [questionOrder, setQuestionOrder] = useState(0);
-    const [questionAnswers, setQuestionAnswers] = useState<string[]>([]);
+    const [questionAnswers, setQuestionAnswers] = useState<Answer[]>([]);
 
     const fetchEdittingQuestion = async () => {
 
@@ -51,14 +52,26 @@ function SortableCard(props: SortableItemProps) {
 
                     getDocs(nestedQ)
                         .then((querySnapshot) => {
-                            querySnapshot.forEach((doc) => {
-
-                                // Title and answers
+                            querySnapshot.forEach(async (doc) => {
+                                const answerCollection = collection(doc.ref, 'answers');
+                                const answerCollectionSnapshot = await getDocs(answerCollection);
+                                answerCollectionSnapshot.forEach((answer) => {
+                                    
+                                    const newAnswer: Answer = {
+                                        id: answer.data().id as number,
+                                        option: answer.data().option as string,
+                                    }
+                                    
+                                    setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
+                                });
+                               
+                                // Info
                                 setQuestionTitle(doc.data().title)
-                                setQuestionAnswers(doc.data().answers)
+                                setQuestionID(doc.data().id)
                                 setQuestionType(doc.data().type)
                                 setQuestionOrder(doc.data().order)
                                 
+                    
                             });
                         })
                         .catch((error) => {
@@ -72,9 +85,10 @@ function SortableCard(props: SortableItemProps) {
     }
 
     // Function to handle receiving answers from FormBuilder
-    const handleFormAnswers = (answers: string[]) => {
+    const handleFormAnswers = async (answers: Answer[]) => {
         setQuestionAnswers(answers);
-        // Use the answers as needed in this component or pass them to other functions/components
+        
+
     };
 
     const handleTitleChange = async (e: React.FormEvent<HTMLDivElement>) => {
@@ -183,14 +197,14 @@ function SortableCard(props: SortableItemProps) {
         props.deleted(props.id);
      }
 
-     //Return the card with specified question type from side menu
-     useEffect(() => {
+    //Return the card with specified question type from side menu
+    useEffect(() => {
         if(props.type !== undefined){
             setQuestionType(props.type);
         }
 
         fetchEdittingQuestion();
-     }, []);
+    }, []);
 
 
      return(
@@ -208,7 +222,7 @@ function SortableCard(props: SortableItemProps) {
                     className="question"
                 />
                     <div className="answer">
-                        <FormBuilder FormType={questionType} setAnswers={handleFormAnswers} />
+                        <FormBuilder FormType={questionType} questionID={questionID} questionAnswers={questionAnswers} />
                 
                     </div>  
                 </div>
