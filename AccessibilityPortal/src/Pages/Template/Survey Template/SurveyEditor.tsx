@@ -28,21 +28,25 @@ interface Question {
     id: string;
     type: string;
     title: string;
-    answers: string[];
+    answers: Answer[];
     order: number;
+}
+
+export interface Answer {
+    id: number;
+    option: string;
 }
 
 function SurveyEditor(){
 
     const [type, setType] = useState<string>();
     const [questionTitle, setQuestionTitle] = useState("");
-    const [questionAnswers, setQuestionAnswer] = useState<string[]>([]);
+    const [questionAnswers, setQuestionAnswers] = useState<Answer[]>([]);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [surveyAuthor, setSurveyAuthor] = useState("");
     const [surveyTitle, setSurveyTitle] = useState("");
     const [surveyDescription, setSurveyDescription] = useState("");
     const [reload, setReload] = useState<boolean>(false);
-    //const { title, setTitle, description, setDescription } = useTitleDescription(); //Synchronize the information entered to preview page
     const navigate = useNavigate();
 
     const triggerReload = () => {
@@ -74,21 +78,44 @@ function SurveyEditor(){
 
                      // Retrieve documents from the nested collection
                     const nestedSnapshot = await getDocs(nestedQuestionCollectionRef)
-                    nestedSnapshot.forEach((doc) => {
+                    nestedSnapshot.forEach(async (doc) => {
 
+                        const answerCollection = collection(doc.ref,'answers');
+                        const answerCollectionSnapshot = await getDocs(answerCollection);
+                        console.log(answerCollectionSnapshot.size)
+                        answerCollectionSnapshot.forEach((answer) => {
+
+                            console.log("ID: " + answer.data().id)
+                            console.log("TEXT: " + answer.data().answerText) 
+                            const newAnswer: Answer = {
+                                id: answer.data().id as number,
+                                option: answer.data().answerText as string,
+                            }
+                            console.log("ID of new: " + newAnswer.id)
+                            console.log("TEXT of new: " + newAnswer.option) 
+                            setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
+                        
+                        });
+                        console.log("LENGTH A: " + questionAnswers.length)
+                        questionAnswers.forEach((e) => {
+                            console.log("ID in loop: " + e.id)
+                        })
+                        
                         const newQuestion: Question = {
                             id: doc.data().id as string,
                             type: doc.data().type as string,
                             title: doc.data().title as string,
-                            answers: doc.data().answers as string[],
-                            order: 0,
+                            answers: questionAnswers,
+                            order: doc.data().order as number,
                         };
                 
                         // Update the questions state by adding the new question
                         setQuestions(prevQuestions => [...prevQuestions, newQuestion]);
-
+                        console.log("LENGTH Q: " + questions.length)
+                        questions.forEach((e) => {
+                            console.log("ID in loop: " + e.id)
+                        })
                     });
-                       
                 });      
             } catch (error) {
                 console.error("Error fetching user: ", error);
@@ -224,6 +251,7 @@ function SurveyEditor(){
                        const surveyID = doc.id; // Replace with the survey's ID
                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", id));
 
+                       // Remove the question
                        getDocs(nestedQ)
                         .then((querySnapshot) => {
                             querySnapshot.forEach((doc) => {
@@ -247,6 +275,41 @@ function SurveyEditor(){
            }
        }
 
+       // After the card is successfully deleted, update the order of remaining questions
+    setQuestions(prevQuestions => {
+        const updatedQuestions = prevQuestions.filter(question => question.id !== id);
+
+        // Re-index the remaining questions
+        updatedQuestions.forEach(async (question, index) => {
+            question.order = index;
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                    const querySnapshot = await getDocs(q);
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach((e) => {
+                            const nestedDocRef = doc(db, 'edittingsurveys', e.id, 'questions', question.id);
+                            updateDoc(nestedDocRef, { order: question.order })
+                                .then(() => {
+                                    console.log('Order updated successfully!');
+                                })
+                                .catch((error) => {
+                                    console.error('Error updating order: ', error);
+                                });
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching user: ", error);
+                    navigate('/template');
+                }
+            }
+        });
+
+        return updatedQuestions;
+
+    });
+    
        triggerReload();
     }
 
@@ -268,8 +331,17 @@ function SurveyEditor(){
                         const newQuestionID = await addDoc(nestedQuestionCollectionRef, {
                             title: questionTitle,
                             type: type,
-                            answers: questionAnswers ,
+                            order: questions.length,
                         });
+
+                        // Create a new 'answers' subcollection inside the newly created question
+                        if (newQuestionID) {
+                            const answersCollectionRef = collection(newQuestionID, 'answers');
+                            await addDoc(answersCollectionRef, {
+                                id: 0,
+                                option: 'Answer 0',
+                            });
+                        }
 
                         updateDoc(newQuestionID, {
                             id: newQuestionID.id,
@@ -293,7 +365,7 @@ function SurveyEditor(){
     useEffect(() => {
         
         // For BACKEND
-        
+
         // Fetching all details of the editting survey
         //fetchEdittingSurvey();
 
@@ -383,22 +455,22 @@ function SurveyEditor(){
                     >  
                     
                     <SortableContext
-                        items={questions.sort((a, b) => a.order - b.order)} // Sort based on order
+                        items={questions}
                         strategy={verticalListSortingStrategy}
                     >
                         {questions
-                        .sort((a, b) => a.order - b.order)
-                        .map(question => (
-                            <SortableCard
-                                key={question.id}
-                                id={question.id}
-                                title={question.title}
-                                answers={question.answers}
-                                deleted={removeCard}
-                                type={question.type}
-                                order={question.order}
-                            />
-                        ))}
+                            .sort((a, b) => a.order - b.order)
+                            .map(question => (
+                                <SortableCard
+                                    key={question.id}
+                                    id={question.id}
+                                    title={question.title}
+                                    answers={question.answers}
+                                    deleted={removeCard}
+                                    type={question.type}
+                                    order={question.order}
+                                />
+                            ))}
                     </SortableContext>
                         
                     </DndContext>

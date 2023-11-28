@@ -21,23 +21,28 @@ const StudyDetailPage: React.FC = () => {
 
     useEffect(() => {
         const fetchStudy = async () => {
-            const docRef = doc(db, "studies", studyId);
-            const docSnap = await getDoc(docRef);
+            if (studyId) {
+                const docRef = doc(db, "studies", studyId);
+                const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
-                const data = docSnap.data();
-                const formattedStudy = {
-                    id: docSnap.id,
-                    title: data.title,
-                    author: data.author_name,
-                    email: data.author_email,
-                    type: data.type,
-                    date: new Date(data.date), // Assuming 'date' is stored in an appropriate format
-                    description: data.description
-                };
-                setStudy(formattedStudy as Study);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const formattedStudy = {
+                        id: docSnap.id,
+                        title: data.title,
+                        author: data.author_name,
+                        email: data.author_email,
+                        type: data.type,
+                        date: new Date(data.date), // Assuming 'date' is stored in an appropriate format
+                        description: data.description
+                    };
+                    setStudy(formattedStudy as Study);
+                } else {
+                    console.log("No such document!");
+                }
             } else {
-                console.log("No such document!");
+                // Handle the case where studyId is undefined
+                console.error('studyId is undefined');
             }
         };
 

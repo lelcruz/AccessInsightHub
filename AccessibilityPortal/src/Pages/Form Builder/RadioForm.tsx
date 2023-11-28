@@ -1,74 +1,239 @@
 import React, { useEffect } from 'react';
 import "./FormBuilder.scss";
 import { useState } from 'react';
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from '../../configurations/firebase';
+import { addDoc, collection, doc, getDocs, query, where, updateDoc, deleteDoc } from "firebase/firestore";
+import {Answer} from "../../Pages/Template/Survey Template/SurveyEditor"
 
-interface Answer {
-  id: number;
-  option: string;
+interface RadioFormProps{
+    questionID: string | undefined;  
+    questionAnswers: Answer[] | undefined;  
 }
 
-interface FormProps {
-    handleAnswers: (answers: string[]) => void;
-}
-
-export function RadioForm(props: FormProps) {
+function RadioForm(props: RadioFormProps) {
 
     // FRONT
-    const [answers, setAnswers] = useState<Answer[]>([]);
-    const [surveyID, setSurveyID] = useState("");
-  
-    const handleRemove = (id: number) => {
-      setAnswers(answers.filter(answer => answer.id !== id));
-    };
-  
-    const handleOptionChange = (id: number, newOption: string) => {
-      setAnswers(answers.map(answer => (answer.id === id ? { ...answer, option: newOption } : answer)));
-    };
-  
-    const surveyIDWorkingOn = () => surveyID;
-  
-    const addOption = () => {
-      let id = answers.length + 1;
-      setAnswers([...answers, { id: id++, option: "Option " + (id-1)}]);
-      console.log(answers)
-    };
+    const [questionAnswers, setQuestionAnswers] = useState<Answer[]>([]);
+    const [reload, setReload] = useState<boolean>(false);
+    const [id, setID] = useState(0);
 
+    const triggerReload = () => {
+        setReload(prev => !prev); // Toggle the reload state
+    };
+    
     // BACK
-    const createEdittingCard = async (id: number) => {
+    const fetchEdittingAnswers = async () => {
         const user = auth.currentUser;
-
         if (user) {
-            // Initilize a card users working on
-            
-            const docRef = await addDoc(collection(db, "edittingcards"), {
-                author: user.email,
-                id: id,
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email)); 
+                const querySnapshot = await getDocs(q);
 
+                if (querySnapshot.empty) {
+                    throw new Error("No matching documents found"); // Throw an error if the query is empty
+                }
+                // Process the query results if not empty
+                querySnapshot.forEach(async (e) => {
+                    const surveyID = e.id; // Replace with the survey's ID
+                    const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.questionID));
 
+                    const nestedQuerySnapshot = await getDocs(nestedQ)
+                        .then((nestedQuerySnapshot) => {
+                            nestedQuerySnapshot.forEach(async (q) => {
+                                const answerCollection = collection(q.ref, 'answers');
+                                const answerCollectionSnapshot = await getDocs(answerCollection);
+                                answerCollectionSnapshot.forEach((answer) => {
+                                    
+                                    const newAnswer: Answer = {
+                                        id: answer.data().id as number,
+                                        option: answer.data().answerText as string,
+                                    }
+                                    
+                                    setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
+                                    
+                                });
+                                console.log("Fetched: " + questionAnswers.length)
+                            });
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching answers: ', error);
+                        });
+                });      
+            } catch (error) {
+                console.error("Error fetching answers: ", error);
+            }
+        }
 
-            });
-        }   
+        return questionAnswers
     }
-
-
-
-
-
-    const fetchEdittingCard = async () => {
-
-    }
-
-
 
     useEffect(() => {
-        fetchEdittingCard();
-    }, []); 
+        async function fetchData() {
+            const newAnswer = await fetchEdittingAnswers();
+            setQuestionAnswers(newAnswer);
+        }
+        fetchData();
+
+        // Reloading when changes happen
+        if(reload) {
+            fetchData();
+            setReload(false)
+        }
+     }, [reload]);
+
+    const handleRemove = async (id: number) => {
+        setQuestionAnswers(questionAnswers.filter(answer => answer.id !== id));
+
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach(async(doc) => {
+
+                        const surveyID = doc.id; // Replace with the survey's ID
+                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.questionID));
+
+                       const nestQuerySnapshot = await getDocs(nestedQ)
+                       .then((nestQuerySnapshot) => {
+                        nestQuerySnapshot.forEach(async (doc) => {
+
+                               const answerCollection = query(collection(doc.ref, 'answers'), where("id", "==", id));
+                                // Remove the answer
+                                const AnswerSnapshot = await getDocs(answerCollection)
+                                .then((AnswerSnapshot) => {
+                                    AnswerSnapshot.forEach((doc) => {
+                                    // Delete the document
+                                    deleteDoc(doc.ref)
+                                        .then(() => {
+                                            console.log('Answer is successfully deleted!');
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error removing Answer: ' + id, error);
+                                        });
+                           });
+                       })
+                       .catch((error) => {
+                           console.error('Error getting documents: ', error);
+                       });
+                                });
+
+                           });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
+
+       // triggerReload()
+
+        console.log("Remove option")
+    };
+  
+    const handleOptionChange = async (id: number, newOption: string) => {
+        setQuestionAnswers(questionAnswers.map(answer => (answer.id === id ? { ...answer, option: newOption } : answer)));
+        
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach(async(doc) => {
+
+                        const surveyID = doc.id; // Replace with the survey's ID
+                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.questionID));
+
+                       await getDocs(nestedQ)
+                       .then((querySnapshot) => {
+                           querySnapshot.forEach(async (doc) => {
+
+                               const answerCollection = query(collection(doc.ref, 'answers'), where("id", "==", id));
+                                // Remove the answer
+                                getDocs(answerCollection)
+                                .then((querySnapshot) => {
+                                    querySnapshot.forEach((e) => {
+                                    // Delete the document
+                                    updateDoc(e.ref, {
+                                        answerText: newOption,
+                                    })
+                                        .then(() => {
+                                            console.log('Answer is successfully deleted!');
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error removing Answer: ' + id, error);
+                                        });
+                           });
+                       })
+                       .catch((error) => {
+                           console.error('Error getting documents: ', error);
+                       });
+                                });
+
+                           });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
+
+        console.log("Handle option")
+    };
+  
+    const addOption = async () => {
+        setID(questionAnswers.length + 1)
+        setQuestionAnswers([...questionAnswers, { id: id, option: "Answer " + id}]);
+
+        // Update to Firebase
+        const user = auth.currentUser;
+        if (user) {
+            try {
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach(async(doc) => {
+
+                        const surveyID = doc.id; // Replace with the survey's ID
+                        const nestedQ = query(collection(db, 'edittingsurveys', surveyID, 'questions'), where("id", "==", props.questionID));
+
+                       const nestedQuerySnapshot = await getDocs(nestedQ)
+                       .then((nestedQuerySnapshot) => {
+                                nestedQuerySnapshot.forEach(async (doc) => {
+
+                               const answerCollection = collection(doc.ref, 'answers');
+                               await addDoc(answerCollection, {
+                                id: id,
+                                answerText: 'Answer ' + id,
+                            });
+
+                           });
+                       })
+                       .catch((error) => {
+                           console.error("Error updating question's answers: ", error);
+                       });
+                    });
+                }
+            } catch (error) {
+                console.error("Error fetching user: ", error);
+            }
+        }
+
+        //triggerReload()
+
+        console.log("Add option")
+    };
 
     return (
         <form>
-            {answers.map((answer) => (
+            {questionAnswers.map((answer) => (
                 <div key={answer.id}>
                 <input type="radio" disabled />
                 <label
