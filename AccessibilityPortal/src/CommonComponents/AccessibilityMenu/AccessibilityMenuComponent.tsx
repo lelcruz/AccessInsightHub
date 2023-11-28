@@ -79,6 +79,15 @@ function AccessibilityMenu() {
         // Change the font for the entire website
         document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
     };
+
+    const handleTextAlignClick = () => {
+        //Add a class to the body element to apply text alignment
+        const bodyElement = document.body;
+        bodyElement.classList.toggle('text-align-center');
+
+        //Close the menu after applying text alignment
+        e.stopPropagation();
+    };
     
   
     const menuRef = useRef<HTMLDivElement>(null);
@@ -180,7 +189,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showTextAlignButton && ( 
-                    <button className= "textalign-button">
+                    <button className= "textalign-button" onClick={handleTextAlignClick}>
                         Text Align
                     </button>
                 )}
