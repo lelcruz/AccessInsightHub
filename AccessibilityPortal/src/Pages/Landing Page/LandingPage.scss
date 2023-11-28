@@ -15,52 +15,57 @@
     .navbar{
         background-color: snow;
         height: 7rem;
-    }
-    
-    .container-sm{
-        justify-content: space-between !important;
-        margin-top: -50px;
-    
-        img{
-            width: 450px;
-            height: 280px;
-            transform: translateX(-25%);
-        }
-       
-        .task-menu{
-            display: flex;
-            margin-top: -4vh;
-    
-            .nav-link{
-                margin: 0 40px;
+
+        .container-sm{
+            justify-content: space-between !important;
+            margin-top: -50px;
+        
+            img{
+                width: 450px;
+                height: 280px;
+                transform: translateX(-30%);
             }
-    
-            button{
-                border: 0;
-                border-radius: 20px;
-                background-color: $lilac;
-                padding: 10px;
-                margin: 0 10px;
-                font-weight: 500;
-                color: $english-violet;
-    
-                &:hover, :focus{
-                    box-shadow: 4px 5px 4px $rose-quartz;
-                    border: 0.5px groove $rose-quartz;
+           
+            .task-menu{
+                display: flex;
+                margin-top: -4vh;
+
+                @media (max-width: 800px){
+                    position: absolute;
+                    top: 100px;
+                    right: 10px;
+
+                }
+        
+                button{
+                    border: 0;
+                    border-radius: 20px;
+                    background-color: $lilac;
+                    padding: 10px;
+                    margin: 0 10px;
+                    font-weight: 500;
+                    color: $english-violet;
+        
+                    &:hover, :focus{
+                        box-shadow: 4px 5px 4px $rose-quartz;
+                        border: 0.5px groove $rose-quartz;
+                    }
+                }
+        
+                img{
+                    width: 2em;
+                    height: 2em;
+                }
+        
+                .login{
+                    background-color: whitesmoke;
+                    border: 4px solid $lilac;
                 }
             }
-    
-            img{
-                width: 2em;
-                height: 2em;
-            }
-    
-            .login{
-                background-color: whitesmoke;
-                border: 4px solid $lilac;
-            }
         }
     }
+    
+    
     
     .illustration{
         height: calc(100vh - 10rem);
@@ -108,6 +113,7 @@
     
             @media (max-width: 1200px){
                 padding-right: 0;
+                margin-right: -80px;
             }
     
             @media (max-width: 800px) {

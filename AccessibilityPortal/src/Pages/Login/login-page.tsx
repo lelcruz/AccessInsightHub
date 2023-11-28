@@ -130,7 +130,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="login-body">
+    <div className="bg-image">
+      <div className="login-body">
       <div className="login-header">
         <h2>Welcome Back</h2>
         <h5>Enter the information you entered while registering</h5>
@@ -158,7 +159,6 @@ function LoginPage() {
         className="form-control mb-3"
       />
 
-      {/* Need href for the Forgot password anchor*/}
       <Link
         style={{ color: "black", paddingBottom: "20px", textAlign: "right" }}
         to="/forgot"
@@ -192,7 +192,8 @@ function LoginPage() {
       ></BasicButtonComponent>
 
       <ErrorMessage error={error} />
-      <div className="bg-image"></div>
+      
+    </div>
     </div>
   );
 

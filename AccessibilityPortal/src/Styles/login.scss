@@ -1,4 +1,4 @@
-@import "Variables";
+@import "Variables.scss";
 
 
 @mixin resize($screen-width, $x) {
@@ -16,7 +16,6 @@
     padding-right: 8vw;
     margin: 0 auto;
     backdrop-filter: blur(8px);
-
 
     @media (max-width: 1200px){
        @include resize(1200px, 900px);
@@ -82,10 +81,9 @@
     height: 100%;
     background-image: url('Background.jpg');
     background-position: 0 0;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: cover;
-    
-   
+
 }
 
 

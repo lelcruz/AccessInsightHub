@@ -45,7 +45,8 @@ const StudyDetailPage: React.FC = () => {
     }, [studyId]);
 
     return (
-        <div className="study-content">
+        <div className="main-page">
+            <div className="study-content">
             <div className="text-xl-center">
                 <h1 className="fw-bold">{study?.title}</h1>
                 <h5 className="fst-italic">Author: {study?.author}</h5>
@@ -61,6 +62,7 @@ const StudyDetailPage: React.FC = () => {
             <hr/>
             <p className="lh-lg">{study?.description}</p>
             <ContactModal/>
+        </div>
         </div>
     );
 };
