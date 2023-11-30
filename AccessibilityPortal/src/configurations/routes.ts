@@ -17,6 +17,9 @@ import TemplatePage from "../Pages/Template/TemplatePage";
 import ActivityLog from "../Pages/ActivityLog/ActivityLogPage";
 import LandingPage from "../Pages/Landing Page/LandingPage";
 import StudyDetailPage from "../Pages/Studies/StudyDetailPage";
+import MyStudies from "../Pages/ActivityLog/MyStudies";
+import MySurveys from "../Pages/ActivityLog/MySurveys";
+import MyHistory from "../Pages/ActivityLog/MyHistory";
 
 
 const routes: IRoute[] = [
@@ -152,8 +155,28 @@ const routes: IRoute[] = [
         component: ActivityLog,
         name: 'Activity Log Page',
         protected: false
+    },
+    {
+        path: '/mystudies',
+        exact: true,
+        component: MyStudies,
+        name: 'Activity Log Study Page',
+        protected: false
+    },
+    {
+        path: '/mysurveys',
+        exact: true,
+        component: MySurveys,
+        name: 'Activity Log Survey Page',
+        protected: false
+    },
+    {
+        path: '/myhistory',
+        exact: true,
+        component: MyHistory,
+        name: 'Activity Log History Page',
+        protected: false
     }
-
 ];
 
 export default routes;

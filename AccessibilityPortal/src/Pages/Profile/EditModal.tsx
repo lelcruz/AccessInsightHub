@@ -6,7 +6,7 @@ import { collection, doc, setDoc, getDocs, query, where } from "firebase/firesto
 
 interface Props {
     triggerReload: () => void;
-  }
+}
 
 function EditModal({ triggerReload }: Props) {
 
@@ -104,7 +104,6 @@ function EditModal({ triggerReload }: Props) {
                 <input type="text" className="full-length-item" value={newLastName} onChange={(e) => setNewLastName(e.target.value)}></input> 
                 <label htmlFor='DOB'>Date of Birth</label>
                 <input type="date" className="full-length-item" value={newDob} min="1900-01-01" max="2023-01-01" onChange={(e) => setNewDob(e.target.value)}></input>
-        
                 <Button color={"dark"} onClick={editProfile} title={"Save"}/>
                 <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
                 

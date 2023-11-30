@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from '../../configurations/firebase';
 import ContactModal from "../../CommonComponents/ContactUs/ContactModal";
@@ -25,7 +25,7 @@ const StudyDetailPage: React.FC = () => {
     const navigate = useNavigate();
 
     const back = () => {
-        navigate('/studies');
+        navigate('/studies')
     }
 
     useEffect(() => {
