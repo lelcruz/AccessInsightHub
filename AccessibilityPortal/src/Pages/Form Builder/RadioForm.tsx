@@ -46,7 +46,7 @@ function RadioForm(props: RadioFormProps) {
                                     
                                     const newAnswer: Answer = {
                                         id: answer.data().id as number,
-                                        option: answer.data().answerText as string,
+                                        option: answer.data().option as string,
                                     }
                                     
                                     setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
@@ -65,7 +65,7 @@ function RadioForm(props: RadioFormProps) {
         }
 
         return questionAnswers
-    }
+    } 
 
     useEffect(() => {
         async function fetchData() {
@@ -82,8 +82,7 @@ function RadioForm(props: RadioFormProps) {
      }, [reload]);
 
     const handleRemove = async (id: number) => {
-        setQuestionAnswers(questionAnswers.filter(answer => answer.id !== id));
-
+       
         // Update to Firebase
         const user = auth.currentUser;
         if (user) {
@@ -129,14 +128,15 @@ function RadioForm(props: RadioFormProps) {
             }
         }
 
+        setQuestionAnswers(questionAnswers.filter(answer => answer.id !== id));
+
        // triggerReload()
 
         console.log("Remove option")
     };
   
     const handleOptionChange = async (id: number, newOption: string) => {
-        setQuestionAnswers(questionAnswers.map(answer => (answer.id === id ? { ...answer, option: newOption } : answer)));
-        
+
         // Update to Firebase
         const user = auth.currentUser;
         if (user) {
@@ -161,7 +161,7 @@ function RadioForm(props: RadioFormProps) {
                                     querySnapshot.forEach((e) => {
                                     // Delete the document
                                     updateDoc(e.ref, {
-                                        answerText: newOption,
+                                        option: newOption,
                                     })
                                         .then(() => {
                                             console.log('Answer is successfully deleted!');
@@ -183,6 +183,8 @@ function RadioForm(props: RadioFormProps) {
                 console.error("Error fetching user: ", error);
             }
         }
+        
+        setQuestionAnswers(questionAnswers.map(answer => (answer.id === id ? { ...answer, option: newOption } : answer)));
 
         console.log("Handle option")
     };
@@ -211,7 +213,7 @@ function RadioForm(props: RadioFormProps) {
                                const answerCollection = collection(doc.ref, 'answers');
                                await addDoc(answerCollection, {
                                 id: id,
-                                answerText: 'Answer ' + id,
+                                option: 'Answer ' + id,
                             });
 
                            });

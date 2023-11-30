@@ -1,15 +1,14 @@
 import React, {FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import userInput from "./UserInput";
-import "./StudyFormStyling.scss";
+import "./SurveyFormStyle.scss";
 import {auth, db} from '../../../configurations/firebase';
 import {addDoc, collection} from "firebase/firestore";
 import logging from '../../../configurations/logging';
 
-const StudyFormTemplate = () => {
+const SurveyFormTemplate = () => {
 
   const [date, setDate] = useState<string>("");
-  const [studyType, setStudyType] = useState<string>("");
 
   const navigate = useNavigate();
 
@@ -29,6 +28,15 @@ const StudyFormTemplate = () => {
     valueChangeHandler: authorNameChangedHandler,
     inputBlurHandler: authorNameBlurHandler,
     reset: resetAuthorNameInput,
+  } = userInput((value: string) => value.trim() !== "");
+
+  const {
+    value: enteredLink,
+    isValid: enteredLinkIsValid,
+    hasError: linkInputHasError,
+    valueChangeHandler: linkChangedHandler,
+    inputBlurHandler: linkBlurHandler,
+    reset: resetLinkInput,
   } = userInput((value: string) => value.trim() !== "");
 
   const {
@@ -65,7 +73,8 @@ const StudyFormTemplate = () => {
     enteredAuthorNameIsValid &&
     enteredDescriptionIsValid &&
     enteredTagIsValid &&
-    enteredRequirementIsValid
+    enteredRequirementIsValid &&
+    enteredLink
   ) {
     formIsValid = true;
   }
@@ -78,7 +87,8 @@ const StudyFormTemplate = () => {
       !enteredAuthorNameIsValid ||
       !enteredDescriptionIsValid ||
       !enteredTagIsValid ||
-      !enteredRequirementIsValid
+      !enteredRequirementIsValid ||
+      !enteredLinkIsValid
 
     ) {
         formIsValid = true;
@@ -89,6 +99,7 @@ const StudyFormTemplate = () => {
     resetAuthorNameInput();
     resetDescriptionInput();
     resetTagInput();
+    resetLinkInput();
     resetRequirementInput();
   };
 
@@ -104,23 +115,23 @@ const StudyFormTemplate = () => {
 
 
           // Store data to Firestore
-          const docRef = addDoc(collection(db, "studies"), {
+          const docRef = addDoc(collection(db, "surveys"), {
             uid: user.uid,
             author_email: user.email,
             title: enteredTitle,
             author_name: enteredAuthorName,
             date: date,
-            type: studyType,
+            link: enteredLink,
             tag: enteredTag,
             requirement: enteredRequirement,
             description: enteredDescription,
           });
 
           navigate('/template');
-          window.alert('Successfully post a study!!!');
-
+          window.alert('Successfully created a Survey!!!');
+          
         }});} else {
-          logging.info('StudyForm: Not Valid ');
+          logging.info('SurveyForm: Not Valid ');
           return
       }
   } 
@@ -131,7 +142,7 @@ const StudyFormTemplate = () => {
 
   return (
     <form className="container mt-4" onSubmit={formSubmissionHandler}>
-      <h1 className="text-center">Post a New Study</h1>
+      <h1 className="text-center">Create a New Survey</h1>
       <div className="form-control">
         <div className="form-group">
           <label htmlFor="title">Title:</label>
@@ -171,12 +182,19 @@ const StudyFormTemplate = () => {
         </div>
 
         <div className="form-group">
-          <label>Study Type:</label>
-          <select id="studyType" name="studyType" className="form-control" onChange={(e) => setStudyType(e.target.value)}>
-            <option value="">Select a study type</option>
-            <option value="Experimental">Experimental</option>
-            <option value="Observational">Observational</option>
-          </select>
+          <label>Survey Link:</label>
+          <input
+            type="text"
+            className="form-control"
+            id="floatingName"
+            placeholder="URL"
+            onChange={linkChangedHandler}
+            value={enteredLink}
+            onBlur={linkBlurHandler}
+          />
+          {linkInputHasError && (
+            <p className="error-text">Link must not be empty.</p>
+          )}
         </div>
 
         <div className="form-group">
@@ -190,7 +208,7 @@ const StudyFormTemplate = () => {
             value={enteredTag}
             onBlur={tagBlurHandler}
           />
-          {descriptionInputHasError && (
+          {tagInputHasError && (
             <p className="error-text">Tag must not be empty.</p>
           )}
         </div>
@@ -240,4 +258,4 @@ const StudyFormTemplate = () => {
 
 };
 
-export default StudyFormTemplate;
+export default SurveyFormTemplate;

@@ -14,8 +14,8 @@ function TemplatePage(){
     const navigate = useNavigate();
 
     const directToSurveyTemplate = () => {
-        createSurveyBackend();
-        navigate('/survey-editor');
+        //createSurveyBackend();
+        navigate('/survey-simple'); // might change later
     }
 
     const directToStudiesTemplate = () => {

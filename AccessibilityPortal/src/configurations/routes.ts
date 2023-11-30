@@ -8,6 +8,7 @@ import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import StudyTemplatePage from "../Pages/Template/Study Template/StudyTemplate";
+import SurveyTemplatePage from "../Pages/Template/SurveyTemplate/SurveyTemplate";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
 import MessagePage from "../Pages/MessagePage/MessagePage"
 import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
@@ -122,6 +123,13 @@ const routes: IRoute[] = [
         exact: true,
         component: SurveyEditorPage,
         name: 'Survey Editor Page',
+        protected: false
+    },
+    {
+        path: '/survey-simple',
+        exact: true,
+        component: SurveyTemplatePage,
+        name: 'Survey Template Page',
         protected: false
     },
     {

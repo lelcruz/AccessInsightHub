@@ -15,7 +15,6 @@ import DeleteIcon from "../../../assets/delete-recycle-bin-trash-can-svgrepo-com
 import ContentEditable from "react-contenteditable";
 import {Answer} from "./SurveyEditor"
 
-
 interface SortableItemProps{
     id: string;
     deleted: (id: string) => void;
@@ -33,6 +32,11 @@ function SortableCard(props: SortableItemProps) {
     const [questionTitle, setQuestionTitle] = useState("");
     const [questionOrder, setQuestionOrder] = useState(0);
     const [questionAnswers, setQuestionAnswers] = useState<Answer[]>([]);
+    const [reload, setReload] = useState<boolean>(false);
+
+    const triggerReload = () => {
+        setReload(prev => !prev); // Toggle the reload state
+    };
 
     const fetchEdittingQuestion = async () => {
 
@@ -53,35 +57,44 @@ function SortableCard(props: SortableItemProps) {
                     getDocs(nestedQ)
                         .then((querySnapshot) => {
                             querySnapshot.forEach(async (doc) => {
+
                                 const answerCollection = collection(doc.ref, 'answers');
                                 const answerCollectionSnapshot = await getDocs(answerCollection);
+                                const newAnswers: Answer[] = [];
+                                console.log("Answer collection length: " + answerCollectionSnapshot.size)
                                 answerCollectionSnapshot.forEach((answer) => {
                                     
                                     const newAnswer: Answer = {
                                         id: answer.data().id as number,
                                         option: answer.data().option as string,
-                                    }
+                                    };
+
+                                    newAnswers.push(newAnswer); // Accumulate new answers in the temporary array
                                     
-                                    setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
+                                    //setQuestionAnswers(prevAnswers => [...prevAnswers, newAnswer]);
+                                    //console.log("Fetch editting: " + questionAnswers.length)
                                 });
-                               
+
+                                setQuestionAnswers((prevAnswers) => [...prevAnswers, ...newAnswers]);
+                                console.log("questionAnswers length " + questionAnswers.length)
+  
                                 // Info
                                 setQuestionTitle(doc.data().title)
                                 setQuestionID(doc.data().id)
                                 setQuestionType(doc.data().type)
                                 setQuestionOrder(doc.data().order)
-                                
-                    
                             });
                         })
                         .catch((error) => {
                             console.error('Error updating documents: ', error);
                         });
+                        setQuestionAnswers(questionAnswers)
                 });      
             } catch (error) {
                 console.error("Error fetching question title & answers: ", error);
             }
         }
+        return questionAnswers;
     }
 
     // Function to handle receiving answers from FormBuilder
@@ -134,6 +147,7 @@ function SortableCard(props: SortableItemProps) {
             }
         }
 
+        triggerReload
     };
 
     const handleTypeChange = async (type: string) => {
@@ -178,6 +192,8 @@ function SortableCard(props: SortableItemProps) {
                 console.error("Error fetching user: ", error);
             }
         }
+
+        triggerReload
     };
 
     const {
@@ -203,8 +219,18 @@ function SortableCard(props: SortableItemProps) {
             setQuestionType(props.type);
         }
 
-        fetchEdittingQuestion();
-    }, []);
+        async function fetchData() {
+            const newAnswer = await fetchEdittingQuestion();
+            setQuestionAnswers(newAnswer);
+        }
+        fetchData();
+
+        // Reloading when changes happen
+        if(reload) {
+            fetchData();
+            setReload(false)
+        }
+     }, [reload]);
 
 
      return(

@@ -1,159 +1,96 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
 import { Survey } from "./Survey";
+import {collection, getDocs, query} from "firebase/firestore";
+import {db} from '../../configurations/firebase';
+
+interface Survey {
+  id: string,
+  title: string;
+  author: string;
+  email: string;
+  requirement: string;
+  tag: string;
+  date: Date;
+  description: string;
+  link: string;
+}
+
+async function fetchSurveys() {
+  const newSurveys: Survey[] = [];
+    try {
+        const q = query(collection(db, "surveys"));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+            const survey = {
+                id: doc.id,
+                title: doc.data().title,
+                author: doc.data().author_name,
+                email: doc.data().author_email,
+                requirement: doc.data().requirement,
+                date: new Date(doc.data().date),
+                description: doc.data().description,
+                link: doc.data().link,
+                tag: doc.data().tag,
+            };
+            newSurveys.push(survey);
+        });
+
+    } catch (error) {
+        console.error("Error fetching studies:", error);
+    }
+
+    return newSurveys;
+}
 
 function SurveyPage() {
-  const surveyInformation = [
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 3,
-      title: "Survey title 3",
-      author: "Author Name 3",
-      studyType: "N/A",
-      date: new Date("01/28/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 1,
-      title: "Survey title 1",
-      author: "Author Name 1",
-      studyType: "N/A",
-      date: new Date("01/03/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-    {
-      id: 2,
-      title: "Survey title 2",
-      author: "Author Name 2",
-      studyType: "N/A",
-      date: new Date("01/09/2023"),
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    },
-  ];
-  const studiesPerPage = 2;
+  
+  const surveysPerPage = 3;
   const [activePage, setActivePage] = useState(1);
-  const indexOfLastStudy = activePage * studiesPerPage;
-  const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
-  const currentStudies = surveyInformation.slice(
-    indexOfFirstStudy,
-    indexOfLastStudy,
+  const indexOfLastSurvey = activePage * surveysPerPage;
+  const indexOfFirstSurvey = indexOfLastSurvey - surveysPerPage;
+  const [surveysInformation, setSurveysInformation] = useState<Survey[]>([]);
+  const currentSurveys = surveysInformation.slice(
+    indexOfFirstSurvey,
+    indexOfLastSurvey,
   );
 
-  const arrayDataItems = currentStudies.map((study) => (
-    <li key={study.id}>
+  useEffect(() => {
+    async function fetchData() {
+        const newSurveys = await fetchSurveys();
+        setSurveysInformation(newSurveys);
+    }
+
+    fetchData();
+}, []);
+
+  const arrayDataItems = currentSurveys.map((survey) => (
+    <li key={survey.id}>
       <Survey
-        title={study.title}
-        author={study.author}
-        type={study.studyType}
-        date={study.date}
-        description={study.description}
+        title={survey.title}
+        author={survey.author}
+        email={survey.email}
+        requirement={survey.requirement}
+        date={survey.date}
+        description={survey.description}
+        link={survey.link}
+        tag={survey.tag}
       />
     </li>
   ));
 
-  const totalStudies = Math.ceil(surveyInformation.length / studiesPerPage);
+  const totalSurveys = Math.ceil(surveysInformation.length / surveysPerPage);
 
   const pageItems = [];
   const pageRange = 2;
 
   for (
     let number = Math.max(1, activePage - pageRange);
-    number <= Math.min(totalStudies, activePage + pageRange);
+    number <= Math.min(totalSurveys, activePage + pageRange);
     number++
   ) {
     pageItems.push(
@@ -189,19 +126,19 @@ function SurveyPage() {
           </>
         )}
         {pageItems}
-        {activePage + pageRange < totalStudies && (
+        {activePage + pageRange < totalSurveys && (
           <>
-            {activePage + pageRange < totalStudies - 1 && (
+            {activePage + pageRange < totalSurveys - 1 && (
               <Pagination.Item disabled>...</Pagination.Item>
             )}
-            <Pagination.Item onClick={() => setActivePage(totalStudies)}>
-              {totalStudies}
+            <Pagination.Item onClick={() => setActivePage(totalSurveys)}>
+              {totalSurveys}
             </Pagination.Item>
           </>
         )}
         <Pagination.Next
           onClick={() => setActivePage(activePage + 1)}
-          disabled={activePage === totalStudies}
+          disabled={activePage === totalSurveys}
         >
           Next
         </Pagination.Next>

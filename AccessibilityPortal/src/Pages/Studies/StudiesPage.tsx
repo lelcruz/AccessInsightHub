@@ -8,7 +8,6 @@ import {collection, getDocs, query} from "firebase/firestore";
 import {db} from '../../configurations/firebase';
 import {Link} from 'react-router-dom';
 
-
 interface Study {
     id: string,
     title: string;
@@ -17,6 +16,8 @@ interface Study {
     studyType: string;
     date: Date;
     description: string;
+    tag: string;
+    requirement: string;
 }
 
 async function fetchStudies() {
@@ -34,6 +35,8 @@ async function fetchStudies() {
                 studyType: doc.data().type,
                 date: new Date(doc.data().date),
                 description: doc.data().description,
+                tag: doc.data().tag,
+                requirement: doc.data().requirement,
             };
             newStudies.push(study);
         });
@@ -72,6 +75,8 @@ function StudiesPage() {
             <Study
                 author={study.author}
                 email={study.email}
+                requirement={study.requirement}
+                tag={study.tag}
                 type={study.studyType}
                 date={study.date}
                 description={study.description}

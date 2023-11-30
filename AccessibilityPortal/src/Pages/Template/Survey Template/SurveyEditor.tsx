@@ -86,10 +86,10 @@ function SurveyEditor(){
                         answerCollectionSnapshot.forEach((answer) => {
 
                             console.log("ID: " + answer.data().id)
-                            console.log("TEXT: " + answer.data().answerText) 
+                            console.log("TEXT: " + answer.data().option) 
                             const newAnswer: Answer = {
                                 id: answer.data().id as number,
-                                option: answer.data().answerText as string,
+                                option: answer.data().option as string,
                             }
                             console.log("ID of new: " + newAnswer.id)
                             console.log("TEXT of new: " + newAnswer.option) 
@@ -116,6 +116,8 @@ function SurveyEditor(){
                             console.log("ID in loop: " + e.id)
                         })
                     });
+
+                    setQuestionAnswers([]);
                 });      
             } catch (error) {
                 console.error("Error fetching user: ", error);
@@ -470,7 +472,7 @@ function SurveyEditor(){
                                     type={question.type}
                                     order={question.order}
                                 />
-                            ))}
+                        ))}
                     </SortableContext>
                         
                     </DndContext>
