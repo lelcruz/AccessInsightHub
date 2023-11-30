@@ -65,27 +65,28 @@ function UserManagePage() {
 
     return (
         <div className="main-page">
-            <NavbarComponent/>
-            <div className="container">
-                <h1>User Management Portal</h1>
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Name</th>
-                                <th>DOB</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tableRows}
-                        </tbody>
-                    </table>
-                </div>
+          <NavbarComponent />
+          <div className="container">
+            <h1>User Management Portal</h1>
+            <div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                    <th>Date of Birth</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {tableRows}
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
-    );
+      );
 }
 
 export default UserManagePage;
+
