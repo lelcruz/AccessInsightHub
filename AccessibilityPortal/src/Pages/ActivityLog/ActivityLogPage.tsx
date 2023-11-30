@@ -15,14 +15,14 @@ function ActivityLog() {
   const navigate = useNavigate();
 
   const directToSurveyTemplate = () => {
-      navigate('/survey-editor');
+      navigate('/survey');
   }
 
   const directToStudiesTemplate = () => {
-      navigate('/study-template');
+      navigate('/studies');
   }
 
-  const directToActivityLog = () => {
+  const directToHistory = () => {
       navigate('/activity-log');
   }
 

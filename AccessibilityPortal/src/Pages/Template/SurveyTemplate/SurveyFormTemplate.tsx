@@ -140,8 +140,17 @@ const SurveyFormTemplate = () => {
     navigate('/template')
   }
 
+  const directToCustomizedSurvey = () => {
+    navigate('/survey-editor')
+  }
+
   return (
     <form className="container mt-4" onSubmit={formSubmissionHandler}>
+
+      <button type="button" className="btn btn-outline-dark" onClick={directToCustomizedSurvey}>
+        Customize your survey
+      </button>
+
       <h1 className="text-center">Create a New Survey</h1>
       <div className="form-control">
         <div className="form-group">

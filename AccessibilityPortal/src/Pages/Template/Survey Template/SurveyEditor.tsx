@@ -53,6 +53,10 @@ function SurveyEditor(){
         setReload(prev => !prev); // Toggle the reload state
     };
 
+    const directToSurveyTemplate = () => {
+        navigate('/survey-simple')
+      }
+
     // BACK //
     const fetchEdittingSurvey = async () => {
 
@@ -431,7 +435,9 @@ function SurveyEditor(){
                         <img src={FileUploadIcon} /> File upload</a></li>
                 </ul>
             </div>
-
+            <button type="button" className="btn btn-outline-dark" onClick={directToSurveyTemplate}>
+                    Use your existing survey
+                </button> 
             <div className="main-workspace">
                 <div ref={(el) => (titleRef.current = el)} className="title">
                 <ContentEditable
