@@ -8,6 +8,7 @@ import StudiesPage from "../Pages/Studies/StudiesPage";
 import SurveyPage from "../Pages/Survey/SurveyPage";
 import ProfilePage from "../Pages/Profile/ProfilePage";
 import StudyTemplatePage from "../Pages/Template/Study Template/StudyTemplate";
+import SurveyTemplatePage from "../Pages/Template/SurveyTemplate/SurveyTemplate";
 import UserManagePage from "../Pages/UserManagement/UserManagementPage";
 import MessagePage from "../Pages/MessagePage/MessagePage"
 import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
@@ -16,6 +17,9 @@ import TemplatePage from "../Pages/Template/TemplatePage";
 import ActivityLog from "../Pages/ActivityLog/ActivityLogPage";
 import LandingPage from "../Pages/Landing Page/LandingPage";
 import StudyDetailPage from "../Pages/Studies/StudyDetailPage";
+import MyStudies from "../Pages/ActivityLog/MyStudies";
+import MySurveys from "../Pages/ActivityLog/MySurveys";
+import MyHistory from "../Pages/ActivityLog/MyHistory";
 
 
 const routes: IRoute[] = [
@@ -125,6 +129,13 @@ const routes: IRoute[] = [
         protected: false
     },
     {
+        path: '/survey-simple',
+        exact: true,
+        component: SurveyTemplatePage,
+        name: 'Survey Template Page',
+        protected: false
+    },
+    {
         path: '/survey-preview',
         exact: true,
         component: SurveyPreviewPage,
@@ -144,8 +155,28 @@ const routes: IRoute[] = [
         component: ActivityLog,
         name: 'Activity Log Page',
         protected: false
+    },
+    {
+        path: '/mystudies',
+        exact: true,
+        component: MyStudies,
+        name: 'Activity Log Study Page',
+        protected: false
+    },
+    {
+        path: '/mysurveys',
+        exact: true,
+        component: MySurveys,
+        name: 'Activity Log Survey Page',
+        protected: false
+    },
+    {
+        path: '/myhistory',
+        exact: true,
+        component: MyHistory,
+        name: 'Activity Log History Page',
+        protected: false
     }
-
 ];
 
 export default routes;

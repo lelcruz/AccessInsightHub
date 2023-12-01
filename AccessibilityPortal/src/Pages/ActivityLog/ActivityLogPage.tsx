@@ -14,16 +14,16 @@ function ActivityLog() {
 
   const navigate = useNavigate();
 
-  const directToSurveyTemplate = () => {
-      navigate('/survey-editor');
+  const directToMySurveys = () => {
+      navigate('/mysurveys');
   }
 
-  const directToStudiesTemplate = () => {
-      navigate('/study-template');
+  const directToMyStudies = () => {
+      navigate('/mystudies');
   }
 
-  const directToActivityLog = () => {
-      navigate('/activity-log');
+  const directToHistory = () => {
+      navigate('/myhistory');
   }
 
   return (
@@ -34,22 +34,22 @@ function ActivityLog() {
                 <div>
                     <BasicCardComponent 
                         imageUrl={SurveysRecordIcon}
-                        title={"Surveys"}
-                        handleClick={directToSurveyTemplate}
+                        title={"My Surveys"}
+                        handleClick={directToMySurveys}
                     ></BasicCardComponent>
                 </div>
                 <div>
                     <BasicCardComponent
                         imageUrl={StudiesCollectionIcon}
-                        title={"Studies"}
-                        handleClick={directToSurveyTemplate}
+                        title={"My Studies"}
+                        handleClick={directToMyStudies}
                     ></BasicCardComponent>
                 </div>
                 <div className="self-center">
                     <BasicCardComponent
                         imageUrl={HistoryIcon}
-                        title={"History"}
-                        handleClick={directToSurveyTemplate}
+                        title={"My History"}
+                        handleClick={directToHistory}
                     ></BasicCardComponent>
                 </div>
             </div> 

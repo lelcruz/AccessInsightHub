@@ -53,6 +53,10 @@ function SurveyEditor(){
         setReload(prev => !prev); // Toggle the reload state
     };
 
+    const directToSurveyTemplate = () => {
+        navigate('/survey-simple')
+      }
+
     // BACK //
     const fetchEdittingSurvey = async () => {
 
@@ -86,10 +90,10 @@ function SurveyEditor(){
                         answerCollectionSnapshot.forEach((answer) => {
 
                             console.log("ID: " + answer.data().id)
-                            console.log("TEXT: " + answer.data().answerText) 
+                            console.log("TEXT: " + answer.data().option) 
                             const newAnswer: Answer = {
                                 id: answer.data().id as number,
-                                option: answer.data().answerText as string,
+                                option: answer.data().option as string,
                             }
                             console.log("ID of new: " + newAnswer.id)
                             console.log("TEXT of new: " + newAnswer.option) 
@@ -116,6 +120,8 @@ function SurveyEditor(){
                             console.log("ID in loop: " + e.id)
                         })
                     });
+
+                    setQuestionAnswers([]);
                 });      
             } catch (error) {
                 console.error("Error fetching user: ", error);
@@ -429,7 +435,9 @@ function SurveyEditor(){
                         <img src={FileUploadIcon} /> File upload</a></li>
                 </ul>
             </div>
-
+            <button type="button" className="btn btn-outline-dark" onClick={directToSurveyTemplate}>
+                    Use your existing survey
+                </button> 
             <div className="main-workspace">
                 <div ref={(el) => (titleRef.current = el)} className="title">
                 <ContentEditable
@@ -470,7 +478,7 @@ function SurveyEditor(){
                                     type={question.type}
                                     order={question.order}
                                 />
-                            ))}
+                        ))}
                     </SortableContext>
                         
                     </DndContext>
