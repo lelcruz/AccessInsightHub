@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import BasicButtonComponent from "../Buttons/BasicButtonComponent";
 import Modal from "../Modal Component/ModalComponent";
+//import {sendEmail} from "use server";
 import {addDoc, collection} from "firebase/firestore";
 import { db } from "../../configurations/firebase";
 
@@ -19,7 +20,7 @@ function ContactModal() {
         setModalShow(false);
     };
 
-    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         const docRef = addDoc(collection(db,"contactForm"), {
             firstname: firstName,
             lastname: lastName,
@@ -46,24 +47,28 @@ function ContactModal() {
                     <input
                         type="text"
                         className="single-item"
+                        name="firstname"
                         placeholder="First Name"
                         onChange={(e) => {setFirstName(e.target.value)}}
                     ></input>
                     <input
                         type="text"
                         className="single-item"
+                        name="lastname"
                         placeholder="Last Name"
                         onChange={(e) => {setLastName(e.target.value)}}
                     ></input>
                     <input
                         type="email"
                         className="full-length-item"
+                        name="email"
                         placeholder="Email"
                         onChange={(e) => {setEmail(e.target.value)}}
                     ></input>
                     <textarea
                         className="full-length-item text-box"
-                        placeholder="Description"
+                        name="message"
+                        placeholder="Message"
                         onChange={(e) => {setMessage(e.target.value)}}
                     ></textarea>
                     <BasicButtonComponent
@@ -71,7 +76,7 @@ function ContactModal() {
                         title="Cancel"
                         onClick={closeModal}
                     />
-                    <BasicButtonComponent color={"dark"} type="submit" title="Save"/>
+                    <BasicButtonComponent color={"dark"} type="submit" title="Send"/>
                 </form>
             </Modal>
         </div>
