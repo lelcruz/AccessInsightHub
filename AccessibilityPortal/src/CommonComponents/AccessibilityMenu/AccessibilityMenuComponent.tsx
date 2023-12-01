@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import accessibilityIcon from "../../assets/universal-access-svgrepo-com.svg";
-import cursorIcon from "../../assets/cursor-alt-svgrepo-com.svg"
+import cursorIcon from "/src/assets/cursor-alt-svgrepo-com.svg"
 import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
@@ -121,22 +121,15 @@ function AccessibilityMenu() {
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const updateCursorStyle = () => {
-            const body = document.body;
-            if (isCursorButtonPressed) {
-                body.style.cursor = `url(${cursorIcon}), auto`;
-            } else {
-                body.style.cursor = 'auto';
-            }
-        };
-    
-        updateCursorStyle();
-    
-        return () => {
-            // Clean up style when the component unmounts
-            document.body.style.cursor = 'auto';
-        };
-    }, [isCursorButtonPressed]);    
+        console.log('Cursor icon:', cursorIcon); // Log the cursor icon
+        const body = document.body;
+        if (isCursorButtonPressed) {
+            body.style.cursor = `url(${cursorIcon}), auto`;
+        } else {
+            body.style.cursor = 'auto';
+        }
+    }, [isCursorButtonPressed, cursorIcon]);
+      
 
     useEffect(() => {
         const clickOutside = (e: MouseEvent) => {

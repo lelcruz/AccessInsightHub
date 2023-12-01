@@ -254,11 +254,19 @@
 }
 
 .cursor-button.active {
-    cursor: url('../../assets/cursor-alt-svgrepo-com.svg'), auto;
+    cursor: url('C:\Users\thedo\Documents\Capstone\TeamNameNotFound\AccessibilityPortal\src\assets\cursor-alt-svgrepo-com.svg'), auto;
     /* Add any additional styles for the active cursor here */
 }
 
 body.text-align-center {
     text-align: center;
 }
+
+.cursor-button.active {
+    cursor: url('/src/assets/cursor-alt-svgrepo-com.svg'), auto;
+    /* Add any additional styles for the active cursor button here */
+}
+
+
+
 
