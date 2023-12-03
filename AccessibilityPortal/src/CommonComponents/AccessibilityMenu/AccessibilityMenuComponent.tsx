@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import accessibilityIcon from "../../assets/universal-access-svgrepo-com.svg";
 import cursorIcon from "/src/assets/cursor-svgrepo-com.svg"
-import pointerIcon from "/src/assets/pointer-svgrepo-com.svg";
 import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
@@ -21,7 +20,7 @@ function AccessibilityMenu() {
     
     const [hideImages, setHideImages] = useState(false);
     const [isCursorButtonPressed, setCursorButtonPressed] = useState(false);
-    
+
     const handleCloseMenu = () => {
         setToggle(false);
     };    
@@ -46,6 +45,10 @@ function AccessibilityMenu() {
     
         // Reset text alignment
         document.body.classList.remove('text-align-center');
+
+        //Reset cursor
+        document.body.style.cursor = 'auto';
+        setCursorButtonPressed(false);
     };
     
 
@@ -97,7 +100,7 @@ function AccessibilityMenu() {
         setCursorButtonPressed(!isCursorButtonPressed);
     };
 
-
+    
     const toggleDyslexiaFriendly = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('dyslexia-friendly');
@@ -122,7 +125,6 @@ function AccessibilityMenu() {
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        console.log('Cursor icon:', cursorIcon); // Log the cursor icon
         const body = document.body;
         if (isCursorButtonPressed) {
             body.style.cursor = `url(${cursorIcon}), auto`;
@@ -209,18 +211,11 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-{showCursorButton && (
-    <button
-        className={`cursor-button ${isCursorButtonPressed ? 'active' : ''}`}
-        onClick={handleCursorButtonClick}
-    >
-        Cursor
-    </button>
-)}
-
-                {showReadingAidButton && (
-                    <button className= "readingaid-button">
-                        Reading Aid
+                {showCursorButton && (
+                    <button
+                        className={`cursor-button ${isCursorButtonPressed ? 'active' : ''}`}
+                        onClick={handleCursorButtonClick}>
+                        Cursor
                     </button>
                 )}
 

@@ -183,7 +183,7 @@
 }
 
 .cursor-button {
-    background-color: pink;
+    background-color: white;
     color: black;
     border: none;
     height: 105px;
@@ -193,20 +193,6 @@
     position: absolute;
     top: 445px;
     left: 13px;
-    border-radius: 10px;
-}
-
-.readingaid-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 445px;
-    left: 52%;
     border-radius: 10px;
 }
 
@@ -233,7 +219,7 @@
     cursor: pointer;
     font-size: 16px;
     position: absolute;
-    top: 560px;
+    top: 445px;
     left: 52%;
     border-radius: 10px;
 }
