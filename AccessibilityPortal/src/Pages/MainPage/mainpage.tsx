@@ -12,6 +12,7 @@ import usersIcon from "../../assets/users-svgrepo-com.svg"
 import messageIcon from "../../assets/mail-alt-svgrepo-com.svg"
 import { auth, db } from '../../configurations/firebase';
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
+import ActivityLogIcon from "../../assets/activity-log-svgrepo-com.svg";
 
 
 function MainPage(){
@@ -37,6 +38,10 @@ function MainPage(){
 
     const directToUserManagement = () => {
         navigate('/usermanage');
+    }
+
+    const directToActivityLog = () => {
+        navigate('/activity-log');
     }
 
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -179,9 +184,9 @@ function MainPage(){
                 </div>
                 <div>
                     <BasicCardComponent
-                        imageUrl={templateIcon}
-                        title={"Template"}
-                        handleClick={directToTemplatePage}
+                        imageUrl={ActivityLogIcon}
+                        title={"Activity Log"}
+                        handleClick={directToActivityLog}
                     ></BasicCardComponent>
                 </div>
             </div>
