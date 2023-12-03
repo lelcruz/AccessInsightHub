@@ -11,7 +11,6 @@ import RadioButtonIcon from "../../../assets/radio-button-checked-svgrepo-com.sv
 import CheckBoxesIcon from "../../../assets/checkbox-svgrepo-com.svg";
 import DropDownIcon from "../../../assets/circle-arrow-up-svgrepo-com.svg";
 import FileUploadIcon from "../../../assets/folder-upload-svgrepo-com.svg";
-import {useTitleDescription} from  "./Context";
 import ContentEditable from "react-contenteditable";
 import { addDoc, collection, doc, getDocs, query, where, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from '../../../configurations/firebase';
