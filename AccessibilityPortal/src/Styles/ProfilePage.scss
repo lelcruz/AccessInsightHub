@@ -66,13 +66,20 @@
         height: 60px;
         vertical-align: middle;
         td{
-            text-align: center;
+            text-align: left;
         }
     }
     
     .edit{
         margin-top: 40px;
     }
+
+    th, td {
+        padding: 100px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
 }
 
 

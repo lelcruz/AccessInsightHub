@@ -52,7 +52,7 @@
         top: 40px;
         left: 0;
         width: 100%;
-        height: 115%;
+        height: 114%;
         background-color: rgb(206, 208, 227);
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;    
@@ -98,7 +98,7 @@
     left: 78%;
 }
 
-.contrast-button {
+.high-contrast-button {
     background-color: white;
     color: black;
     border: none;
@@ -112,8 +112,8 @@
     border-radius: 10px;
 }
 
-.link-button {
-    background-color: pink;
+.invert-button {
+    background-color: white;
     color: black;
     border: none;
     height: 105px;
@@ -155,7 +155,7 @@
 }
 
 .image-button {
-    background-color: pink;
+    background-color: white;
     color: black;
     border: none;
     height: 105px;
@@ -164,68 +164,40 @@
     font-size: 16px;
     position: absolute;
     top: 330px;
-    left: 13px;
-    border-radius: 10px;
-}
-
-.dyslexia-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 330px;
-    left: 52%;
-    border-radius: 10px;
-}
-
-.readingaid-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 445px;
-    left: 13px;
-    border-radius: 10px;
-}
-
-.lineheight-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 445px;
-    left: 52%;
-    border-radius: 10px;
-}
-
-.textalign-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 560px;
     left: 13px;
     border-radius: 10px;
 }
 
 .saturation-button {
-    background-color: pink;
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 330px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.cursor-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 445px;
+    left: 13px;
+    border-radius: 10px;
+}
+
+.dyslexia-button {
+    background-color: white;
     color: black;
     border: none;
     height: 105px;
@@ -234,10 +206,23 @@
     font-size: 16px;
     position: absolute;
     top: 560px;
-    left: 52%;
+    left: 13px;
     border-radius: 10px;
 }
 
+.textalign-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 445px;
+    left: 52%;
+    border-radius: 10px;
+}
 
 .show-menu {
     width: 100%;
@@ -250,11 +235,18 @@
     font-size: 18px;
 }
 
-.high-contrast {
-    filter: contrast(150%);
-}
-
 .increased-spacing {
     letter-spacing: 2px;
 }
+
+body.text-align-center {
+    text-align: center;
+}
+
+.cursor-button.active {
+    cursor: url('${cursorIcon}'), auto;
+}
+
+
+
 
