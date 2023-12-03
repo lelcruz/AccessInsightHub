@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import accessibilityIcon from "../../assets/universal-access-svgrepo-com.svg";
-import cursorIcon from "/src/assets/cursor-alt-svgrepo-com.svg"
+import cursorIcon from "/src/assets/cursor-svgrepo-com.svg"
+import pointerIcon from "/src/assets/pointer-svgrepo-com.svg";
 import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
@@ -129,7 +130,7 @@ function AccessibilityMenu() {
             body.style.cursor = 'auto';
         }
     }, [isCursorButtonPressed, cursorIcon]);
-      
+    
 
     useEffect(() => {
         const clickOutside = (e: MouseEvent) => {
