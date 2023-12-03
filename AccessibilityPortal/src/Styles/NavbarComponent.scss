@@ -1,27 +1,28 @@
-@import "../../styles/variables";
+@import "Variables";
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-.nav-link{
+.nav-link {
   transition: all 0.2s;
 }
 
-.nav-link:hover{
+.nav-link:hover {
   border-bottom: 3px solid black;
 }
-.container-md{
+
+.container-md {
   font-weight: bold;
 }
 
-.navbar{
+.navbar {
   background-color: $light-grey;
 }
 
 
-.search-bar{
+.search-bar {
   display: flex;
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     display: none;
   }
 }
