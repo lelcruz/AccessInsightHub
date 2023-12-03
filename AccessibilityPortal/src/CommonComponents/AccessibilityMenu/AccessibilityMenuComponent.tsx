@@ -18,7 +18,8 @@ function AccessibilityMenu() {
     const [showLineHeightButton] = useState(true);
     const [showTextAlignButton] = useState(true);
     const [showSaturationButton] = useState(true);
-
+    const [hideImages, setHideImages] = useState(false);
+    
     const handleCloseMenu = () => {
         setToggle(false);
     };    
@@ -33,6 +34,16 @@ function AccessibilityMenu() {
     
         // Reset font styles
         document.body.style.fontFamily = 'inherit';
+    
+        // Reset image visibility
+        setHideImages(false);
+        const images = document.querySelectorAll('img');
+        images.forEach((image) => {
+            image.style.display = 'block';
+        });
+    
+        // Reset text alignment
+        document.body.classList.remove('text-align-center');
     };
     
 
@@ -68,6 +79,17 @@ function AccessibilityMenu() {
         rootElement.classList.toggle('bigger-text');
     };
 
+    const toggleHideImages = () => {
+        setHideImages(!hideImages);
+    
+        // You might want to perform additional logic here, such as updating CSS classes or applying specific styles.
+        // For simplicity, let's just hide or show all images by updating their 'display' property.
+        const images = document.querySelectorAll('img:not(.img-bottom-right)');
+        images.forEach((image) => {
+            image.style.display = hideImages ? 'block' : 'none';
+        });
+    };
+
     const toggleTextSpacing = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('increased-spacing');
@@ -93,6 +115,15 @@ function AccessibilityMenu() {
         // Change the font for the entire website
         document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
     };
+
+    const handleTextAlignClick = () => {
+        //Add a class to the body element to apply text alignment
+        const bodyElement = document.body;
+        bodyElement.classList.toggle('text-align-center');
+
+        //Close the menu after applying text alignment
+        e.stopPropagation();
+    };
     
   
     const menuRef = useRef<HTMLDivElement>(null);
@@ -112,10 +143,15 @@ function AccessibilityMenu() {
         };
     }, [toggle]);
 
+
     return (
         <div ref={menuRef}>
             <button className="logo-button" onClick={() => setToggle(!toggle)}>
-                <img src={accessibilityIcon} className="img-bottom-right" alt="Accessibility Icon" />
+                <img
+                    src={accessibilityIcon}
+                    className={`img-bottom-right ${hideImages ? 'hidden' : ''}`}
+                    alt="Accessibility Icon"
+                />
             </button>
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
                 <div className = "menu-header">
@@ -164,8 +200,8 @@ function AccessibilityMenu() {
                 )}
 
                 {showImageButton && ( 
-                    <button className="image-button">
-                        Hide Images
+                    <button className={`image-button${hideImages ? ' hidden' : ''}`} onClick={toggleHideImages}>
+                        {hideImages ? 'Show Images' : 'Hide Images'}
                     </button>
                 )}
 
@@ -194,7 +230,7 @@ function AccessibilityMenu() {
                 )}
 
                 {showTextAlignButton && ( 
-                    <button className= "textalign-button">
+                    <button className= "textalign-button" onClick={handleTextAlignClick}>
                         Text Align
                     </button>
                 )}

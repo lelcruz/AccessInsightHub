@@ -15,18 +15,16 @@ import SurveyEditorPage from "../Pages/Template/Survey Template/SurveyEditor";
 import SurveyPreviewPage from "../Pages/Template/Survey Template/SurveyPreview";
 import TemplatePage from "../Pages/Template/TemplatePage";
 import ActivityLog from "../Pages/ActivityLog/ActivityLogPage";
-import LandingPage from "../Pages/Landing Page/LandingPage";
 import StudyDetailPage from "../Pages/Studies/StudyDetailPage";
 import MyStudies from "../Pages/ActivityLog/MyStudies";
 import MySurveys from "../Pages/ActivityLog/MySurveys";
 import MyHistory from "../Pages/ActivityLog/MyHistory";
 
-
 const routes: IRoute[] = [
     {
         path: '/',
         exact: true,
-        component: LandingPage,
+        component: LoginPage,
         name: 'Welcome Page',
         protected: false
     },
