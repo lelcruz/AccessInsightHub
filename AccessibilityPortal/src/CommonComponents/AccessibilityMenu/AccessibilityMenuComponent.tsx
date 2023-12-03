@@ -89,7 +89,7 @@ function AccessibilityMenu() {
     
         // You might want to perform additional logic here, such as updating CSS classes or applying specific styles.
         // For simplicity, let's just hide or show all images by updating their 'display' property.
-        const images = document.querySelectorAll('img:not(.img-bottom-right)');
+        const images = document.querySelectorAll<HTMLImageElement>('img:not(.img-bottom-right)');
         images.forEach((image) => {
             image.style.display = hideImages ? 'block' : 'none';
         });
@@ -126,7 +126,7 @@ function AccessibilityMenu() {
         document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
     };
 
-    const handleTextAlignClick = () => {
+    const handleTextAlignClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         //Add a class to the body element to apply text alignment
         const bodyElement = document.body;
         bodyElement.classList.toggle('text-align-center');
