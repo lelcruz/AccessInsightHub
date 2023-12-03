@@ -3,9 +3,9 @@ import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
-import { Survey } from "./Survey";
-import {collection, getDocs, query} from "firebase/firestore";
-import {db} from '../../configurations/firebase';
+import { Survey } from "./MySurveyTemplate";
+import { addDoc, collection, doc, getDocs, query, where, updateDoc, deleteDoc } from "firebase/firestore";
+import {auth, db} from '../../configurations/firebase';
 
 interface Survey {
   id: string,
@@ -20,36 +20,40 @@ interface Survey {
 }
 
 async function fetchSurveys() {
-  const newSurveys: Survey[] = [];
-    try {
-        const q = query(collection(db, "surveys"));
-        const querySnapshot = await getDocs(q);
+    const newSurveys: Survey[] = [];
+    const user = auth.currentUser;
 
-        querySnapshot.forEach((doc) => {
-            const survey = {
-                id: doc.id,
-                title: doc.data().title,
-                author: doc.data().author_name,
-                email: doc.data().author_email,
-                requirement: doc.data().requirement,
-                date: new Date(doc.data().date),
-                description: doc.data().description,
-                link: doc.data().link,
-                tag: doc.data().tag,
-            };
-            newSurveys.push(survey);
-        });
+    if(user) {
+        try {
+            const q = query(collection(db, "surveys"), where("author_email", "==", user.email)); 
+            const querySnapshot = await getDocs(q);
 
-    } catch (error) {
-        console.error("Error fetching studies:", error);
+            querySnapshot.forEach((doc) => {
+                const survey = {
+                    id: doc.id,
+                    title: doc.data().title,
+                    author: doc.data().author_name,
+                    email: doc.data().author_email,
+                    requirement: doc.data().requirement,
+                    date: new Date(doc.data().date),
+                    description: doc.data().description,
+                    link: doc.data().link,
+                    tag: doc.data().tag,
+                };
+                newSurveys.push(survey);
+            });
+
+        } catch (error) {
+            console.error("Error fetching studies:", error);
+        }
     }
 
     return newSurveys;
 }
 
-function SurveyPage() {
+function MySurveys() {
   
-  const surveysPerPage = 3;
+  const surveysPerPage = 2;
   const [activePage, setActivePage] = useState(1);
   const indexOfLastSurvey = activePage * surveysPerPage;
   const indexOfFirstSurvey = indexOfLastSurvey - surveysPerPage;
@@ -59,18 +63,29 @@ function SurveyPage() {
     indexOfLastSurvey,
   );
 
+  const [reload, setReload] = useState<boolean>(false);
+
+  const triggerReload = () => {
+      setReload(prev => !prev); // Toggle the reload state
+  };
+
   useEffect(() => {
     async function fetchData() {
         const newSurveys = await fetchSurveys();
         setSurveysInformation(newSurveys);
     }
-
     fetchData();
-}, []);
+
+    if(reload) {
+      fetchData();
+      setReload(false)
+    }
+}, [reload]);
 
   const arrayDataItems = currentSurveys.map((survey) => (
     <li key={survey.id}>
       <Survey
+        id={survey.id}
         title={survey.title}
         author={survey.author}
         email={survey.email}
@@ -79,6 +94,7 @@ function SurveyPage() {
         description={survey.description}
         link={survey.link}
         tag={survey.tag}
+        triggerReload={triggerReload}
       />
     </li>
   ));
@@ -148,4 +164,4 @@ function SurveyPage() {
   );
 }
 
-export default SurveyPage;
+export default MySurveys;

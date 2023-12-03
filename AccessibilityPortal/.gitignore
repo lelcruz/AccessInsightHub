@@ -22,6 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# local env files
+.env*.local
 /test-results/
 /playwright-report/
 /blob-report/

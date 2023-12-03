@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import "../../Styles/ResearchPage.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import {Study} from "./Study";
+import {Study} from "./MyStudyTemplate";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
-import {collection, getDocs, query} from "firebase/firestore";
-import {db} from '../../configurations/firebase';
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import {auth, db} from '../../configurations/firebase';
 import {Link} from 'react-router-dom';
 
 interface Study {
@@ -22,33 +22,37 @@ interface Study {
 
 async function fetchStudies() {
     const newStudies: Study[] = [];
-    try {
-        const q = query(collection(db, "studies"));
-        const querySnapshot = await getDocs(q);
+    const user = auth.currentUser;
 
-        querySnapshot.forEach((doc) => {
-            const study = {
-                id: doc.id,
-                title: doc.data().title,
-                author: doc.data().author_name,
-                email: doc.data().author_email,
-                studyType: doc.data().type,
-                date: new Date(doc.data().date),
-                description: doc.data().description,
-                tag: doc.data().tag,
-                requirement: doc.data().requirement,
-            };
-            newStudies.push(study);
-        });
+    if(user) {
+        try {
+            const q = query(collection(db, "studies"), where("author_email", "==", user.email)); 
+            const querySnapshot = await getDocs(q);
 
-    } catch (error) {
-        console.error("Error fetching studies:", error);
+            querySnapshot.forEach((doc) => {
+                const study = {
+                    id: doc.id,
+                    title: doc.data().title,
+                    author: doc.data().author_name,
+                    email: doc.data().author_email,
+                    studyType: doc.data().type,
+                    date: new Date(doc.data().date),
+                    description: doc.data().description,
+                    tag: doc.data().tag,
+                    requirement: doc.data().requirement,
+                };
+                newStudies.push(study);
+            });
+
+        } catch (error) {
+            console.error("Error fetching studies:", error);
+        }
     }
 
     return newStudies;
 }
 
-function StudiesPage() {
+function MyStudies() {
 
     const studiesPerPage = 2;
     const [activePage, setActivePage] = useState(1);
@@ -56,14 +60,24 @@ function StudiesPage() {
     const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
     const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
 
+    const [reload, setReload] = useState<boolean>(false);
+
+    const triggerReload = () => {
+        setReload(prev => !prev); // Toggle the reload state
+    };
+
     useEffect(() => {
         async function fetchData() {
             const newStudies = await fetchStudies();
             setStudiesInformation(newStudies);
         }
-
         fetchData();
-    }, []);
+
+        if(reload) {
+          fetchData();
+          setReload(false)
+        }
+    }, [reload]);
 
     const currentStudies = studiesInformation.slice(
         indexOfFirstStudy,
@@ -73,6 +87,8 @@ function StudiesPage() {
     const arrayDataItems = currentStudies.map((study, index) => (
         <li key={index}>
             <Study
+                id={study.id}
+                title={study.title}
                 author={study.author}
                 email={study.email}
                 requirement={study.requirement}
@@ -80,9 +96,7 @@ function StudiesPage() {
                 type={study.studyType}
                 date={study.date}
                 description={study.description}
-                titleElement={
-                    <Link to={`/study/${study.id}`}>{study.title}</Link> // The title as a clickable link
-                }
+                triggerReload={triggerReload}
             />
         </li>
     ));
@@ -153,4 +167,4 @@ function StudiesPage() {
     );
 }
 
-export default StudiesPage;
+export default MyStudies;

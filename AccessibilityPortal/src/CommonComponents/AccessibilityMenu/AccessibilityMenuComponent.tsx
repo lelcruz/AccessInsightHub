@@ -57,7 +57,21 @@ function AccessibilityMenu() {
         const rootElement = document.documentElement;
         const currentHighContrast = rootElement.style.filter;
         rootElement.style.filter = currentHighContrast === 'contrast(150%)' ? 'none' : 'contrast(150%)';
+        const highContrastEnabled: boolean = true;
+        //localStorage.setItem('highContrastEnabled', currentHighContrast.toString());
+
     };
+
+    {/*useEffect(() => {
+        const highContrastEnabled: string | null = localStorage.getItem('highContrastEnabled');
+        const isHighContrastEnabled: boolean = highContrastEnabled == 'true';
+        if (highContrastEnabled === 'true') {
+            // Apply high contrast styles
+            const rootElement = document.documentElement;
+            rootElement.style.filter = 'contrast(150%)';
+        }
+    }, []);*/}
+
 
     const toggleInvert = () => {
         const rootElement = document.documentElement;
