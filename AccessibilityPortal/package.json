@@ -34,7 +34,9 @@
     "survey-creator-react": "^1.9.112"
   },
   "devDependencies": {
+    "@playwright/test": "^1.40.1",
     "@types/bcryptjs": "^2.4.4",
+    "@types/node": "^20.10.1",
     "@types/react": "^18.0.28",
     "@types/react-avatar-editor": "^13.0.0",
     "@types/react-dom": "^18.0.11",

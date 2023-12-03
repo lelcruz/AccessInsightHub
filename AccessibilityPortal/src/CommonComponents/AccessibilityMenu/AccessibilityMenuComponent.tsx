@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import accessibilityIcon from "../../assets/universal-access-svgrepo-com.svg";
+import cursorIcon from "/src/assets/cursor-svgrepo-com.svg"
 import "./AccessibilityMenu.scss";
 
 function AccessibilityMenu() {
@@ -8,18 +9,18 @@ function AccessibilityMenu() {
     const [showCloseButton] = useState(true);
     const [showHighContrastButton] = useState(true);
     const [showInvertButton] = useState(true);
-    const [showLinkButton] = useState(true);
     const [showTextButton] = useState(true);
     const [showSpacingButton] = useState(true);
     const [showImageButton] = useState(true);
-    const [showDyslexiaButton] = useState(true);
+    const [showSaturationButton] = useState(true);
     const [showCursorButton] = useState(true);
     const [showReadingAidButton] = useState(true);
-    const [showLineHeightButton] = useState(true);
+    const [showDyslexiaButton] = useState(true);
     const [showTextAlignButton] = useState(true);
-    const [showSaturationButton] = useState(true);
-    const [hideImages, setHideImages] = useState(false);
     
+    const [hideImages, setHideImages] = useState(false);
+    const [isCursorButtonPressed, setCursorButtonPressed] = useState(false);
+
     const handleCloseMenu = () => {
         setToggle(false);
     };    
@@ -44,6 +45,10 @@ function AccessibilityMenu() {
     
         // Reset text alignment
         document.body.classList.remove('text-align-center');
+
+        //Reset cursor
+        document.body.style.cursor = 'auto';
+        setCursorButtonPressed(false);
     };
     
 
@@ -105,6 +110,11 @@ function AccessibilityMenu() {
         }
     };
 
+    const handleCursorButtonClick = () => {
+        setCursorButtonPressed(!isCursorButtonPressed);
+    };
+
+    
     const toggleDyslexiaFriendly = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('dyslexia-friendly');
@@ -127,6 +137,16 @@ function AccessibilityMenu() {
     
   
     const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const body = document.body;
+        if (isCursorButtonPressed) {
+            body.style.cursor = `url(${cursorIcon}), auto`;
+        } else {
+            body.style.cursor = 'auto';
+        }
+    }, [isCursorButtonPressed, cursorIcon]);
+    
 
     useEffect(() => {
         const clickOutside = (e: MouseEvent) => {
@@ -181,12 +201,6 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showLinkButton && ( 
-                    <button className="link-button">
-                        Highlight Links
-                    </button>
-                )}
-
                 {showTextButton && ( 
                     <button className="text-button" onClick={toggleBiggerText}>
                         Bigger Text
@@ -205,39 +219,29 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
+                {showSaturationButton && ( 
+                    <button className= "saturation-button" onClick={toggleSaturation}>
+                        Saturation
+                    </button>
+                )}
+
+                {showCursorButton && (
+                    <button
+                        className={`cursor-button ${isCursorButtonPressed ? 'active' : ''}`}
+                        onClick={handleCursorButtonClick}>
+                        Cursor
+                    </button>
+                )}
+
                 {showDyslexiaButton && ( 
                     <button className="dyslexia-button" onClick={toggleDyslexiaFriendly}>
                         Dyslexia Friendly
                     </button>
                 )}
 
-                {showCursorButton && ( 
-                    <button className= "cursor-button">
-                        Cursor
-                    </button>
-                )}
-
-                {showReadingAidButton && (
-                    <button className= "readingaid-button">
-                        Reading Aid
-                    </button>
-                )}
-
-                {showLineHeightButton && ( 
-                    <button className="lineheight-button">
-                    Line Height
-                    </button>
-                )}
-
                 {showTextAlignButton && ( 
                     <button className= "textalign-button" onClick={handleTextAlignClick}>
                         Text Align
-                    </button>
-                )}
-
-                {showSaturationButton && ( 
-                    <button className= "saturation-button" onClick={toggleSaturation}>
-                        Saturation
                     </button>
                 )}
             </div>
