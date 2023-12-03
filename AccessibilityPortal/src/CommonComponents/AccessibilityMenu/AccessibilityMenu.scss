@@ -52,7 +52,7 @@
         top: 40px;
         left: 0;
         width: 100%;
-        height: 133%;
+        height: 114%;
         background-color: rgb(206, 208, 227);
         border-top-left-radius: 15px;
         border-top-right-radius: 15px;    
@@ -126,20 +126,6 @@
     border-radius: 10px;
 }
 
-.link-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 215px;
-    left: 52%;
-    border-radius: 10px;
-}
-
 .text-button {
     background-color: white;
     color: black;
@@ -163,7 +149,7 @@
     cursor: pointer;
     font-size: 16px;
     position: absolute;
-    top: 330px;
+    top: 215px;
     left: 52%;
     border-radius: 10px;
 }
@@ -182,6 +168,34 @@
     border-radius: 10px;
 }
 
+.saturation-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 330px;
+    left: 52%;
+    border-radius: 10px;
+}
+
+.cursor-button {
+    background-color: white;
+    color: black;
+    border: none;
+    height: 105px;
+    width: 140px;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 445px;
+    left: 13px;
+    border-radius: 10px;
+}
+
 .dyslexia-button {
     background-color: white;
     color: black;
@@ -196,48 +210,6 @@
     border-radius: 10px;
 }
 
-.cursor-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 445px;
-    left: 13px;
-    border-radius: 10px;
-}
-
-.readingaid-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 445px;
-    left: 52%;
-    border-radius: 10px;
-}
-
-.lineheight-button {
-    background-color: pink;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 560px;
-    left: 52%;
-    border-radius: 10px;
-}
-
 .textalign-button {
     background-color: white;
     color: black;
@@ -247,25 +219,10 @@
     cursor: pointer;
     font-size: 16px;
     position: absolute;
-    top: 675px;
-    left: 13px;
-    border-radius: 10px;
-}
-
-.saturation-button {
-    background-color: white;
-    color: black;
-    border: none;
-    height: 105px;
-    width: 140px;
-    cursor: pointer;
-    font-size: 16px;
-    position: absolute;
-    top: 675px;
+    top: 445px;
     left: 52%;
     border-radius: 10px;
 }
-
 
 .show-menu {
     width: 100%;
@@ -285,4 +242,11 @@
 body.text-align-center {
     text-align: center;
 }
+
+.cursor-button.active {
+    cursor: url('${cursorIcon}'), auto;
+}
+
+
+
 
