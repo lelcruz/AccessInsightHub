@@ -23,7 +23,7 @@ function AccessibilityMenu() {
 
     const handleCloseMenu = () => {
         setToggle(false);
-    };    
+    };
 
     const resetWebsite = () => {
         // Reset SCSS classes
@@ -72,14 +72,14 @@ function AccessibilityMenu() {
 
     const toggleHideImages = () => {
         setHideImages(!hideImages);
-    
-        // You might want to perform additional logic here, such as updating CSS classes or applying specific styles.
-        // For simplicity, let's just hide or show all images by updating their 'display' property.
         const images = document.querySelectorAll('img:not(.img-bottom-right)');
+        
         images.forEach((image) => {
-            image.style.display = hideImages ? 'block' : 'none';
+            const imgElement = image as HTMLImageElement;
+            imgElement.style.display = hideImages ? 'block' : 'none';
         });
     };
+    
 
     const toggleTextSpacing = () => {
         const rootElement = document.documentElement;
@@ -112,26 +112,17 @@ function AccessibilityMenu() {
         document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
     };
 
-    const handleTextAlignClick = () => {
-        //Add a class to the body element to apply text alignment
-        const bodyElement = document.body;
-        bodyElement.classList.toggle('text-align-center');
-
-        //Close the menu after applying text alignment
-        e.stopPropagation();
-    };
-    
   
     const menuRef = useRef<HTMLDivElement>(null);
-
+    
     useEffect(() => {
         const body = document.body;
         if (isCursorButtonPressed) {
-            body.style.cursor = `url(${cursorIcon}), auto`;
+          body.style.cursor = `url(${cursorIcon}), auto`;
         } else {
-            body.style.cursor = 'auto';
+          body.style.cursor = 'auto';
         }
-    }, [isCursorButtonPressed, cursorIcon]);
+      }, [isCursorButtonPressed]);
     
 
     useEffect(() => {
@@ -159,17 +150,19 @@ function AccessibilityMenu() {
                     alt="Accessibility Icon"
                 />
             </button>
+            
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
-                <div className = "menu-header">
+                <div className="menu-header">
                     Accessibility Menu
                 </div>
+
                 {showCloseButton && (
-                    <button className = "close-button" onClick={handleCloseMenu}>
+                    <button className="close-button" onClick={handleCloseMenu}>
                         Close
                     </button>
                 )}
 
-                {showResetButton && ( 
+                {showResetButton && (
                     <button className="reset-button" onClick={resetWebsite}>
                         Reset
                     </button>
@@ -225,11 +218,9 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showTextAlignButton && ( 
-                    <button className= "textalign-button" onClick={handleTextAlignClick}>
-                        Text Align
-                    </button>
-                )}
+                <button className="textalign-button button button-white" onClick={() => document.body.classList.toggle('text-align-center')}>
+                Text Align
+                </button>
             </div>
         </div>
     );
