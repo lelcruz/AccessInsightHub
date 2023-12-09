@@ -196,6 +196,7 @@ function SortableCard(props: SortableItemProps) {
         triggerReload
     };
 
+    // Define useSortable attributes 
     const {
         attributes: draggableAttributes,
         listeners: draggableListeners,
@@ -209,6 +210,7 @@ function SortableCard(props: SortableItemProps) {
         transition
      }
 
+     // Function to deleted card 
      const handleDelete = () => {
         props.deleted(props.id);
      }
@@ -234,7 +236,8 @@ function SortableCard(props: SortableItemProps) {
 
 
      return(
-        <div ref={draggableNodeRef} style={style}>
+        // Set up reference for draggable card
+        <div ref={draggableNodeRef} style={style}>  
             <div className="question-card">
             <div className="card">
                 <div className="card-header" {...draggableListeners}>
@@ -247,16 +250,16 @@ function SortableCard(props: SortableItemProps) {
                     tagName="div" // Set the HTML tag name
                     className="question"
                 />
-                    <div className="answer">
+                    <div className="answer"> 
                         <FormBuilder FormType={questionType} questionID={questionID} questionAnswers={questionAnswers} />
-                
                     </div>  
                 </div>
                 <div className="card-footer"> 
-                    <div className="dropdown">
+                    <div className="dropdown"> 
                         <button className="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            {questionType === undefined ? "Input Type" : questionType}
+                            {questionType === undefined ? "Input Type" : questionType}  {/* Display the selected input type from the dropdown menu */}
                         </button>
+                        {/* Dropdown menu for input type selection */}
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a className="dropdown-item" href="#" onClick={() => {handleTypeChange("Multiple Choice")}}>
                                <img src={RadioButtonIcon} /> Multiple choice</a></li>
