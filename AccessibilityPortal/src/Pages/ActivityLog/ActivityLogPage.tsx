@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "../../Styles/ActivityLog.scss";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
@@ -9,53 +9,54 @@ import StudiesCollectionIcon from "../../assets/education-books-book-study-learn
 import SurveysRecordIcon from "../../assets/survey-record-research-catalog-svgrepo-com.svg";
 
 function ActivityLog() {
+    // Navigation hook from react-router-dom
+    const navigate = useNavigate();
 
-  // Fetch and synchronize whenever create survey/study, then fetch to print out acitivites
+    // Function to navigate to the My Surveys page
+    const directToMySurveys = () => navigate('/mysurveys');
 
-  const navigate = useNavigate();
+    // Function to navigate to the My Studies page
+    const directToMyStudies = () => navigate('/mystudies');
 
-  const directToMySurveys = () => {
-      navigate('/mysurveys');
-  }
+    // Function to navigate to the My History page
+    const directToHistory = () => navigate('/myhistory');
 
-  const directToMyStudies = () => {
-      navigate('/mystudies');
-  }
+    // Render the Activity Log page with navigation options to surveys, studies, and history
+    return (
+        <div className="ActivityLogBody">
+            {/* Navigation bar component */}
+            <NavbarComponent/>
 
-  const directToHistory = () => {
-      navigate('/myhistory');
-  }
-
-  return (
-    <div className="ActivityLogBody">
-      <NavbarComponent />
-
-      <div className="display-box-template">
+            {/* Display box for cards */}
+            <div className="display-box-template">
+                {/* Card for navigating to My Surveys */}
                 <div>
-                    <BasicCardComponent 
+                    <BasicCardComponent
                         imageUrl={SurveysRecordIcon}
                         title={"My Surveys"}
                         handleClick={directToMySurveys}
-                    ></BasicCardComponent>
+                    />
                 </div>
+                {/* Card for navigating to My Studies */}
                 <div>
                     <BasicCardComponent
                         imageUrl={StudiesCollectionIcon}
                         title={"My Studies"}
                         handleClick={directToMyStudies}
-                    ></BasicCardComponent>
+                    />
                 </div>
+                {/* Card for navigating to My History */}
                 <div className="self-center">
                     <BasicCardComponent
                         imageUrl={HistoryIcon}
                         title={"My History"}
                         handleClick={directToHistory}
-                    ></BasicCardComponent>
+                    />
                 </div>
-            </div> 
-      
-    </div>
-  );
+            </div>
+        </div>
+    );
 }
 
 export default ActivityLog;
+

@@ -1,30 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "../../Styles/ResearchPage.scss";
-import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
-import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
-import Pagination from "react-bootstrap/Pagination";
-import { Survey } from "../../Pages/Survey/Survey";
+import {Survey} from "../../Pages/Survey/Survey";
 import {collection, getDocs, query} from "firebase/firestore";
 import {db} from '../../configurations/firebase';
 
 interface Survey {
-  id: string,
-  title: string;
-  author: string;
-  email: string;
-  requirement: string;
-  tag: string;
-  date: Date;
-  description: string;
-  link: string;
+    id: string,
+    title: string;
+    author: string;
+    email: string;
+    requirement: string;
+    tag: string;
+    date: Date;
+    description: string;
+    link: string;
 }
 
+// Asynchronously fetches surveys from the database
 async function fetchSurveys() {
-  const newSurveys: Survey[] = [];
+    const newSurveys: Survey[] = [];
     try {
         const q = query(collection(db, "surveys"));
         const querySnapshot = await getDocs(q);
-
+        // Iterating through each document in the query snapshot
         querySnapshot.forEach((doc) => {
             const survey = {
                 id: doc.id,
@@ -48,13 +46,9 @@ async function fetchSurveys() {
 }
 
 function MyHistory() {
-  
-  const surveysPerPage = 3;
-  
-
-
-
-  
+    // State and variables for MyHistory component (e.g., to manage pagination of surveys)
+    const surveysPerPage = 3;
+    // ... Rest of the MyHistory component ...
 }
 
 export default MyHistory;

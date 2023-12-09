@@ -4,9 +4,8 @@ import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import {Study} from "./MyStudyTemplate";
 import AccessibilityMenuComponent from "../../CommonComponents/AccessibilityMenu/AccessibilityMenuComponent";
 import Pagination from "react-bootstrap/Pagination";
-import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import {collection, getDocs, query, where} from "firebase/firestore";
 import {auth, db} from '../../configurations/firebase';
-import {Link} from 'react-router-dom';
 
 interface Study {
     id: string,
@@ -24,9 +23,9 @@ async function fetchStudies() {
     const newStudies: Study[] = [];
     const user = auth.currentUser;
 
-    if(user) {
+    if (user) {
         try {
-            const q = query(collection(db, "studies"), where("author_email", "==", user.email)); 
+            const q = query(collection(db, "studies"), where("author_email", "==", user.email));
             const querySnapshot = await getDocs(q);
 
             querySnapshot.forEach((doc) => {
@@ -53,29 +52,30 @@ async function fetchStudies() {
 }
 
 function MyStudies() {
-
+    // State declarations for pagination and studies data
     const studiesPerPage = 2;
     const [activePage, setActivePage] = useState(1);
     const indexOfLastStudy = activePage * studiesPerPage;
     const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
     const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
-
     const [reload, setReload] = useState<boolean>(false);
-
+    // Function to trigger a reload of the studies data
     const triggerReload = () => {
         setReload(prev => !prev); // Toggle the reload state
     };
 
+    // useEffect to fetch studies data whenever a reload is triggered
     useEffect(() => {
         async function fetchData() {
             const newStudies = await fetchStudies();
             setStudiesInformation(newStudies);
         }
+
         fetchData();
 
-        if(reload) {
-          fetchData();
-          setReload(false)
+        if (reload) {
+            fetchData();
+            setReload(false)
         }
     }, [reload]);
 
@@ -83,7 +83,7 @@ function MyStudies() {
         indexOfFirstStudy,
         indexOfLastStudy,
     );
-
+    // Mapping each study to a UI element
     const arrayDataItems = currentStudies.map((study, index) => (
         <li key={index}>
             <Study
@@ -101,12 +101,12 @@ function MyStudies() {
         </li>
     ));
 
-
+    // Calculating the total number of pages for pagination
     const totalStudies = Math.ceil(studiesInformation.length / studiesPerPage);
 
     const pageItems = [];
     const pageRange = 2;
-
+    // Pagination logic
     for (
         let number = Math.max(1, activePage - pageRange);
         number <= Math.min(totalStudies, activePage + pageRange);
@@ -122,7 +122,7 @@ function MyStudies() {
             </Pagination.Item>,
         );
     }
-
+    // Render the list of studies and pagination
     return (
         <div className="ResearchPageBody">
             <NavbarComponent/>

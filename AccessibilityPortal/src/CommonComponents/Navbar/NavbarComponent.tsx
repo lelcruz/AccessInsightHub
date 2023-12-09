@@ -6,29 +6,32 @@ import {auth, db} from '../../configurations/firebase';
 import {collection, getDocs, query, where} from "firebase/firestore";
 
 const NavbarComponent = () => {
-
+    // State to track if the current user is an admin
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
+    // Handler for the submit event of the search form
     const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        console.log("Submit!");
+        event.preventDefault(); // Prevents the default form submission behavior
+        console.log("Submit!"); // Placeholder for submit logic
     };
 
+    // useEffect hook to determine if the logged-in user is an admin
     useEffect(() => {
         auth.onAuthStateChanged(async user => {
-            if (user) {
-                if (user.emailVerified) {
-                    const q = query(collection(db, "users"), where("email", "==", user.email));
-                    const querySnapshot = await getDocs(q);
-                    querySnapshot.forEach((doc) => {
-                        let userRole = doc.data().role;
-                        if (userRole == "admin")
-                            setIsAdmin(true)
-                    });
-                }
+            if (user && user.emailVerified) {
+                // Query to check the user's role from the database
+                const q = query(collection(db, "users"), where("email", "==", user.email));
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    if (doc.data().role === "admin") {
+                        setIsAdmin(true); // Set isAdmin to true if user is an admin
+                    }
+                });
             }
-        })
+        });
     }, []);
+
+    // Rendering the navigation bar with conditional links for admin users
 
     return (
         <nav className="navbar">

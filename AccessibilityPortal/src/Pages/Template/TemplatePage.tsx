@@ -1,37 +1,41 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import NavbarComponent from "../../CommonComponents/Navbar/NavbarComponent";
 import BasicCardComponent from "../../CommonComponents/Card/BasicCardComponent";
 import StudyTemplateIcon from "../../assets/format-svgrepo-com.svg";
 import SurveyTemplateIcon from "../../assets/edit-form-svgrepo-com.svg";
 import ActivityLogIcon from "../../assets/activity-log-svgrepo-com.svg";
 import "./TemplatePage.scss";
-import { addDoc, collection, doc, getDocs, query, where } from "firebase/firestore";
-import { auth, db } from '../../configurations/firebase';
+import {addDoc, collection, doc, getDocs, query, where} from "firebase/firestore";
+import {auth, db} from '../../configurations/firebase';
 
-function TemplatePage(){
+function TemplatePage() {
 
     const navigate = useNavigate();
 
+    // Function to navigate to the survey template page
     const directToSurveyTemplate = () => {
         //createSurveyBackend();
         navigate('/survey-simple'); // might change later
     }
 
+    // Function to navigate to the study template page
     const directToStudiesTemplate = () => {
         navigate('/study-template');
     }
 
+    // Function to navigate to the activity log pages
     const directToActivityLog = () => {
         navigate('/activity-log');
     }
 
+    // Asynchronous function to create a new survey template in Firebase
     const createSurveyBackend = async () => {
         const user = auth.currentUser;
         try {
-            if (user) {       
-                
-                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email)); 
+            if (user) {
+
+                const q = query(collection(db, "edittingsurveys"), where("author", "==", user.email));
                 const querySnapshot = await getDocs(q);
 
                 if (querySnapshot.empty) {
@@ -41,36 +45,36 @@ function TemplatePage(){
                         title: "",
                         description: "",
                     });
-    
+
                     // Survey UID in firebase
                     const surveyUID = surveyRef.id;
-    
+
                     // Add a question collection to the survey editor
                     const subcollectionRef = collection(doc(db, "edittingsurveys", surveyUID), "questions");
-                    
+
                     // Initialize a demo question
                     await addDoc(subcollectionRef, {
                         id: 0,
                         title: "demo question",
                         answers: [],
                     });
-    
+
                     console.log("A new survey template is created");
                 }
             } else {
                 console.error("No user detected");
-            } 
+            }
         } catch (error) {
             console.error("Error creating subcollection: ", error);
         }
     }
 
-    return(
+    return (
         <div className="main-page">
-            <NavbarComponent />
+            <NavbarComponent/>
             <div className="display-box-template">
                 <div>
-                    <BasicCardComponent 
+                    <BasicCardComponent
                         imageUrl={SurveyTemplateIcon}
                         title={"Survey Creator"}
                         handleClick={directToSurveyTemplate}
@@ -90,8 +94,9 @@ function TemplatePage(){
                         handleClick={directToActivityLog}
                     ></BasicCardComponent>
                 </div>
-            </div> 
+            </div>
         </div>
     );
 }
+
 export default TemplatePage;

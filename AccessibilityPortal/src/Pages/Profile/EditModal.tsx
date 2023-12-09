@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import Modal from "../../CommonComponents/Modal Component/ModalComponent";
 import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
-import { auth, db } from '../../configurations/firebase';
-import { collection, doc, setDoc, getDocs, query, where } from "firebase/firestore";
+import {auth, db} from '../../configurations/firebase';
+import {collection, doc, getDocs, query, setDoc, where} from "firebase/firestore";
 
 interface Props {
     triggerReload: () => void;
 }
 
-function EditModal({ triggerReload }: Props) {
-
+function EditModal({triggerReload}: Props) {
+    // State hooks for managing modal and form fields
     const [modalShow, setModalShow] = useState(false);
     const [role, setRole] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -40,6 +40,7 @@ function EditModal({ triggerReload }: Props) {
         alert('Successfully edited!');
     }
 
+    // Updates the user profile in Firebase and triggers a reload of the parent component
     const editProfile = () => {
         const docRef = doc(db, "users", userID);
         const newData = {
@@ -52,16 +53,16 @@ function EditModal({ triggerReload }: Props) {
         };
         // Updating infos
         setDoc(docRef, newData)
-        .then(() => {
-            console.log("Document updated successfully!");
-            triggerReload(); // Reload the Profile Page for update new information
-            setModalShow(false)
-        })
-        .catch((error) => {
-            console.error("Error updating document: ", error);
-        });
+            .then(() => {
+                console.log("Document updated successfully!");
+                triggerReload(); // Reload the Profile Page for update new information
+                setModalShow(false)
+            })
+            .catch((error) => {
+                console.error("Error updating document: ", error);
+            });
     }
-
+    // Fetches the current user data from Firebase
     const fetchUser = async () => {
         const user = auth.currentUser;
         if (user && user.emailVerified) {
@@ -82,34 +83,39 @@ function EditModal({ triggerReload }: Props) {
                     setUserID(doc.id);
                 });
             } catch (error) {
-                
+
             }
         }
     }
-
+    // Effect hook to fetch user data on component mount
     useEffect(() => {
         fetchUser();
     }, []);
-
-    return(
+    // Rendering the modal with form fields for editing user information
+    return (
         <>
-        <Button color={"light"} onClick={openModal} title={"Edit Account"}/>
+            <Button color={"light"} onClick={openModal} title={"Edit Account"}/>
 
-        <Modal size="xs" isOpen={modalShow} onClose={closeModal}>
-            <form className="form-box" style={{rowGap: "8px"}} onSubmit={handleSubmit}>
-              
-                <label htmlFor='firstName'>First Name</label>
-                <input type="text" className="full-length-item" value={newFirstName} onChange={(e) => {setNewFirstName(e.target.value)}}></input>
-                <label htmlFor='lastName'>Last Name</label>
-                <input type="text" className="full-length-item" value={newLastName} onChange={(e) => setNewLastName(e.target.value)}></input> 
-                <label htmlFor='DOB'>Date of Birth</label>
-                <input type="date" className="full-length-item" value={newDob} min="1900-01-01" max="2023-01-01" onChange={(e) => setNewDob(e.target.value)}></input>
-                <Button color={"dark"} onClick={editProfile} title={"Save"}/>
-                <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
-                
-          </form>
-        </Modal>
-        </> 
+            <Modal size="xs" isOpen={modalShow} onClose={closeModal}>
+                <form className="form-box" style={{rowGap: "8px"}} onSubmit={handleSubmit}>
+
+                    <label htmlFor='firstName'>First Name</label>
+                    <input type="text" className="full-length-item" value={newFirstName} onChange={(e) => {
+                        setNewFirstName(e.target.value)
+                    }}></input>
+                    <label htmlFor='lastName'>Last Name</label>
+                    <input type="text" className="full-length-item" value={newLastName}
+                           onChange={(e) => setNewLastName(e.target.value)}></input>
+                    <label htmlFor='DOB'>Date of Birth</label>
+                    <input type="date" className="full-length-item" value={newDob} min="1900-01-01" max="2023-01-01"
+                           onChange={(e) => setNewDob(e.target.value)}></input>
+                    <Button color={"dark"} onClick={editProfile} title={"Save"}/>
+                    <Button color={"dark"} onClick={closeModal} title={"Cancel"}/>
+
+                </form>
+            </Modal>
+        </>
     );
 }
+
 export default EditModal

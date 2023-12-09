@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import accessibilityIcon from "../../assets/universal-access-svgrepo-com.svg";
 import cursorIcon from "/src/assets/cursor-svgrepo-com.svg"
 import "./AccessibilityMenu.scss";
@@ -17,32 +17,34 @@ function AccessibilityMenu() {
     const [showReadingAidButton] = useState(true);
     const [showDyslexiaButton] = useState(true);
     const [showTextAlignButton] = useState(true);
-    
+
     const [hideImages, setHideImages] = useState(false);
     const [isCursorButtonPressed, setCursorButtonPressed] = useState(false);
 
+    // Closes the accessibility menu
     const handleCloseMenu = () => {
         setToggle(false);
     };
 
+    // Resets website to default accessibility settings
     const resetWebsite = () => {
         // Reset SCSS classes
         const rootElement = document.documentElement;
         rootElement.classList.remove('bigger-text', 'increased-spacing', 'dyslexia-friendly');
-    
+
         // Reset filters
         rootElement.style.filter = 'none';
-    
+
         // Reset font styles
         document.body.style.fontFamily = 'inherit';
-    
+
         // Reset image visibility
         setHideImages(false);
         const images = document.querySelectorAll('img');
         images.forEach((image) => {
             image.style.display = 'block';
         });
-    
+
         // Reset text alignment
         document.body.classList.remove('text-align-center');
 
@@ -50,7 +52,7 @@ function AccessibilityMenu() {
         document.body.style.cursor = 'auto';
         setCursorButtonPressed(false);
     };
-    
+
 
     //Adding function on here because of errors on scss
     const toggleHighContrast = () => {
@@ -70,40 +72,44 @@ function AccessibilityMenu() {
             const rootElement = document.documentElement;
             rootElement.style.filter = 'contrast(150%)';
         }
-    }, []);*/}
+    }, []);*/
+    }
 
-
+    //toggle to invert
     const toggleInvert = () => {
         const rootElement = document.documentElement;
         const currentInvert = rootElement.style.filter;
         rootElement.style.filter = currentInvert === 'invert(100%)' ? 'none' : 'invert(100%)';
     };
-
+    //toggle to make text bigger
     const toggleBiggerText = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('bigger-text');
     };
 
+    //toggle to hide images
     const toggleHideImages = () => {
         setHideImages(!hideImages);
         const images = document.querySelectorAll('img:not(.img-bottom-right)');
-        
+
         images.forEach((image) => {
             const imgElement = image as HTMLImageElement;
             imgElement.style.display = hideImages ? 'block' : 'none';
         });
     };
-    
 
+    //toggle for text spacing
     const toggleTextSpacing = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('increased-spacing');
     };
 
+    // Toggles high contrast mode on the website
+
     const toggleSaturation = () => {
         const rootElement = document.documentElement;
         const currentSaturation = rootElement.style.filter;
-        if (currentSaturation === 'grayscale(100%)' ) {
+        if (currentSaturation === 'grayscale(100%)') {
             rootElement.style.filter = 'grayscale(0%)';
         } else {
             rootElement.style.filter = 'grayscale(100%)';
@@ -114,30 +120,31 @@ function AccessibilityMenu() {
         setCursorButtonPressed(!isCursorButtonPressed);
     };
 
-    
+
     const toggleDyslexiaFriendly = () => {
         const rootElement = document.documentElement;
         rootElement.classList.toggle('dyslexia-friendly');
-    
+
         // Check if dyslexia-friendly class is present
         const isDyslexiaFriendly = rootElement.classList.contains('dyslexia-friendly');
-    
+
         // Change the font for the entire website
         document.body.style.fontFamily = isDyslexiaFriendly ? 'Comic Sans MS' : 'inherit';
     };
 
-  
+
     const menuRef = useRef<HTMLDivElement>(null);
-    
+    // useEffect hook for cursor button functionality
     useEffect(() => {
         const body = document.body;
         if (isCursorButtonPressed) {
-          body.style.cursor = `url(${cursorIcon}), auto`;
+            body.style.cursor = `url(${cursorIcon}), auto`;
         } else {
-          body.style.cursor = 'auto';
+            body.style.cursor = 'auto';
         }
-      }, [isCursorButtonPressed]);
-    
+    }, [isCursorButtonPressed]);
+
+    // useEffect hook for closing the menu when clicking outside
 
     useEffect(() => {
         const clickOutside = (e: MouseEvent) => {
@@ -154,6 +161,7 @@ function AccessibilityMenu() {
         };
     }, [toggle]);
 
+    // Rendering the accessibility menu and its options
 
     return (
         <div ref={menuRef}>
@@ -164,7 +172,7 @@ function AccessibilityMenu() {
                     alt="Accessibility Icon"
                 />
             </button>
-            
+
             <div className={`accessibility-menu${toggle ? ' show-menu' : ''}`}>
                 <div className="menu-header">
                     Accessibility Menu
@@ -182,38 +190,38 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showHighContrastButton && ( 
+                {showHighContrastButton && (
                     <button className="high-contrast-button" onClick={toggleHighContrast}>
                         High Contrast
                     </button>
                 )}
 
-                {showInvertButton && ( 
+                {showInvertButton && (
                     <button className="invert-button" onClick={toggleInvert}>
                         Invert
                     </button>
                 )}
 
-                {showTextButton && ( 
+                {showTextButton && (
                     <button className="text-button" onClick={toggleBiggerText}>
                         Bigger Text
                     </button>
                 )}
 
-                {showSpacingButton && ( 
+                {showSpacingButton && (
                     <button className="spacing-button" onClick={toggleTextSpacing}>
                         Text Spacing
                     </button>
                 )}
 
-                {showImageButton && ( 
+                {showImageButton && (
                     <button className={`image-button${hideImages ? ' hidden' : ''}`} onClick={toggleHideImages}>
                         {hideImages ? 'Show Images' : 'Hide Images'}
                     </button>
                 )}
 
-                {showSaturationButton && ( 
-                    <button className= "saturation-button" onClick={toggleSaturation}>
+                {showSaturationButton && (
+                    <button className="saturation-button" onClick={toggleSaturation}>
                         Saturation
                     </button>
                 )}
@@ -226,14 +234,15 @@ function AccessibilityMenu() {
                     </button>
                 )}
 
-                {showDyslexiaButton && ( 
+                {showDyslexiaButton && (
                     <button className="dyslexia-button" onClick={toggleDyslexiaFriendly}>
                         Dyslexia Friendly
                     </button>
                 )}
 
-                <button className="textalign-button button button-white" onClick={() => document.body.classList.toggle('text-align-center')}>
-                Text Align
+                <button className="textalign-button button button-white"
+                        onClick={() => document.body.classList.toggle('text-align-center')}>
+                    Text Align
                 </button>
             </div>
         </div>

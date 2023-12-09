@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import React, {useState} from 'react';
+import {Button} from 'reactstrap';
 import ErrorMessage from '../../CommonComponents/ErrorMessage';
-import { auth } from '../../configurations/firebase';
+import {auth} from '../../configurations/firebase';
 import logging from '../../configurations/logging';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent"; 
-import { useNavigate } from 'react-router-dom';
+import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
+import {useNavigate} from 'react-router-dom';
 import "./ForgotPasswordPage.scss";
 
+// Component for the Forgot Password page.
 function ForgotPasswordPage() {
-
+    // State hooks for managing component state
     const [sending, setSending] = useState<boolean>(false);
     const [sent, setSent] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('');
     const [error, setError] = useState<string>('');
-
+    // Hook for navigating to different routes
     const navigate = useNavigate();
 
     const directToLoginPage = () => {
@@ -21,46 +22,50 @@ function ForgotPasswordPage() {
     };
 
     const back = () => {
-        setSent(false);  
+        setSent(false);
         setEmail('')
     };
 
+    //Handles the password reset request.
     const resetPasswordRequest = () => {
         if (error !== '') setError('');
 
         setSending(true);
 
         auth.sendPasswordResetEmail(email)
-        .then(() => {
-            logging.info('Sent!!!');
-            setSent(true);
-            setSending(false);
-        })
-        .catch(error => {
-            logging.error(error);
-            setError(error.message);
-            setSending(false);
-        });
+            .then(() => {
+                logging.info('Sent!!!');
+                setSent(true);
+                setSending(false);
+            })
+            .catch(error => {
+                logging.error(error);
+                setError(error.message);
+                setSending(false);
+            });
 
         window.close();
     }
-
+    // Rendering the component's UI based on the state
     return (
         <div className="body-page">
             <div className="form-component">
                 {sent ?
                     <div className="confirmation">
-                    <p>The recovery email has been sent to the entered email with instructions. Please check your mailbox.</p>
-                    <div className="action-button">
-                        <BasicButtonComponent color='light' title={"Go back"} onClick={directToLoginPage}></BasicButtonComponent>
-                        <BasicButtonComponent color='light' title={"Resend"} onClick={back}></BasicButtonComponent>
+                        <p>The recovery email has been sent to the entered email with instructions. Please check your
+                            mailbox.</p>
+                        <div className="action-button">
+                            <BasicButtonComponent color='light' title={"Go back"}
+                                                  onClick={directToLoginPage}></BasicButtonComponent>
+                            <BasicButtonComponent color='light' title={"Resend"} onClick={back}></BasicButtonComponent>
+                        </div>
                     </div>
-                    </div>
-                :
+                    :
                     <>
                         <h5>Please enter your email address</h5>
                         <label htmlFor="username" className="form-check-label"> Email Address </label>
-                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control mb-3"/>
+                        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)}
+                               className="form-control mb-3"/>
 
                         <Button
                             disabled={sending}
@@ -70,7 +75,7 @@ function ForgotPasswordPage() {
                         >
                             Send Reset Link
                         </Button>
-                        <ErrorMessage error={error} />
+                        <ErrorMessage error={error}/>
                     </>
                 }
             </div>
