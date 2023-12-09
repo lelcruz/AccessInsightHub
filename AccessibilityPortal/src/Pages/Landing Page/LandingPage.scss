@@ -140,8 +140,8 @@
             row-gap: 50px;
         }
     
-        @media (max-height: 900px){
-            padding-top: 15rem;
+        @media (max-height: 900px) and (max-width: 700px){
+            margin-top: 15rem;
         }
     
         .item{
