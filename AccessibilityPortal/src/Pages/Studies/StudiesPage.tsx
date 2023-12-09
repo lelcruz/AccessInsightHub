@@ -20,6 +20,7 @@ interface Study {
     requirement: string;
 }
 
+//Asynchronously fetches studies from the Firestore database.
 async function fetchStudies() {
     const newStudies: Study[] = [];
     try {
@@ -55,7 +56,7 @@ function StudiesPage() {
     const indexOfLastStudy = activePage * studiesPerPage;
     const indexOfFirstStudy = indexOfLastStudy - studiesPerPage;
     const [studiesInformation, setStudiesInformation] = useState<Study[]>([]);
-
+    // Effect hook to fetch studies data on component mount
     useEffect(() => {
         async function fetchData() {
             const newStudies = await fetchStudies();
@@ -69,7 +70,7 @@ function StudiesPage() {
         indexOfFirstStudy,
         indexOfLastStudy,
     );
-
+    // Mapping each study to a renderable element
     const arrayDataItems = currentStudies.map((study, index) => (
         <li key={index}>
             <Study
@@ -92,7 +93,7 @@ function StudiesPage() {
 
     const pageItems = [];
     const pageRange = 2;
-
+    // Loop to create pagination items
     for (
         let number = Math.max(1, activePage - pageRange);
         number <= Math.min(totalStudies, activePage + pageRange);
@@ -108,7 +109,7 @@ function StudiesPage() {
             </Pagination.Item>,
         );
     }
-
+    // Rendering the studies page with pagination
     return (
         <div className="ResearchPageBody">
             <NavbarComponent/>

@@ -1,66 +1,49 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Modal from "../../CommonComponents/Modal Component/LogOutPopUp";
 import Button from "../../CommonComponents/Buttons/BasicButtonComponent";
-import { useNavigate } from 'react-router-dom';
-import { auth } from '../../configurations/firebase';
-import logging from '../../configurations/logging';
-import BasicButtonComponent from "../../CommonComponents/Buttons/BasicButtonComponent";
 
 function ContactUsModal() {
-  const [modalShow, setModalShow] = useState(false);
+    // State to control the visibility of the modal
+    const [modalShow, setModalShow] = useState(false);
 
-  const navigate = useNavigate();
+    // Function to open the modal
+    const openModal = () => setModalShow(true);
 
-  const openModal = () => {
-    setModalShow(true);
-  };
+    // Function to close the modal
+    const closeModal = () => setModalShow(false);
 
-  const closeModal = () => {
-    setModalShow(false);
-  };
+    // Function to handle form submission
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        alert("Saved"); // Placeholder action for form submission
+    }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    alert("Saved");
-  }
+    // Placeholder function for additional contact logic
+    const contactUs = () => {
+        // Implement contact logic here
+    }
 
-  const contactUs = () => {
-    
+    // Rendering the modal with form elements
+    return (
+        <>
+            <Modal size="s" isOpen={modalShow} onClose={closeModal}>
+                <h4>Have any Question?</h4>
+                <h4>Get in touch</h4>
+                <form className="form-box" onSubmit={handleSubmit}>
+                    {/* Input fields for the contact form */}
+                    <input type="text" className="single-item" placeholder="First Name"/>
+                    <input type="text" className="single-item" placeholder="Last Name"/>
+                    <input type="email" className="full-length-item" placeholder="Email"/>
+                    <textarea className="full-length-item text-box" placeholder="Description"/>
 
-  }
-
-  return (
-    <>
-      <Modal size="s" isOpen={modalShow} onClose={closeModal}>
-        <h4>Have any Question?</h4>
-        <h4>Get in touch</h4>
-        <form className="form-box" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="single-item"
-            placeholder="First Name"
-          ></input>
-          <input
-            type="text"
-            className="single-item"
-            placeholder="Last Name"
-          ></input>
-          <input
-            type="email"
-            className="full-length-item"
-            placeholder="Email"
-          ></input>
-          <textarea
-            className="full-length-item text-box"
-            placeholder="Description"
-          ></textarea>
-
-          <Button color={"dark"} onClick={contactUs} title={"ContactUs"}/>
-          <Button color={"light"} onClick={closeModal} title={"Cancel"}/>
-        </form>
-      </Modal>
-    </>
-  );
+                    {/* Buttons for submitting the form and closing the modal */}
+                    <Button color={"dark"} onClick={contactUs} title={"Contact Us"}/>
+                    <Button color={"light"} onClick={closeModal} title={"Cancel"}/>
+                </form>
+            </Modal>
+        </>
+    );
 }
 
 export default ContactUsModal;
+

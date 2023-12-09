@@ -3,36 +3,39 @@ import BasicButtonComponent from "../Buttons/BasicButtonComponent";
 import Modal from "../Modal Component/ModalComponent";
 //import {sendEmail} from "use server";
 import {addDoc, collection} from "firebase/firestore";
-import { db } from "../../configurations/firebase";
+import {db} from "../../configurations/firebase";
 
 function ContactModal() {
+    // State for modal visibility and form fields
     const [modalShow, setModalShow] = useState(false);
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
 
-    const openModal = () => {
-        setModalShow(true);
-    };
+    // Function to open the modal
+    const openModal = () => setModalShow(true);
 
-    const closeModal = () => {
-        setModalShow(false);
-    };
+    // Function to close the modal
+    const closeModal = () => setModalShow(false);
 
+    // Function to handle form submission
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        const docRef = addDoc(collection(db,"contactForm"), {
+        e.preventDefault(); // Prevent default form submission behavior
+
+        // Logic to store form data in database
+        const docRef = addDoc(collection(db, "contactForm"), {
             firstname: firstName,
             lastname: lastName,
             email: email,
             message: message
         });
 
-        e.preventDefault();
-        alert("Sent")
-        closeModal();
+        alert("Sent"); // Notification for successful form submission
+        closeModal(); // Close the modal on submission
     }
 
+    // Render the contact form with input fields and submit button
     return (
         <div>
             <BasicButtonComponent
@@ -49,27 +52,35 @@ function ContactModal() {
                         className="single-item"
                         name="firstname"
                         placeholder="First Name"
-                        onChange={(e) => {setFirstName(e.target.value)}}
+                        onChange={(e) => {
+                            setFirstName(e.target.value)
+                        }}
                     ></input>
                     <input
                         type="text"
                         className="single-item"
                         name="lastname"
                         placeholder="Last Name"
-                        onChange={(e) => {setLastName(e.target.value)}}
+                        onChange={(e) => {
+                            setLastName(e.target.value)
+                        }}
                     ></input>
                     <input
                         type="email"
                         className="full-length-item"
                         name="email"
                         placeholder="Email"
-                        onChange={(e) => {setEmail(e.target.value)}}
+                        onChange={(e) => {
+                            setEmail(e.target.value)
+                        }}
                     ></input>
                     <textarea
                         className="full-length-item text-box"
                         name="message"
                         placeholder="Message"
-                        onChange={(e) => {setMessage(e.target.value)}}
+                        onChange={(e) => {
+                            setMessage(e.target.value)
+                        }}
                     ></textarea>
                     <BasicButtonComponent
                         color={"dark"}

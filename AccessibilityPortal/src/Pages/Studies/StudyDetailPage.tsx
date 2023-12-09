@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useNavigate, useLocation} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {doc, getDoc} from 'firebase/firestore';
 import {db} from '../../configurations/firebase';
 import ContactModal from "../../CommonComponents/ContactUs/ContactModal";
@@ -19,6 +19,7 @@ interface Study {
 }
 
 const StudyDetailPage: React.FC = () => {
+    // Extracting studyId from URL parameters
     const {studyId} = useParams<{ studyId: string }>();
     const [study, setStudy] = useState<Study | null>(null);
 
@@ -27,7 +28,7 @@ const StudyDetailPage: React.FC = () => {
     const back = () => {
         navigate('/studies')
     }
-
+    // Effect hook to fetch study details from Firestore
     useEffect(() => {
         const fetchStudy = async () => {
             if (studyId) {
@@ -59,28 +60,27 @@ const StudyDetailPage: React.FC = () => {
 
         fetchStudy();
     }, [studyId]);
-
+    // Rendering the study details page
     return (
         <div className="main-page">
             <div className="study-content">
-            <Button color={"light"} onClick={back} title={"Back"}/>
-            <div className="text-xl-center">
-                <h1 className="fw-bold">{study?.title}</h1>
-                <h5 className="fst-italic">Author: {study?.author}</h5>
-            </div>
-            {/*<h5>{study?.email}</h5>*/}
-            <div className="section">
-                <h6 className="fw-normal">Type: {study?.type}</h6>
-                <h6 className="fw-normal">Date: {study?.date ? study.date.toLocaleDateString() : 'N/A'}</h6>
-                <h6 className="fw-normal">Requirements: {study?.requirement}</h6>
-                <h6 className="fw-normal">Tag: {study?.tag}</h6>
-            </div>
+                <Button color={"light"} onClick={back} title={"Back"}/>
+                <div className="text-xl-center">
+                    <h1 className="fw-bold">{study?.title}</h1>
+                    <h5 className="fst-italic">Author: {study?.author}</h5>
+                </div>
+                <div className="section">
+                    <h6 className="fw-normal">Type: {study?.type}</h6>
+                    <h6 className="fw-normal">Date: {study?.date ? study.date.toLocaleDateString() : 'N/A'}</h6>
+                    <h6 className="fw-normal">Requirements: {study?.requirement}</h6>
+                    <h6 className="fw-normal">Tag: {study?.tag}</h6>
+                </div>
 
-            <h2>Description:</h2>
-            <hr/>
-            <p className="lh-lg">{study?.description}</p>
-            <ContactModal/>      
-        </div>
+                <h2>Description:</h2>
+                <hr/>
+                <p className="lh-lg">{study?.description}</p>
+                <ContactModal/>
+            </div>
         </div>
     );
 };

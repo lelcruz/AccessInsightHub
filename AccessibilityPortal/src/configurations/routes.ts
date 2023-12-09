@@ -21,7 +21,7 @@ import MyStudies from "../Pages/ActivityLog/MyStudies";
 import MySurveys from "../Pages/ActivityLog/MySurveys";
 import MyHistory from "../Pages/ActivityLog/MyHistory";
 
-
+// Array of route configurations for the application
 const routes: IRoute[] = [
     {
         path: '/',

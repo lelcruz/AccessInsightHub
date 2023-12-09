@@ -1,24 +1,22 @@
 import React from "react";
 import RadioForm from "./RadioForm";
-import CheckboxForm from "./CheckboxForm";
-import SelectForm from "./SelectForm";
-import FileForm from "./FileForm";
 import {Answer} from "../../Pages/Template/Survey Template/SurveyEditor"
 
-interface FormProps{
+interface FormProps {
     FormType: string | undefined;   //"Multiple Choice" | "Checkboxes" | "Dropdown" | "File Upload";
-    questionID: string | undefined;  
-    questionAnswers: Answer[] | undefined;  
+    questionID: string | undefined;
+    questionAnswers: Answer[] | undefined;
 }
 
+// Component for building different types of form elements based on the specified form type.
 function FormBuilder(props: FormProps) {
 
     if (props.FormType === "Multiple Choice") {
-        return <RadioForm questionID={props.questionID} questionAnswers={props.questionAnswers} />;
+        return <RadioForm questionID={props.questionID} questionAnswers={props.questionAnswers}/>;
     }
 
     if (props.FormType === "Checkboxes") {
-       // return <CheckboxForm handleAnswers={handleAnswers} />;
+        // return <CheckboxForm handleAnswers={handleAnswers} />;
     }
 
     if (props.FormType === "Dropdown") {
@@ -30,7 +28,7 @@ function FormBuilder(props: FormProps) {
     }
 
     return null;
-        
+
 }
 
 export default FormBuilder;
