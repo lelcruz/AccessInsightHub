@@ -33,7 +33,7 @@ function SelectForm() {
                 );
             })}
 
-
+            {/* Function to add an anwser into the array */}
             <label className="option" style={{"color": "gray"}} aria-label="Answer" role="textbox"
                    onClick={() => {
                        let id = answers.length + 1;

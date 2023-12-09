@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^7.0.2",
-    "@dnd-kit/utilities": "^3.2.1",
+    "@dnd-kit/utilities": "^3.2.2",
     "@fortawesome/fontawesome-free": "^6.4.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
@@ -20,7 +20,7 @@
     "@types/react-modal": "^3.16.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.2",
-    "firebase": "^10.4.0",
+    "firebase": "^10.7.0",
     "react": "^18.2.0",
     "react-avatar-edit": "^1.2.0",
     "react-avatar-editor": "^13.0.0",
@@ -28,8 +28,8 @@
     "react-contenteditable": "^3.3.7",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
-    "react-router-dom": "^6.17.0",
-    "reactstrap": "^9.2.0",
+    "react-router-dom": "^6.20.1",
+    "reactstrap": "^9.2.1",
     "resend": "^2.0.0",
     "styled-components": "^6.0.8",
     "survey-creator-react": "^1.9.112"
@@ -37,6 +37,7 @@
   "devDependencies": {
     "@playwright/test": "^1.40.1",
     "@types/bcryptjs": "^2.4.4",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.10.1",
     "@types/react": "^18.0.28",
     "@types/react-avatar-editor": "^13.0.0",
